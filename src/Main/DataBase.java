@@ -36,6 +36,16 @@ public class DataBase {
         //create.executeUpdate();
         checkSQL(create);
     }
+    void createUtvonalakTable() throws SQLException {
+            PreparedStatement create = db.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS utvonalak("
+                            + "id int NOT NULL AUTO_INCREMENT      ,"
+                            + "jaratSzam          text             ,"
+                            + "allomasok          text            ,"
+                            + "PRIMARY KEY(id))");
+            checkSQL(create);
+            System.out.println("createUtavonalakTable Complete.");
+    }
 
     void dropTable() throws SQLException {
         PreparedStatement create = db.prepareStatement("DROP TABLE utasok");
@@ -76,12 +86,59 @@ public class DataBase {
             postUtas("Magdi Néni");
         }
     }
+    public void postUtvonal34(String jaratSzam) throws SQLException {
+
+        ArrayList<String> allomasok34 = new ArrayList<>();
+        allomasok34.add("Békásmegyer, Újmegyeri tér");
+        allomasok34.add("Hadrianus utca");
+        allomasok34.add("Madzsar József utca / Hadrianus utca");
+        allomasok34.add("Szolgáltatóház");
+        allomasok34.add("Békásmegyer H");
+        allomasok34.add("Madzsar József utca / Pünkösdfürdő utca");
+        allomasok34.add("Medgyessy Ferenc utca");
+        allomasok34.add("Boglár utca");
+        allomasok34.add("Pünkösdfürdő");
+
+        String var1 = jaratSzam;
+        for (String allomasok341 : allomasok34) {
+                PreparedStatement posted = db.prepareStatement(
+                        "INSERT INTO utvonalak "
+                                + "("
+                                + "jaratSzam,"
+                                + "allomasok"
+                                + ") "
+                                + "VALUES (?,?)");
+                posted.setString(1, var1);
+                posted.setString(2, allomasok341);
+                posted.executeUpdate();
+            System.out.println("Allomasokkal feltolve");
+        }
+    }
+
+    List<String> getAllomasokLista(String jaratSzam) throws SQLException {
+        List<String> allomasokLista = new ArrayList<>();
+        PreparedStatement statement = db.prepareStatement("SELECT * FROM utvonalak where jaratSzam =" + jaratSzam);
+        ResultSet result = statement.executeQuery();
+        while (result.next()){
+            String eredmeny = result.getString("allomasok");
+            allomasokLista.add(eredmeny);
+        }
+        return allomasokLista;
+    }
+
+    int countTableSize(String tableName) throws SQLException {
+        PreparedStatement create = db.prepareStatement("SELECT COUNT(*) FROM " + tableName);
+        ResultSet result = create.executeQuery();
+        if (result.next()) {
+            //System.out.println(result.getInt(1));
+        }
+        return result.getInt(1);
+    }
 
     int getAnything(String varibaleType, int id, String row) throws SQLException {
-        PreparedStatement statement = db.prepareStatement("SELECT * FROM utasok where id = ?");
+        PreparedStatement statement = db.prepareStatement("SELECT * FROM utasok where id =?");
         statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
-
         int eredmeny;
         while (result.next()) {
             switch (varibaleType.toLowerCase()) {
@@ -121,7 +178,7 @@ public class DataBase {
         statement.setInt(2, id);
         statement.executeUpdate();
 
-        System.out.println("új " + row + " (id:" + id + "):" + newValue);
+        System.out.print("új " + row + " (id:" + id + "):" + newValue);
     }
 
     void setNewIntValue(int id, String row, String amounToModify, String symbol) throws SQLException {
