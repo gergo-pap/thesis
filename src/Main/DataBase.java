@@ -57,7 +57,6 @@ public class DataBase {
 
     void postUtas(String utasNev) throws SQLException {
         Random r = new Random();
-
         PreparedStatement posted = db.prepareStatement(
                 "INSERT INTO utasok "
                         + "("
@@ -70,7 +69,7 @@ public class DataBase {
                         + ") "
                         + "VALUES (?,?,?,?,?,?)");
 
-        posted.setString(1, utasNev);
+        posted.setString(1, NameGenerator());
         posted.setInt(2, r.nextInt((99 - 15) + 1) + 15);
         posted.setInt(3, r.nextInt(50000));
         posted.setBoolean(4, randomPercent(85));
@@ -178,7 +177,7 @@ public class DataBase {
         statement.setInt(2, id);
         statement.executeUpdate();
 
-        System.out.print("új " + row + " (id:" + id + "):" + newValue);
+        //System.out.print("új " + row + " (id:" + id + "):" + newValue);
     }
 
     void setNewIntValue(int id, String row, String amounToModify, String symbol) throws SQLException {
@@ -199,6 +198,18 @@ public class DataBase {
                 statement.executeUpdate();
                 break;
         }
+    }
+    public String NameGenerator() {
+        String[] Beginning = { "Kis", "Nagy", "Kovács", "Pap", "Szabó",
+                "Kovács", "Szűcs", "Barta", "Garaba", "Botos", "Kozma", "Szász", "Simon", "Pupek",
+                "Pomozi", "Fülöp", "Horváth", "Balogh", "Szilágyi", "Illyés", "Németh", "Csontos", "Fekete",
+                "Takács", "Détár" };
+        String[] Middle = { "András", "Virág", "Gábor", "Dóri", "Balázs", "Kristóf",
+                "Ádám", "Zoltán", "Anita", "Nikoletta", "Klári", "Zita", "Csilla", "Adrián", "Marci",
+                "Tímea", "Dominik", "Edina", "Bianka", "Marcell" };
+        Random rand = new Random();
+        return Beginning[rand.nextInt(Beginning.length)] + " "+
+                Middle[rand.nextInt(Middle.length)];
     }
 
     private static void checkSQL(PreparedStatement posted) throws SQLException {

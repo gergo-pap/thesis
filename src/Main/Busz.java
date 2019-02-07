@@ -34,7 +34,7 @@ public class Busz {
             int i = 0;
             List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
             for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
-                if(dataBase.getAnything("boolean", j, "utasUtazikE") == 1){ }
+                if(dataBase.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0){ }
                 else {
                     if (getBuszSzabadHelyekSzama() > 0 &&  dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
                         felszallBerlettel(j);
@@ -129,7 +129,7 @@ public class Busz {
             int rand = r.nextInt(10);
             buszAktualisMegallo = allomasok.get(i);
             System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
-            buszFelszallUtas(5);
+            buszFelszallUtas(rand);
             System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
             Thread.sleep(500);
         }
