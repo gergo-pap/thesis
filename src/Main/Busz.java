@@ -3,6 +3,7 @@ package Main;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,37 +32,72 @@ public class Busz {
 
     void buszFelszallUtas(int buszMennyiUtas) throws SQLException, InterruptedException {
             int i = 0;
+            List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
             for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
-                if (getBuszSzabadHelyekSzama() > 0 && dataBase.getAnything("boolean", j, "utasUtazikE") == 0 && dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
-                        dataBase.setAnything("boolean", j, "utasUtazikE", "true");
-                        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
-                        System.out.println("felszállt, mivel volt bérlete");
+                if(dataBase.getAnything("boolean", j, "utasUtazikE") == 1){ }
+                else {
+                    if (getBuszSzabadHelyekSzama() > 0 &&  dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
+                        felszallBerlettel(j);
                         i++;
-                } else if (dataBase.getAnything("boolean", j, "utasVanEJegye") == 1) {
-                    dataBase.setAnything("boolean", j, "utasVanEJegye", "false");
-                    dataBase.setAnything("boolean", j, "utasUtazikE", "true");
-                    setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
-                    System.out.println("felszáll, volt jegye");
-                    i++;
-                } else {
-                    System.out.print("Nem tudott felszállni: " + dataBase.getAnything("int", j, "id")+ " ");
-
-                }
-                if (i >= buszMennyiUtas){
-                    return;
+                    } else if (dataBase.getAnything("boolean", j, "utasVanEJegye") == 1) {
+                        felszallJeggyel(j);
+                        i++;
+                    } else {
+                        nemTudtakFelszallniLista.add(dataBase.getAnything("int", j, "id"));
+                    }
+                    if (i == buszMennyiUtas) { //>=
+                        System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
+                        System.out.print("Nem tudtak felszallni: ");
+                        for (Integer intek:nemTudtakFelszallniLista) {
+                            System.out.print(intek+", ");
+                        }
+                        return;
+                    }
                 }
         }
+
+    }
+
+    void felszallBerlettel(int j) throws SQLException {
+        dataBase.setAnything("boolean", j, "utasUtazikE", "true");
+        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
+        //System.out.println("--felszállt,bérlet--" + j);
+    }
+
+    void felszallJeggyel (int j) throws SQLException {
+        dataBase.setAnything("boolean", j, "utasVanEJegye", "false");
+        dataBase.setAnything("boolean", j, "utasUtazikE", "true");
+        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
+        //System.out.println("--felszáll, jegy--" + j);
+    }
+
+    void buszLeszallOsszesUtas() throws SQLException {
+
+        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+            leszallUtas(j);
+        }
+        System.out.println("Leszállt minden utas");
     }
 
     void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
-        for (int i = 1; i <= buszMennyiUtas; i++) {
-            if (/*utasok.size() > 0 &&*/dataBase.getAnything("boolean", i, "utasUtazikE") == 1) {
-                dataBase.setAnything("boolean", i, "utasUtazikE", "false");
-                setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() + 1);
+        int i = 0;
+        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
+            if (i == buszMennyiUtas){
+                System.out.println("lezállt ennyi utas: " + i);
+                return;}
+            else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {
+                leszallUtas(j);
+                i++;
             } else {
-                System.out.println("Üres a busz, vagy az utas nem utazik: " + dataBase.getAnything("string", i, "utasNev"));
+                System.out.println("Üres a busz, vagy az utas nem utazik: " + dataBase.getAnything("string", j, "id"));
             }
         }
+    }
+
+    void leszallUtas(int j) throws SQLException {
+        dataBase.setAnything("boolean", j, "utasUtazikE", "false");
+        //System.out.println("Leszállt az utas: " + dataBase.getAnything("string", j, "id"));
+        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() + 1);
     }
 
     void buszEllenorzes(int buszMennyiUtas) throws SQLException {
@@ -90,13 +126,14 @@ public class Busz {
         List<String > allomasok = dataBase.getAllomasokLista("134");
         Random r = new Random();
         for (int i = 0; i < allomasok.size(); i++){
+            int rand = r.nextInt(10);
             buszAktualisMegallo = allomasok.get(i);
-            System.out.println("Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
-            buszFelszallUtas(r.nextInt(10));
-            //buszLeszallUtas();
+            System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
+            buszFelszallUtas(5);
             System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
+        buszLeszallOsszesUtas();
     }
 
 
