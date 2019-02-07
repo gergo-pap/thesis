@@ -55,7 +55,7 @@ public class DataBase {
         System.out.println("Drop done");
     }
 
-    void postUtas(String utasNev) throws SQLException {
+    void postUtas() throws SQLException {
         Random r = new Random();
         PreparedStatement posted = db.prepareStatement(
                 "INSERT INTO utasok "
@@ -75,14 +75,12 @@ public class DataBase {
         posted.setBoolean(4, randomPercent(85));
         posted.setBoolean(5, randomPercent(50));
         posted.setBoolean(6, false);
-
-        //posted.executeUpdate();
         checkSQL(posted);
     }
 
     public void postUtasNumberOfTimes(int num) throws SQLException {
         for (int i = 0; i < num; i++) {
-            postUtas("Magdi Néni");
+            postUtas();
         }
     }
     public void postUtvonal34(String jaratSzam) throws SQLException {
