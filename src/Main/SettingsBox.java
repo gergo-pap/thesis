@@ -16,6 +16,12 @@ public class SettingsBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                System.exit(1);
+            }
+        });
         final Label label = new Label();
         label.setText(message);
 
