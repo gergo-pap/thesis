@@ -30,7 +30,7 @@ public class Main extends Application{
         //dataBase.createUtvonalakTable();
         //dataBase.postUtvonal34("134");
         System.out.println(dataBase.getAllomasokLista("134"));
-        busz.buszKozlekedik();
+        //busz.buszKozlekedik();
 
     }
 
@@ -38,11 +38,13 @@ public class Main extends Application{
     public void start(Stage stage) {
         window = stage;
         window.setTitle("Transport Simulation");
-        button = new Button("Click me");
+        button = new Button("Katt ide");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 AlertBox.display("Aleert", "Ez az üzenet");
+                boolean result = SettingsBox.display("Options","Igen/Nem");
+                System.out.println(result);
             }
         });
         StackPane layout = new StackPane();
