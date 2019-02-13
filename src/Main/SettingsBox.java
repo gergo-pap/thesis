@@ -8,10 +8,12 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
-public class SettingsBox {
-    static boolean answer;
+import java.sql.SQLException;
 
-    public static boolean display(String title, String message) {
+public class SettingsBox {
+
+
+    public static void display(String title, String message) throws SQLException, ClassNotFoundException {
         final Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -19,44 +21,50 @@ public class SettingsBox {
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
-                System.exit(1);
+                AlertBox.display("Exit", "Biztosan ki akarsz lépni?");
+                windowEvent.consume();
             }
         });
         final Label label = new Label();
         label.setText(message);
-
         //Create two buttons
-        final Button yesButton = new Button("Yes");
-        final Button noButton = new Button("No");
-
-        //Clicking will set answer and close window
+        final Button yesButton = new Button("Mehet a program");
+        final Button noButton = new Button("Kilépés");
 
         yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            Busz busz = new Busz("34", 100);
             @Override
             public void handle(ActionEvent actionEvent) {
-                answer = true;
-                window.close();
+
+                try {
+                    busz.buszKozlekedik();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
         noButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                answer = false;
-                window.close();
+
+                AlertBox.display("Exit", "Biztosan ki akarsz lépni?");
             }
         });
 
-        VBox layout = new VBox(10);
-
-        //Add buttons
-        layout.getChildren().addAll(label, yesButton, noButton);
-        layout.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(layout);
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        GridPane.setConstraints(label, 0, 0);
+        GridPane.setConstraints(yesButton, 1, 0);
+        GridPane.setConstraints(noButton, 2, 0);
+        gridPane.getChildren().addAll(noButton, yesButton, label);
+        Scene scene = new Scene(gridPane, 300, 250);
         window.setScene(scene);
-        window.showAndWait();
-
-        //Make sure to return answer
-        return answer;
+        window.show();
     }
 }

@@ -23,21 +23,33 @@ public class AlertBox {
         });
         Label label = new Label();
         label.setText(message);
-        Button closeButton = new Button("Close this window");
+        Button closeButton = new Button("Igen");
+        Button goOnButton = new Button("Nem");
+
         closeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.exit(1);
+            }
+        });
+
+        goOnButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 window.close();
             }
         });
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        GridPane.setConstraints(label, 0, 0);
+        GridPane.setConstraints(goOnButton, 1, 0);
+        GridPane.setConstraints(closeButton, 2, 0);
+        gridPane.getChildren().addAll(closeButton, goOnButton, label);
+        Scene scene = new Scene(gridPane, 260, 40);
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, closeButton);
-        layout.setAlignment(Pos.CENTER);
-
-        //Display window and wait for it to be closed before returning
-        Scene scene = new Scene(layout);
         window.setScene(scene);
-        window.showAndWait();
+        window.show();
     }
 }
