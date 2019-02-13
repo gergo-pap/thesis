@@ -4,14 +4,18 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
+import java.awt.*;
 import java.sql.SQLException;
 
 
@@ -42,6 +46,13 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) {
+        int widht = 800;
+        int height = 800;
+        Image image = new Image("map.jpg");
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(widht);
+        imageView.setImage(image);
         window = stage;
         window.setTitle("Transport Simulation");
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -53,8 +64,10 @@ public class Main extends Application{
             }
         });
 
-        Label label = new Label("Ez a kezdő oldal");
+        Label label = new Label("Budapest tömmegközlekedési térkép");
+        label.setAlignment(Pos.CENTER);
         button = new Button("Kattolj");
+        button.setMinWidth(widht);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -64,14 +77,19 @@ public class Main extends Application{
                 catch (ClassNotFoundException e) {e.printStackTrace();}
             }
         });
+
+
+
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
+
         GridPane.setConstraints(label, 0, 0);
-        GridPane.setConstraints(button, 1, 0);
-        gridPane.getChildren().addAll(button,label);
-        Scene scene = new Scene(gridPane, 300, 250);
+        GridPane.setConstraints(button, 0, 2);
+        GridPane.setConstraints(imageView,0,1);
+        gridPane.getChildren().addAll(button,label,imageView);
+        Scene scene = new Scene(gridPane, widht+25, height+75);
 
         window.setScene(scene);
         window.show();

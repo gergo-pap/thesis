@@ -63,7 +63,7 @@ public class SettingsBox {
         GridPane.setConstraints(yesButton, 1, 0);
         GridPane.setConstraints(noButton, 2, 0);
         gridPane.getChildren().addAll(noButton, yesButton, label);
-        Scene scene = new Scene(gridPane, 300, 250);
+        Scene scene = new Scene(gridPane, 270, 40);
         window.setScene(scene);
         window.show();
     }
