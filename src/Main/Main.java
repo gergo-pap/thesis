@@ -8,10 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.sql.SQLException;
 
-public class Main extends Application implements EventHandler<ActionEvent> {
+public class Main extends Application{
     Stage window;
     Button button;
 
@@ -41,7 +39,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         window = stage;
         window.setTitle("Transport Simulation");
         button = new Button("Click me");
-        button.setOnAction(this);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                AlertBox.display("Aleert", "Ez az üzenet");
+            }
+        });
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
         Scene scene = new Scene(layout, 300, 250);
@@ -50,9 +53,5 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         window.show();
     }
 
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == button)
-            System.out.println("Good boiii");
-    }
+
 }

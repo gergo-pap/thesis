@@ -71,7 +71,7 @@ public class Busz {
         //System.out.println("--felszáll, jegy--" + j);
     }
 
-    void buszLeszallOsszesUtas() throws SQLException {
+    public void buszLeszallOsszesUtas() throws SQLException {
 
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
             leszallUtas(j);
