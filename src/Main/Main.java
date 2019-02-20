@@ -40,7 +40,7 @@ public class Main extends Application{
         //dataBase.createUtvonalakTable();
         //dataBase.postUtvonal34("134");
         System.out.println(dataBase.getAllomasokLista("134"));
-        //busz.buszKozlekedik();
+        busz.buszKozlekedik();
 
     }
 
