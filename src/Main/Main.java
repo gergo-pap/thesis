@@ -19,12 +19,11 @@ import java.awt.*;
 import java.sql.SQLException;
 
 
-public class Main extends Application{
+public class Main {
     Stage window;
     Button button;
 
     public static void main(String[] args) throws Exception  {
-        launch(args);
         int mennyiUtasTEszt = 85;
         DataBase dataBase = new DataBase();
         dataBase.createUtasokTable();
@@ -44,7 +43,7 @@ public class Main extends Application{
 
     }
 
-    @Override
+    /*@Override
     public void start(Stage stage) {
         int widht = 800;
         int height = 800;
@@ -94,6 +93,6 @@ public class Main extends Application{
         window.setScene(scene);
         window.show();
     }
-
+*/
 
 }
