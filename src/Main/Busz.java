@@ -46,8 +46,8 @@ public class Busz {
                         nemTudtakFelszallniLista.add(dataBase.getAnything("int", j, "id"));
                     }
                     if (i == buszMennyiUtas) { //>=
-                        System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
-                        System.out.print("Nem tudtak felszallni: ");
+                        //System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
+                        //System.out.print("Nem tudtak felszallni: ");
                         for (Integer intek:nemTudtakFelszallniLista) {
                             System.out.print(intek+", ");
                         }
@@ -83,13 +83,13 @@ public class Busz {
         int i = 0;
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
             if (i == buszMennyiUtas){
-                System.out.println("lezállt ennyi utas: " + i);
+                //System.out.println("lezállt ennyi utas: " + i);
                 return;}
             else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {
                 leszallUtas(j);
                 i++;
             } else {
-                System.out.println("Üres a busz, vagy az utas nem utazik: " + dataBase.getAnything("string", j, "id"));
+                //System.out.println("Üres a busz, vagy az utas nem utazik: " + dataBase.getAnything("string", j, "id"));
             }
         }
     }
@@ -127,9 +127,9 @@ public class Busz {
         for (int i = 0; i < allomasok.size(); i++){
             int rand = r.nextInt(10);
             buszAktualisMegallo = allomasok.get(i);
-            System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
+            //System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
             buszFelszallUtas(rand);
-            System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
+            //System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
             buszEllenorzes();
             Thread.sleep(500);
         }

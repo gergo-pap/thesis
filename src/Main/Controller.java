@@ -21,9 +21,7 @@ public class Controller extends Application {
         int maxHeight = 800;
         int maxWidht = 800;
 
-        //Create new path transition
 
-        //Set node to be animated
         Image imageBus = new Image("bus2.png");
         Image imageMap = new Image("map.jpg");
 
@@ -40,9 +38,6 @@ public class Controller extends Application {
         Path path = new Path();
 
 
-
-        //path.getElements().add(new CubicCurveTo(0, 900, 380, 120, 200, 120));
-        //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
         path.getElements().add (new MoveTo (453, 161)); // x(vízszint),y(függő)
 
         path.getElements().add (new LineTo (453, 161));
@@ -68,7 +63,7 @@ public class Controller extends Application {
         path.getElements().add (new LineTo (351, 546));
         path.getElements().add (new LineTo (366, 566));
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(1000));
+        pathTransition.setDuration(Duration.millis(5000));
         pathTransition.setNode(imageView);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setCycleCount(Timeline.INDEFINITE);
