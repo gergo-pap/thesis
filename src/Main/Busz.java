@@ -19,15 +19,26 @@ public class Busz {
 
     DataBase dataBase = new DataBase();
 
-    Busz(int buszKapacitas) throws SQLException, ClassNotFoundException {
-        this.buszKapacitas = buszKapacitas;
-    }
-
     public Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException {
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
         buszSzabadHelyekSzama = buszKapacitas;
 
+    }
+
+    void buszKozlekedik() throws SQLException, InterruptedException {
+        List<String > allomasok = dataBase.getAllomasokLista("134");
+        Random r = new Random();
+        for (int i = 0; i < allomasok.size(); i++){
+            int rand = r.nextInt(10);
+            buszAktualisMegallo = allomasok.get(i);
+            System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
+            buszFelszallUtas(rand);
+            System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
+            buszEllenorzes();
+            Thread.sleep(5000/allomasok.size());
+        }
+        buszLeszallOsszesUtas();
     }
 
     void buszFelszallUtas(int buszMennyiUtas) throws SQLException {
@@ -121,20 +132,6 @@ public class Busz {
     }
 
 
-    void buszKozlekedik() throws SQLException, InterruptedException {
-        List<String > allomasok = dataBase.getAllomasokLista("134");
-        Random r = new Random();
-        for (int i = 0; i < allomasok.size(); i++){
-            int rand = r.nextInt(10);
-            buszAktualisMegallo = allomasok.get(i);
-            //System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
-            buszFelszallUtas(rand);
-            //System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
-            buszEllenorzes();
-            Thread.sleep(500);
-        }
-        buszLeszallOsszesUtas();
-    }
 
     void buszJegyetElhasznal(int i) throws SQLException {
         dataBase.setAnything("boolean", i, "utasVanEJegye", "false");

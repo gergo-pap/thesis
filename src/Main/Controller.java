@@ -12,14 +12,32 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.SQLException;
+
 public class Controller extends Application {
 
 
+    public void buszKozlekedik() throws SQLException, ClassNotFoundException, InterruptedException {
+        int mennyiUtasTEszt = 85;
+        DataBase dataBase = new DataBase();
+
+        //dataBase.createUtasokTable();
+        //dataBase.postUtasNumberOfTimes(mennyiUtasTEszt);
+
+        Busz busz = new Busz("34", 100);
+        //dataBase.createUtvonalakTable();
+        //dataBase.postUtvonal34("134");
+        System.out.println(dataBase.getAllomasokLista("134"));
+        busz.buszKozlekedik();
+    }
+
+
+
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws InterruptedException, SQLException, ClassNotFoundException {
 
         int maxHeight = 800;
-        int maxWidht = 800;
+        int maxWidth = 800;
 
 
         Image imageBus = new Image("bus2.png");
@@ -32,15 +50,16 @@ public class Controller extends Application {
         imageView.setImage(imageBus);
 
         imageViewMap.setFitHeight(maxHeight);
-        imageViewMap.setFitWidth(maxWidht);
+        imageViewMap.setFitWidth(maxWidth);
         imageViewMap.setImage(imageMap);
 
         Path path = new Path();
-
+        PathTransition pathTransition = new PathTransition();
 
         path.getElements().add (new MoveTo (453, 161)); // x(vízszint),y(függő)
 
         path.getElements().add (new LineTo (453, 161));
+
         path.getElements().add (new LineTo (438, 202));
         path.getElements().add (new LineTo (424, 200));
         path.getElements().add (new LineTo (406, 199));
@@ -62,18 +81,33 @@ public class Controller extends Application {
         path.getElements().add (new LineTo (353, 532));
         path.getElements().add (new LineTo (351, 546));
         path.getElements().add (new LineTo (366, 566));
-        PathTransition pathTransition = new PathTransition();
+
         pathTransition.setDuration(Duration.millis(5000));
         pathTransition.setNode(imageView);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Timeline.INDEFINITE);
-        pathTransition.setAutoReverse(true);
+        pathTransition.setCycleCount(1);
+        //pathTransition.setAutoReverse(true);
         pathTransition.setPath(path);
 
         pathTransition.play();
         Group group = new Group(imageViewMap, imageView);
-        Scene scene = new Scene(group, maxWidht, maxHeight);
+        Scene scene = new Scene(group, maxWidth, maxHeight);
         stage.setScene(scene);
+
+        new Thread(){
+
+            @Override
+            public void run() {
+                try {
+                    buszKozlekedik();
+                }
+                catch (SQLException e) {e.printStackTrace(); }
+                catch (ClassNotFoundException e) { e.printStackTrace(); }
+                catch (InterruptedException e) { e.printStackTrace(); }
+            }
+        }.start();
+
+
         stage.show();
 
 
@@ -81,8 +115,8 @@ public class Controller extends Application {
 
     public static void main(String[] args) {
         Application.launch(args);
-
     }
+
 
 
 }

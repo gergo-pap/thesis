@@ -201,7 +201,7 @@ public class DataBase {
         String[] Beginning = { "Kis", "Nagy", "Kovács", "Pap", "Szabó",
                 "Kovács", "Szűcs", "Barta", "Garaba", "Botos", "Kozma", "Szász", "Simon", "Pupek",
                 "Pomozi", "Fülöp", "Horváth", "Balogh", "Szilágyi", "Illyés", "Németh", "Csontos", "Fekete",
-                "Takács", "Détár" };
+                "Takács", "Détár", "Cinkóczi" };
         String[] Middle = { "András", "Virág", "Gábor", "Dóri", "Balázs", "Kristóf",
                 "Ádám", "Zoltán", "Anita", "Nikoletta", "Klári", "Zita", "Csilla", "Adrián", "Marci",
                 "Tímea", "Dominik", "Edina", "Bianka", "Marcell" };
