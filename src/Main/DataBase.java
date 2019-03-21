@@ -12,37 +12,33 @@ public class DataBase {
     private Connection db;
 
     DataBase() throws ClassNotFoundException, SQLException {
-        String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/transportsimulation?useSSL=false";
-        String username = "root";
-        String password = "";
+        String driver = "org.sqlite.JDBC";
+        String url = "jdbc:sqlite:test.db";
 
         Class.forName(driver);
-        db = DriverManager.getConnection(url, username, password);
+        db = DriverManager.getConnection(url);
         //System.out.println("Connected");
     }
 
     void createUtasokTable() throws SQLException {
         PreparedStatement create = db.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS utasok("
-                        + "id int NOT NULL AUTO_INCREMENT   , "
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT   , "
                         + "utasNev          text            , "
                         + "utasKor          int             , "
                         + "utasEgyenleg 	int     	, "
                         + "utasVanEBerlete 	tinyint(1)	, "
                         + "utasVanEJegye 	tinyint(1)	, "
-                        + "utasUtazikE 	tinyint(1)	, "
-                        + "PRIMARY KEY(id))");
+                        + "utasUtazikE 	tinyint(1))");
         //create.executeUpdate();
         checkSQL(create);
     }
     void createUtvonalakTable() throws SQLException {
             PreparedStatement create = db.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS utvonalak("
-                            + "id int NOT NULL AUTO_INCREMENT      ,"
+                            + "id INTEGER PRIMARY KEY AUTOINCREMENT      ,"
                             + "jaratSzam          text             ,"
-                            + "allomasok          text            ,"
-                            + "PRIMARY KEY(id))");
+                            + "allomasok          text)");
             checkSQL(create);
             System.out.println("createUtavonalakTable Complete.");
     }
