@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.util.jar.Pack200.Packer.PASS;
-
 public class DataBase {
 
     private Connection db;
@@ -18,6 +16,22 @@ public class DataBase {
         Class.forName(driver);
         db = DriverManager.getConnection(url);
         //System.out.println("Connected");
+    }
+
+    private static void checkSQL(PreparedStatement posted) throws SQLException {
+        int rs = posted.executeUpdate();
+
+        if (rs >= 0) {
+            System.out.println("Done");
+        } else {
+            System.out.println("Error");
+        }
+    }
+
+    private static boolean randomPercent(int percentage) {
+        Random rand = new Random();
+
+        return (rand.nextInt(100) < percentage);
     }
 
     void createUtasokTable() throws SQLException {
@@ -33,14 +47,15 @@ public class DataBase {
         //create.executeUpdate();
         checkSQL(create);
     }
+
     void createUtvonalakTable() throws SQLException {
-            PreparedStatement create = db.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS utvonalak("
-                            + "id INTEGER PRIMARY KEY AUTOINCREMENT      ,"
-                            + "jaratSzam          text             ,"
-                            + "allomasok          text)");
-            checkSQL(create);
-            System.out.println("createUtavonalakTable Complete.");
+        PreparedStatement create = db.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS utvonalak("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT      ,"
+                        + "jaratSzam          text             ,"
+                        + "allomasok          text)");
+        checkSQL(create);
+        System.out.println("createUtavonalakTable Complete.");
     }
 
     void dropTable() throws SQLException {
@@ -79,6 +94,7 @@ public class DataBase {
             postUtas();
         }
     }
+
     public void postUtvonal34(String jaratSzam) throws SQLException {
 
         ArrayList<String> allomasok34 = new ArrayList<>();
@@ -94,16 +110,16 @@ public class DataBase {
 
         String var1 = jaratSzam;
         for (String allomas : allomasok34) {
-                PreparedStatement posted = db.prepareStatement(
-                        "INSERT INTO utvonalak "
-                                + "("
-                                + "jaratSzam,"
-                                + "allomasok"
-                                + ") "
-                                + "VALUES (?,?)");
-                posted.setString(1, var1);
-                posted.setString(2, allomas);
-                posted.executeUpdate();
+            PreparedStatement posted = db.prepareStatement(
+                    "INSERT INTO utvonalak "
+                            + "("
+                            + "jaratSzam,"
+                            + "allomasok"
+                            + ") "
+                            + "VALUES (?,?)");
+            posted.setString(1, var1);
+            posted.setString(2, allomas);
+            posted.executeUpdate();
             System.out.println("Allomasokkal feltolve");
         }
     }
@@ -112,7 +128,7 @@ public class DataBase {
         List<String> allomasokLista = new ArrayList<>();
         PreparedStatement statement = db.prepareStatement("SELECT * FROM utvonalak where jaratSzam =" + jaratSzam);
         ResultSet result = statement.executeQuery();
-        while (result.next()){
+        while (result.next()) {
             String eredmeny = result.getString("allomasok");
             allomasokLista.add(eredmeny);
         }
@@ -176,15 +192,15 @@ public class DataBase {
 
     void setNewIntValue(int id, String row, String amounToModify, String symbol) throws SQLException {
         db.setAutoCommit(false);
-        switch (symbol){
+        switch (symbol) {
             case "+":
-                PreparedStatement statement = db.prepareStatement("UPDATE utasok SET " + row + " = "+ row +"+ ? WHERE id = ?;");
+                PreparedStatement statement = db.prepareStatement("UPDATE utasok SET " + row + " = " + row + "+ ? WHERE id = ?;");
                 System.out.println("hozzáadott összeg " + row + " (id:" + id + "):" + amounToModify);
                 statement.setInt(1, Integer.parseInt(amounToModify));
                 statement.setInt(2, id);
                 statement.executeUpdate();
                 break;
-            case  "-":
+            case "-":
                 statement = db.prepareStatement("UPDATE utasok SET " + row + " = " + row + "- ? WHERE id = ?;");
                 System.out.printf("levont összeg %s (id:%d):-%s%n", row, id, amounToModify);
                 statement.setInt(1, Integer.parseInt(amounToModify));
@@ -193,29 +209,19 @@ public class DataBase {
                 break;
         }
     }
+
     public String NameGenerator() {
-        String[] Beginning = { "Kis", "Nagy", "Kovács", "Pap", "Szabó",
+        String[] Beginning = {"Kis", "Nagy", "Kovács", "Pap", "Szabó",
                 "Kovács", "Szűcs", "Barta", "Garaba", "Botos", "Kozma", "Szász", "Simon", "Pupek",
                 "Pomozi", "Fülöp", "Horváth", "Balogh", "Szilágyi", "Illyés", "Németh", "Csontos", "Fekete",
-                "Takács", "Détár", "Cinkóczi" };
-        String[] Middle = { "András", "Virág", "Gábor", "Dóri", "Balázs", "Kristóf",
+                "Takács", "Détár", "Cinkóczi"};
+        String[] Middle = {"András", "Virág", "Gábor", "Dóri", "Balázs", "Kristóf",
                 "Ádám", "Zoltán", "Anita", "Nikoletta", "Klári", "Zita", "Csilla", "Adrián", "Marci",
-                "Tímea", "Dominik", "Edina", "Bianka", "Marcell" };
+                "Tímea", "Dominik", "Edina", "Bianka", "Marcell"};
         Random rand = new Random();
-        return Beginning[rand.nextInt(Beginning.length)] + " "+
+        return Beginning[rand.nextInt(Beginning.length)] + " " +
                 Middle[rand.nextInt(Middle.length)];
     }
-
-    private static void checkSQL(PreparedStatement posted) throws SQLException {
-        int rs = posted.executeUpdate();
-
-        if (rs >= 0) {
-            System.out.println("Done");
-        } else {
-            System.out.println("Error");
-        }
-    }
-
 
     void deleteDatabase() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/transportsimulation?useSSL=false";
@@ -229,16 +235,10 @@ public class DataBase {
         db = DriverManager.getConnection(url, username, password);
         PreparedStatement ps = db.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-        ps.setString(1,"id");
+        ps.setString(1, "id");
         ps.setArray(2, ps.getConnection().createArrayOf("utasNev", keys.toArray()));
 
         int res = ps.executeUpdate();
         System.out.println("Drop database succesful");
-    }
-
-    private static boolean randomPercent(int percentage) {
-        Random rand = new Random();
-
-        return (rand.nextInt(100) < percentage);
     }
 }

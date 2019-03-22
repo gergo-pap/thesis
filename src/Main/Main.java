@@ -1,8 +1,9 @@
 package Main;
+
 public class Main {
 
 
-    public static void main(String[] args) throws Exception  {
+    public static void main(String[] args) throws Exception {
         int mennyiUtasTEszt = 85;
         DataBase dataBase = new DataBase();
         dataBase.createUtasokTable();
@@ -15,7 +16,6 @@ public class Main {
         busz.buszKozlekedik();
 
     }
-
 
 
 }

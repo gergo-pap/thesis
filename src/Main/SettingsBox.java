@@ -2,11 +2,14 @@ package Main;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.sql.SQLException;
 
@@ -33,6 +36,7 @@ public class SettingsBox {
 
         yesButton.setOnAction(new EventHandler<ActionEvent>() {
             Busz busz = new Busz("34", 100);
+
             @Override
             public void handle(ActionEvent actionEvent) {
 

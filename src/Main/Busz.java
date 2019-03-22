@@ -1,8 +1,6 @@
 package Main;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,44 +25,44 @@ public class Busz {
     }
 
     void buszKozlekedik() throws SQLException, InterruptedException {
-        List<String > allomasok = dataBase.getAllomasokLista("134");
+        List<String> allomasok = dataBase.getAllomasokLista("134");
         Random r = new Random();
-        for (int i = 0; i < allomasok.size(); i++){
+        for (int i = 0; i < allomasok.size(); i++) {
             int rand = r.nextInt(10);
             buszAktualisMegallo = allomasok.get(i);
-            System.out.println("----------------------------Busz aktuális megállója:("+i+") " + buszAktualisMegallo + "----------------------------");
+            System.out.println("----------------------------Busz aktuális megállója:(" + i + ") " + buszAktualisMegallo + "----------------------------");
             buszFelszallUtas(rand);
-            System.out.println("buszSzabadhelyekszama "+getBuszSzabadHelyekSzama());
+            System.out.println("buszSzabadhelyekszama " + getBuszSzabadHelyekSzama());
             buszEllenorzes();
-            Thread.sleep(5000/allomasok.size());
+            Thread.sleep(5000 / allomasok.size());
         }
         buszLeszallOsszesUtas();
     }
 
     void buszFelszallUtas(int buszMennyiUtas) throws SQLException {
-            int i = 0;
-            List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
-            for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
-                if(dataBase.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0){ }
-                else {
-                    if (getBuszSzabadHelyekSzama() > 0 &&  dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
-                        felszallBerlettel(j);
-                        i++;
-                    } else if (dataBase.getAnything("boolean", j, "utasVanEJegye") == 1) {
-                        felszallJeggyel(j);
-                        i++;
-                    } else {
-                        nemTudtakFelszallniLista.add(dataBase.getAnything("int", j, "id"));
-                    }
-                    if (i == buszMennyiUtas) { //>=
-                        //System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
-                        //System.out.print("Nem tudtak felszallni: ");
-                        for (Integer intek:nemTudtakFelszallniLista) {
-                            System.out.print(intek+", ");
-                        }
-                        return;
-                    }
+        int i = 0;
+        List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
+        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+            if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0) {
+            } else {
+                if (getBuszSzabadHelyekSzama() > 0 && dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
+                    felszallBerlettel(j);
+                    i++;
+                } else if (dataBase.getAnything("boolean", j, "utasVanEJegye") == 1) {
+                    felszallJeggyel(j);
+                    i++;
+                } else {
+                    nemTudtakFelszallniLista.add(dataBase.getAnything("int", j, "id"));
                 }
+                if (i == buszMennyiUtas) { //>=
+                    //System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
+                    //System.out.print("Nem tudtak felszallni: ");
+                    for (Integer intek : nemTudtakFelszallniLista) {
+                        System.out.print(intek + ", ");
+                    }
+                    return;
+                }
+            }
         }
 
     }
@@ -75,7 +73,7 @@ public class Busz {
         //System.out.println("--felszállt,bérlet--" + j);
     }
 
-    void felszallJeggyel (int j) throws SQLException {
+    void felszallJeggyel(int j) throws SQLException {
         dataBase.setAnything("boolean", j, "utasVanEJegye", "false");
         dataBase.setAnything("boolean", j, "utasUtazikE", "true");
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
@@ -92,11 +90,11 @@ public class Busz {
 
     void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
         int i = 0;
-        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++){
-            if (i == buszMennyiUtas){
+        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+            if (i == buszMennyiUtas) {
                 //System.out.println("lezállt ennyi utas: " + i);
-                return;}
-            else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {
+                return;
+            } else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {
                 leszallUtas(j);
                 i++;
             } else {
@@ -113,7 +111,7 @@ public class Busz {
 
     void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
-        for (int i = 1; i <= buszKapacitas-getBuszSzabadHelyekSzama(); i++) {
+        for (int i = 1; i <= buszKapacitas - getBuszSzabadHelyekSzama(); i++) {
             if (dataBase.getAnything("boolean", i, "utasUtazikE") == 1 || dataBase.getAnything("boolean", i, "utasVanEBerlete") == 1) {
             } else {
                 if (dataBase.getAnything("boolean", i, "utasVanEJegye") == 1) {
@@ -121,8 +119,7 @@ public class Busz {
                 }
                 if (dataBase.getAnything("boolean", i, "utasEgyenleg") > 450) {
                     buszJegyetVesz(i);
-                    }
-                 else {
+                } else {
                     dataBase.setNewIntValue(i, "utasEgyenleg", "16000", "-");
                     buntetesekSzama++;
                 }
@@ -132,11 +129,11 @@ public class Busz {
     }
 
 
-
     void buszJegyetElhasznal(int i) throws SQLException {
         dataBase.setAnything("boolean", i, "utasVanEJegye", "false");
         System.out.println(dataBase.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
     }
+
     void buszJegyetVesz(int i) throws SQLException {
         dataBase.setNewIntValue(i, "utasEgyenleg", "450", "-");
         dataBase.setAnything("boolean", i, "utasVanEJegye", "true");

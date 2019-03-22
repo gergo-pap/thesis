@@ -1,14 +1,14 @@
 package Main;
 
 import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.*;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
@@ -16,13 +16,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class Controller extends Application {
 
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
 
     public void buszKozlekedik() throws SQLException, ClassNotFoundException, InterruptedException {
         int mennyiUtasTEszt = 85;
@@ -37,7 +40,6 @@ public class Controller extends Application {
         System.out.println(dataBase.getAllomasokLista("134"));
         busz.buszKozlekedik();
     }
-
 
     @Override
     public void start(Stage stage) throws IOException, ParseException {
@@ -66,7 +68,7 @@ public class Controller extends Application {
         PathTransition pathTransition = new PathTransition();
 
 
-        JSONObject megallo = (JSONObject)  jarat34.get(0);
+        JSONObject megallo = (JSONObject) jarat34.get(0);
         double x = ((Long) megallo.get("x")).doubleValue();
         double y = ((Long) megallo.get("y")).doubleValue();
 
@@ -92,16 +94,19 @@ public class Controller extends Application {
         Scene scene = new Scene(group, maxWidth, maxHeight);
         stage.setScene(scene);
 
-        new Thread(){
+        new Thread() {
 
             @Override
             public void run() {
                 try {
                     buszKozlekedik();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                catch (SQLException e) {e.printStackTrace(); }
-                catch (ClassNotFoundException e) { e.printStackTrace(); }
-                catch (InterruptedException e) { e.printStackTrace(); }
             }
         }.start();
 
@@ -110,11 +115,6 @@ public class Controller extends Application {
 
 
     }
-
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
 
 
 }
