@@ -2,6 +2,8 @@ package Main;
 
 import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,10 +17,10 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Controller extends Application {
     private Busz busz;
+    private PathTransition pathTransition;
 
     public Controller() throws ClassNotFoundException, SQLException, ParseException, IOException {
         this.busz = new Busz("34", 100);
@@ -28,8 +30,22 @@ public class Controller extends Application {
         Application.launch(args);
     }
 
-    public void buszKozlekedik() throws SQLException, ClassNotFoundException {
-        int mennyiUtasTEszt = 85;
+    public void buszKozlekedik(Path path, PathTransition pathTransition) throws SQLException, InterruptedException {
+        while (true) {
+            Allomas elozo_allomas = busz.getAktualisAllomas();
+            boolean vegallomasra_ert = busz.kovetkezoMegallo();
+
+            path.getElements().add(new MoveTo(elozo_allomas.getX(), elozo_allomas.getY()));
+            path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
+            pathTransition.play();
+            pathTransition.wait();
+
+            if (vegallomasra_ert) {
+                break;
+            }
+        }
+
+//        int mennyiUtasTEszt = 85;
 //        DataBase dataBase = new DataBase();
 
         //dataBase.createUtasokTable();
@@ -42,65 +58,66 @@ public class Controller extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-
+    public void start(Stage stage) throws InterruptedException {
         int maxHeight = 800;
         int maxWidth = 800;
 
-        Image imageBus = new Image("bus2.png");
+        Image imageBusz = new Image("bus2.png");
         Image imageMap = new Image("map.jpg");
 
-        ImageView imageView = new ImageView();
-        ImageView imageViewMap = new ImageView();
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-        imageView.setImage(imageBus);
+        ImageView imageViewBusz = new ImageView();
+        imageViewBusz.setFitHeight(50);
+        imageViewBusz.setFitWidth(50);
+        imageViewBusz.setImage(imageBusz);
 
+        ImageView imageViewMap = new ImageView();
         imageViewMap.setFitHeight(maxHeight);
         imageViewMap.setFitWidth(maxWidth);
         imageViewMap.setImage(imageMap);
 
         Path path = new Path();
-        PathTransition pathTransition = new PathTransition();
+        Allomas kezdo_allomas = busz.getAktualisAllomas();
+        path.getElements().add(new MoveTo(kezdo_allomas.getX(), kezdo_allomas.getY()));
 
-        List<Allomas> allomasok = busz.getAllomasok();
-
-        Allomas elso_allomas = allomasok.get(0);
-        path.getElements().add(new MoveTo(elso_allomas.getX(), elso_allomas.getY()));
-
-        for (Allomas allomas : allomasok) {
-            path.getElements().add(new LineTo(allomas.getX(), allomas.getY()));
-        }
-
-        pathTransition.setDuration(Duration.millis(5000));
-        pathTransition.setNode(imageView);
+        pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(1));
+        pathTransition.setNode(imageViewBusz);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setCycleCount(1);
         //pathTransition.setAutoReverse(true);
         pathTransition.setPath(path);
-
-        pathTransition.play();
-        Group group = new Group(imageViewMap, imageView);
-        Scene scene = new Scene(group, maxWidth, maxHeight);
-        stage.setScene(scene);
-
-        new Thread() {
-
+        pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
-            public void run() {
+            public void handle(ActionEvent actionEvent) {
                 try {
-                    buszKozlekedik();
-                } catch (SQLException | ClassNotFoundException e) {
+                    nyomasAKovetkezoMegalloba();
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-        }.start();
+        });
 
+        Group group = new Group(imageViewMap, imageViewBusz);
+        Scene scene = new Scene(group, maxWidth, maxHeight);
+        stage.setScene(scene);
 
         stage.show();
-
-
+        pathTransition.play();
     }
 
+    void nyomasAKovetkezoMegalloba() throws SQLException {
+        Allomas elozo_allomas = busz.getAktualisAllomas();
+        boolean uton_van = busz.kovetkezoMegallo();
 
+        Path path = new Path();
+        path.getElements().add(new MoveTo(elozo_allomas.getX(), elozo_allomas.getY()));
+        path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
+
+        pathTransition.setDuration(Duration.millis(500));
+        pathTransition.setPath(path);
+
+        if (uton_van) {
+            pathTransition.play();
+        }
+    }
 }
