@@ -107,6 +107,9 @@ public class Controller extends Application {
     void nyomasAKovetkezoMegalloba() throws SQLException {
         Allomas elozo_allomas = busz.getAktualisAllomas();
         boolean uton_van = busz.kovetkezoMegallo();
+        if (!uton_van) {
+            return;
+        }
 
         Path path = new Path();
         path.getElements().add(new MoveTo(elozo_allomas.getX(), elozo_allomas.getY()));
@@ -114,9 +117,6 @@ public class Controller extends Application {
 
         pathTransition.setDuration(Duration.millis(500));
         pathTransition.setPath(path);
-
-        if (uton_van) {
-            pathTransition.play();
-        }
+        pathTransition.play();
     }
 }

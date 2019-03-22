@@ -51,6 +51,12 @@ public class Busz {
     }
 
     boolean kovetkezoMegallo() throws SQLException {
+        if (!hatralevo_allomasok.hasNext()) {
+            buszLeszallOsszesUtas();
+
+            return false;
+        }
+
         aktualisAllomas = hatralevo_allomasok.next();
         allomas_index++;
         printState();
@@ -60,12 +66,6 @@ public class Busz {
         System.out.println("buszSzabadhelyekszama " + getBuszSzabadHelyekSzama());
 
         buszEllenorzes();
-
-        if (!hatralevo_allomasok.hasNext()) {
-            buszLeszallOsszesUtas();
-
-            return false;
-        }
 
         return true;
     }
