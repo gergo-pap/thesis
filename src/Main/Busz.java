@@ -20,8 +20,8 @@ public class Busz {
     private int buszSzabadHelyekSzama;
     private List<Allomas> allomasok;
     private Allomas aktualisAllomas;
-    private ListIterator<Allomas> hatralevo_allomasok;
-    private int allomas_index;
+    private ListIterator<Allomas> hatralevoAllomasok;
+    private int allomasIndex;
 
     public Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.buszJaratSzam = buszJaratSzam;
@@ -32,9 +32,9 @@ public class Busz {
     }
 
     void buszAStartPoziciora() {
-        hatralevo_allomasok = this.allomasok.listIterator();
-        allomas_index = 0;
-        aktualisAllomas = hatralevo_allomasok.next();
+        hatralevoAllomasok = this.allomasok.listIterator();
+        allomasIndex = 0;
+        aktualisAllomas = hatralevoAllomasok.next();
         printState();
     }
 
@@ -47,18 +47,18 @@ public class Busz {
     }
 
     private void printState() {
-        System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomas_index + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
+        System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
     }
 
     boolean kovetkezoMegallo() throws SQLException {
-        if (!hatralevo_allomasok.hasNext()) {
+        if (!hatralevoAllomasok.hasNext()) {
             buszLeszallOsszesUtas();
 
             return false;
         }
 
-        aktualisAllomas = hatralevo_allomasok.next();
-        allomas_index++;
+        aktualisAllomas = hatralevoAllomasok.next();
+        allomasIndex++;
         printState();
 
         Random r = new Random();

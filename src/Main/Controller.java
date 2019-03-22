@@ -32,24 +32,24 @@ public class Controller extends Application {
 
     public void buszKozlekedik(Path path, PathTransition pathTransition) throws SQLException, InterruptedException {
         while (true) {
-            Allomas elozo_allomas = busz.getAktualisAllomas();
-            boolean vegallomasra_ert = busz.kovetkezoMegallo();
+            Allomas elozoAllomas = busz.getAktualisAllomas();
+            boolean vegallomasraErt = busz.kovetkezoMegallo();
 
-            path.getElements().add(new MoveTo(elozo_allomas.getX(), elozo_allomas.getY()));
+            path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
             path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
             pathTransition.play();
             pathTransition.wait();
 
-            if (vegallomasra_ert) {
+            if (vegallomasraErt) {
                 break;
             }
         }
 
-//        int mennyiUtasTEszt = 85;
+//        int mennyiUtasTeszt = 85;
 //        DataBase dataBase = new DataBase();
 
         //dataBase.createUtasokTable();
-        //dataBase.postUtasNumberOfTimes(mennyiUtasTEszt);
+        //dataBase.postUtasNumberOfTimes(mennyiUtasTeszt);
 
         //dataBase.createUtvonalakTable();
         //dataBase.postUtvonal34("134");
@@ -76,8 +76,8 @@ public class Controller extends Application {
         imageViewMap.setImage(imageMap);
 
         Path path = new Path();
-        Allomas kezdo_allomas = busz.getAktualisAllomas();
-        path.getElements().add(new MoveTo(kezdo_allomas.getX(), kezdo_allomas.getY()));
+        Allomas kezdoAllomas = busz.getAktualisAllomas();
+        path.getElements().add(new MoveTo(kezdoAllomas.getX(), kezdoAllomas.getY()));
 
         pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(1));
@@ -105,14 +105,14 @@ public class Controller extends Application {
     }
 
     void nyomasAKovetkezoMegalloba() throws SQLException {
-        Allomas elozo_allomas = busz.getAktualisAllomas();
-        boolean uton_van = busz.kovetkezoMegallo();
-        if (!uton_van) {
+        Allomas elozoAllomas = busz.getAktualisAllomas();
+        boolean utonVan = busz.kovetkezoMegallo();
+        if (!utonVan) {
             return;
         }
 
         Path path = new Path();
-        path.getElements().add(new MoveTo(elozo_allomas.getX(), elozo_allomas.getY()));
+        path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
         path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
 
         pathTransition.setDuration(Duration.millis(500));
