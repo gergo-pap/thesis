@@ -93,7 +93,7 @@ public class DataBase {
         allomasok34.add("Pünkösdfürdő");
 
         String var1 = jaratSzam;
-        for (String allomasok341 : allomasok34) {
+        for (String allomas : allomasok34) {
                 PreparedStatement posted = db.prepareStatement(
                         "INSERT INTO utvonalak "
                                 + "("
@@ -102,7 +102,7 @@ public class DataBase {
                                 + ") "
                                 + "VALUES (?,?)");
                 posted.setString(1, var1);
-                posted.setString(2, allomasok341);
+                posted.setString(2, allomas);
                 posted.executeUpdate();
             System.out.println("Allomasokkal feltolve");
         }
