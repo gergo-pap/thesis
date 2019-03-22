@@ -11,7 +11,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class Controller extends Application {
@@ -32,13 +39,15 @@ public class Controller extends Application {
     }
 
 
-
     @Override
-    public void start(Stage stage) throws InterruptedException, SQLException, ClassNotFoundException {
+    public void start(Stage stage) throws IOException, ParseException {
 
         int maxHeight = 800;
         int maxWidth = 800;
 
+        JSONParser parser = new JSONParser();
+        JSONObject jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
+        JSONArray jarat34 = (JSONArray) jaratok.get("34");
 
         Image imageBus = new Image("bus2.png");
         Image imageMap = new Image("map.jpg");
@@ -56,31 +65,20 @@ public class Controller extends Application {
         Path path = new Path();
         PathTransition pathTransition = new PathTransition();
 
-        path.getElements().add (new MoveTo (453, 161)); // x(vízszint),y(függő)
 
-        path.getElements().add (new LineTo (453, 161));
+        JSONObject megallo = (JSONObject)  jarat34.get(0);
+        double x = ((Long) megallo.get("x")).doubleValue();
+        double y = ((Long) megallo.get("y")).doubleValue();
 
-        path.getElements().add (new LineTo (438, 202));
-        path.getElements().add (new LineTo (424, 200));
-        path.getElements().add (new LineTo (406, 199));
-        path.getElements().add (new LineTo (400, 215));
-        path.getElements().add (new LineTo (400, 215));
-        path.getElements().add (new LineTo (399, 214));
-        path.getElements().add (new LineTo (393, 230));
-        path.getElements().add (new LineTo (389, 275));
-        path.getElements().add (new LineTo (410, 279));
-        path.getElements().add (new LineTo (402, 301));
-        path.getElements().add (new LineTo (396, 315));
-        path.getElements().add (new LineTo (386, 318));
-        path.getElements().add (new LineTo (380, 339));
-        path.getElements().add (new LineTo (378, 375));
-        path.getElements().add (new LineTo (382, 392));
-        path.getElements().add (new LineTo (376, 424));
-        path.getElements().add (new LineTo (367, 456));
-        path.getElements().add (new LineTo (359, 500));
-        path.getElements().add (new LineTo (353, 532));
-        path.getElements().add (new LineTo (351, 546));
-        path.getElements().add (new LineTo (366, 566));
+        path.getElements().add(new MoveTo(x, y));
+
+        for (Object megallo_obj : jarat34) {
+            megallo = (JSONObject) megallo_obj;
+            x = ((Long) megallo.get("x")).doubleValue();
+            y = ((Long) megallo.get("y")).doubleValue();
+
+            path.getElements().add(new LineTo(x, y));
+        }
 
         pathTransition.setDuration(Duration.millis(5000));
         pathTransition.setNode(imageView);
