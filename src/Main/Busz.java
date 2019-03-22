@@ -42,10 +42,6 @@ public class Busz {
         return aktualisAllomas;
     }
 
-    List<Allomas> getAllomasok() {
-        return allomasok;
-    }
-
     private void printState() {
         System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
     }
