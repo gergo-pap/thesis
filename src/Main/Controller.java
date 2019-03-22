@@ -11,45 +11,41 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Controller extends Application {
+    private Busz busz;
 
+    public Controller() throws ClassNotFoundException, SQLException, ParseException, IOException {
+        this.busz = new Busz("34", 100);
+    }
 
     public static void main(String[] args) {
         Application.launch(args);
     }
 
-    public void buszKozlekedik() throws SQLException, ClassNotFoundException, InterruptedException {
+    public void buszKozlekedik() throws SQLException, ClassNotFoundException {
         int mennyiUtasTEszt = 85;
-        DataBase dataBase = new DataBase();
+//        DataBase dataBase = new DataBase();
 
         //dataBase.createUtasokTable();
         //dataBase.postUtasNumberOfTimes(mennyiUtasTEszt);
 
-        Busz busz = new Busz("34", 100);
         //dataBase.createUtvonalakTable();
         //dataBase.postUtvonal34("134");
-        System.out.println(dataBase.getAllomasokLista("134"));
-        busz.buszKozlekedik();
+//        System.out.println(dataBase.getAllomasokLista("134"));
+//        busz.buszKozlekedik();
     }
 
     @Override
-    public void start(Stage stage) throws IOException, ParseException {
+    public void start(Stage stage) {
 
         int maxHeight = 800;
         int maxWidth = 800;
-
-        JSONParser parser = new JSONParser();
-        JSONObject jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
-        JSONArray jarat34 = (JSONArray) jaratok.get("34");
 
         Image imageBus = new Image("bus2.png");
         Image imageMap = new Image("map.jpg");
@@ -67,19 +63,13 @@ public class Controller extends Application {
         Path path = new Path();
         PathTransition pathTransition = new PathTransition();
 
+        List<Allomas> allomasok = busz.getAllomasok();
 
-        JSONObject megallo = (JSONObject) jarat34.get(0);
-        double x = ((Long) megallo.get("x")).doubleValue();
-        double y = ((Long) megallo.get("y")).doubleValue();
+        Allomas elso_allomas = allomasok.get(0);
+        path.getElements().add(new MoveTo(elso_allomas.getX(), elso_allomas.getY()));
 
-        path.getElements().add(new MoveTo(x, y));
-
-        for (Object megallo_obj : jarat34) {
-            megallo = (JSONObject) megallo_obj;
-            x = ((Long) megallo.get("x")).doubleValue();
-            y = ((Long) megallo.get("y")).doubleValue();
-
-            path.getElements().add(new LineTo(x, y));
+        for (Allomas allomas : allomasok) {
+            path.getElements().add(new LineTo(allomas.getX(), allomas.getY()));
         }
 
         pathTransition.setDuration(Duration.millis(5000));
@@ -100,11 +90,7 @@ public class Controller extends Application {
             public void run() {
                 try {
                     buszKozlekedik();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

@@ -33,23 +33,23 @@ public class SettingsBox {
         //Create two buttons
         final Button yesButton = new Button("Mehet a program");
         final Button noButton = new Button("Kilépés");
-
-        yesButton.setOnAction(new EventHandler<ActionEvent>() {
-            Busz busz = new Busz("34", 100);
-
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                try {
-                    busz.buszKozlekedik();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
+//
+//        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+//            Busz busz = new Busz("34", 100);
+//
+//            @Override
+//            public void handle(ActionEvent actionEvent) {
+//
+//                try {
+//                    busz.buszKozlekedik();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
 
         noButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

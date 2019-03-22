@@ -1,5 +1,12 @@
 package Main;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,16 +55,6 @@ public class DataBase {
         checkSQL(create);
     }
 
-    void createUtvonalakTable() throws SQLException {
-        PreparedStatement create = db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS utvonalak("
-                        + "id INTEGER PRIMARY KEY AUTOINCREMENT      ,"
-                        + "jaratSzam          text             ,"
-                        + "allomasok          text)");
-        checkSQL(create);
-        System.out.println("createUtavonalakTable Complete.");
-    }
-
     void dropTable() throws SQLException {
         PreparedStatement create = db.prepareStatement("DROP TABLE utasok");
         create.execute();
@@ -95,44 +92,24 @@ public class DataBase {
         }
     }
 
-    public void postUtvonal34(String jaratSzam) throws SQLException {
+    List<Allomas> getAllomasokLista(String jaratSzam) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
+        JSONArray jarat34 = (JSONArray) jaratok.get(jaratSzam);
 
-        ArrayList<String> allomasok34 = new ArrayList<>();
-        allomasok34.add("Békásmegyer, Újmegyeri tér");
-        allomasok34.add("Hadrianus utca");
-        allomasok34.add("Madzsar József utca / Hadrianus utca");
-        allomasok34.add("Szolgáltatóház");
-        allomasok34.add("Békásmegyer H");
-        allomasok34.add("Madzsar József utca / Pünkösdfürdő utca");
-        allomasok34.add("Medgyessy Ferenc utca");
-        allomasok34.add("Boglár utca");
-        allomasok34.add("Pünkösdfürdő");
+        List<Allomas> allomasok = new ArrayList<>();
+        JSONObject megallo;
 
-        String var1 = jaratSzam;
-        for (String allomas : allomasok34) {
-            PreparedStatement posted = db.prepareStatement(
-                    "INSERT INTO utvonalak "
-                            + "("
-                            + "jaratSzam,"
-                            + "allomasok"
-                            + ") "
-                            + "VALUES (?,?)");
-            posted.setString(1, var1);
-            posted.setString(2, allomas);
-            posted.executeUpdate();
-            System.out.println("Allomasokkal feltolve");
+        for (Object megallo_obj : jarat34) {
+            megallo = (JSONObject) megallo_obj;
+            allomasok.add(new Allomas(
+                    (String) megallo.get("name"),
+                    ((Long) megallo.get("x")).doubleValue(),
+                    ((Long) megallo.get("y")).doubleValue()
+            ));
         }
-    }
 
-    List<String> getAllomasokLista(String jaratSzam) throws SQLException {
-        List<String> allomasokLista = new ArrayList<>();
-        PreparedStatement statement = db.prepareStatement("SELECT * FROM utvonalak where jaratSzam =" + jaratSzam);
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            String eredmeny = result.getString("allomasok");
-            allomasokLista.add(eredmeny);
-        }
-        return allomasokLista;
+        return allomasok;
     }
 
     int countTableSize(String tableName) throws SQLException {

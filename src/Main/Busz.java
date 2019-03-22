@@ -1,42 +1,73 @@
 package Main;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class Busz {
 
-    String buszJaratSzam;
-    String buszAktualisMegallo;
     int buszJegyAr;
-    int buszKapacitas;
-    int buszSzabadHelyekSzama;
     boolean buszElsoAjtose;
     int buszBuntetesekSzama;
-
     DataBase dataBase = new DataBase();
+    private String buszJaratSzam;
+    private int buszKapacitas;
+    private int buszSzabadHelyekSzama;
+    private List<Allomas> allomasok;
+    private Allomas aktualisAllomas;
+    private ListIterator<Allomas> hatralevo_allomasok;
+    private int allomas_index;
 
-    public Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException {
+    public Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
-        buszSzabadHelyekSzama = buszKapacitas;
-
+        this.buszSzabadHelyekSzama = buszKapacitas;
+        this.allomasok = dataBase.getAllomasokLista(buszJaratSzam);
+        buszAStartPoziciora();
     }
 
-    void buszKozlekedik() throws SQLException, InterruptedException {
-        List<String> allomasok = dataBase.getAllomasokLista("134");
+    void buszAStartPoziciora() {
+        hatralevo_allomasok = this.allomasok.listIterator();
+        allomas_index = 0;
+        aktualisAllomas = hatralevo_allomasok.next();
+        printState();
+    }
+
+    Allomas getAktualisAllomas() {
+        return aktualisAllomas;
+    }
+
+    List<Allomas> getAllomasok() {
+        return allomasok;
+    }
+
+    private void printState() {
+        System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomas_index + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
+    }
+
+    boolean kovetkezoMegallo() throws SQLException {
+        aktualisAllomas = hatralevo_allomasok.next();
+        allomas_index++;
+        printState();
+
         Random r = new Random();
-        for (int i = 0; i < allomasok.size(); i++) {
-            int rand = r.nextInt(10);
-            buszAktualisMegallo = allomasok.get(i);
-            System.out.println("----------------------------Busz aktuális megállója:(" + i + ") " + buszAktualisMegallo + "----------------------------");
-            buszFelszallUtas(rand);
-            System.out.println("buszSzabadhelyekszama " + getBuszSzabadHelyekSzama());
-            buszEllenorzes();
-            Thread.sleep(5000 / allomasok.size());
+        buszFelszallUtas(r.nextInt(10));
+        System.out.println("buszSzabadhelyekszama " + getBuszSzabadHelyekSzama());
+
+        buszEllenorzes();
+
+        if (!hatralevo_allomasok.hasNext()) {
+            buszLeszallOsszesUtas();
+
+            return false;
         }
-        buszLeszallOsszesUtas();
+
+        return true;
     }
 
     void buszFelszallUtas(int buszMennyiUtas) throws SQLException {
