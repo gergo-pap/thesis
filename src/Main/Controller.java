@@ -96,13 +96,12 @@ public class Controller extends Application {
                 }
             }
         });
+        pathTransition.play();
 
         Group group = new Group(imageViewMap, imageViewBusz);
         Scene scene = new Scene(group, maxWidth, maxHeight);
         stage.setScene(scene);
-
         stage.show();
-        pathTransition.play();
     }
 
     void nyomasAKovetkezoMegalloba() throws SQLException {
