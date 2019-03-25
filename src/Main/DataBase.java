@@ -100,8 +100,8 @@ public class DataBase {
         List<Allomas> allomasok = new ArrayList<>();
         JSONObject megallo;
 
-        for (Object megallo_obj : jarat34) {
-            megallo = (JSONObject) megallo_obj;
+        for (Object megalloObj : jarat34) {
+            megallo = (JSONObject) megalloObj;
             allomasok.add(new Allomas(
                     (String) megallo.get("name"),
                     ((Long) megallo.get("x")).doubleValue(),
