@@ -4,9 +4,6 @@ import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -18,57 +15,22 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class Controller extends Application {
+public class MainController {
+    public ImageView imageViewBusz;
+    public ImageView imageViewMap;
     private Busz busz;
     private PathTransition pathTransition;
 
-    public Controller() throws ClassNotFoundException, SQLException, ParseException, IOException {
+    public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
         this.busz = new Busz("34", 100);
+        this.pathTransition = new PathTransition();
     }
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
-    public void buszKozlekedik(Path path, PathTransition pathTransition) throws SQLException, InterruptedException {
-        while (true) {
-            Allomas elozoAllomas = busz.getAktualisAllomas();
-            boolean vegallomasraErt = busz.kovetkezoMegallo();
-
-            path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
-            path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
-            pathTransition.play();
-            pathTransition.wait();
-
-            if (vegallomasraErt) {
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void start(Stage stage) throws InterruptedException {
-        int maxHeight = 800;
-        int maxWidth = 800;
-
-        Image imageBusz = new Image("bus2.png");
-        Image imageMap = new Image("map.jpg");
-
-        ImageView imageViewBusz = new ImageView();
-        imageViewBusz.setFitHeight(50);
-        imageViewBusz.setFitWidth(50);
-        imageViewBusz.setImage(imageBusz);
-
-        ImageView imageViewMap = new ImageView();
-        imageViewMap.setFitHeight(maxHeight);
-        imageViewMap.setFitWidth(maxWidth);
-        imageViewMap.setImage(imageMap);
-
+    public void initialize() {
         Path path = new Path();
         Allomas kezdoAllomas = busz.getAktualisAllomas();
         path.getElements().add(new MoveTo(kezdoAllomas.getX(), kezdoAllomas.getY()));
 
-        pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(1));
         pathTransition.setNode(imageViewBusz);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -86,11 +48,6 @@ public class Controller extends Application {
             }
         });
         pathTransition.play();
-
-        Group group = new Group(imageViewMap, imageViewBusz);
-        Scene scene = new Scene(group, maxWidth, maxHeight);
-        stage.setScene(scene);
-        stage.show();
     }
 
     void nyomasAKovetkezoMegalloba() throws SQLException {
