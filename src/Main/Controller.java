@@ -44,17 +44,6 @@ public class Controller extends Application {
                 break;
             }
         }
-
-//        int mennyiUtasTeszt = 85;
-//        DataBase dataBase = new DataBase();
-
-        //dataBase.createUtasokTable();
-        //dataBase.postUtasNumberOfTimes(mennyiUtasTeszt);
-
-        //dataBase.createUtvonalakTable();
-        //dataBase.postUtvonal34("134");
-//        System.out.println(dataBase.getAllomasokLista("134"));
-//        busz.buszKozlekedik();
     }
 
     @Override
