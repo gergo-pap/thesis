@@ -64,11 +64,16 @@ public class MainController {
         path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
         path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
 
-        pathTransition.setDuration(Duration.millis(500));
+        pathTransition.setDuration(Duration.millis(calculateDistance(busz.getAktualisAllomas().getX(),elozoAllomas.getX(),busz.getAktualisAllomas().getY(),elozoAllomas.getY())));
         pathTransition.setPath(path);
         labelAllomas.setVisible(true);
         labelAllomas.setText("" + busz.getAktualisAllomas().getName());
         pathTransition.play();
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void OnRestart(MouseEvent mouseEvent) throws SQLException {
@@ -87,5 +92,8 @@ public class MainController {
         imageViewBusz.setVisible(true);
         autoPlay = false;
         nyomasAKovetkezoMegalloba();
+    }
+    public int calculateDistance(double X1, double X2, double Y1, double Y2){
+       return (int)Math.sqrt(Math.pow(2,(X2-X1))+Math.pow(2,(Y2-Y1)))*10000;
     }
 }
