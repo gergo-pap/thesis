@@ -3,6 +3,7 @@ package Main;
 import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.LineTo;
@@ -17,12 +18,18 @@ import java.sql.SQLException;
 public class MainController {
     public ImageView imageViewBusz;
     public ImageView imageViewMap;
+    public static Label labelAllomas;
+    public static Label labelSzabadhelyekSzama;
+    public static Label labelEsemenyek;
+    public static Label labelBuntetesek;
+    public static Label labelLeszallutasok;
+    public static Label labelFelszallutasok;
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;
 
     public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
-        busz = new Busz("34", 100);
+        busz = new Busz("134", 100);
         autoPlay = false;
 
         pathTransition = new PathTransition();
@@ -46,7 +53,7 @@ public class MainController {
         pathTransition.setNode(imageViewBusz);
     }
 
-    void nyomasAKovetkezoMegalloba() throws SQLException {
+    private void nyomasAKovetkezoMegalloba() throws SQLException {
         Allomas elozoAllomas = busz.getAktualisAllomas();
         boolean utonVan = busz.kovetkezoMegallo();
         if (!utonVan) {
@@ -59,10 +66,13 @@ public class MainController {
 
         pathTransition.setDuration(Duration.millis(500));
         pathTransition.setPath(path);
+        labelAllomas.setVisible(true);
+        labelAllomas.setText("" + busz.getAktualisAllomas().getName());
         pathTransition.play();
     }
 
     public void OnRestart(MouseEvent mouseEvent) throws SQLException {
+
         busz.buszAStartPoziciora();
         Allomas kezdoAllomas = busz.getAktualisAllomas();
         imageViewBusz.setX(kezdoAllomas.getX());
@@ -74,6 +84,7 @@ public class MainController {
     }
 
     public void OnStepByStep(MouseEvent mouseEvent) throws SQLException {
+        imageViewBusz.setVisible(true);
         autoPlay = false;
         nyomasAKovetkezoMegalloba();
     }

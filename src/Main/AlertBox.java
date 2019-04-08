@@ -15,14 +15,13 @@ public class AlertBox {
     public static void display(String title, String message) {
         final Stage window = new Stage();
 
-        //Block events to other windows
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
-                System.exit(1);
+                windowEvent.consume();
             }
         });
         Label label = new Label();

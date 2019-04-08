@@ -11,9 +11,6 @@ import java.util.Random;
 
 public class Busz {
 
-    int buszJegyAr;
-    boolean buszElsoAjtose;
-    int buszBuntetesekSzama;
     DataBase dataBase = new DataBase();
     private String buszJaratSzam;
     private int buszKapacitas;
@@ -23,7 +20,8 @@ public class Busz {
     private ListIterator<Allomas> hatralevoAllomasok;
     private int allomasIndex;
 
-    public Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
+
+    Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
         this.buszSzabadHelyekSzama = buszKapacitas;
@@ -39,14 +37,18 @@ public class Busz {
     }
 
     Allomas getAktualisAllomas() {
+
         return aktualisAllomas;
     }
 
     private void printState() {
+        //MainController.labelAllomas.setText("" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName());
         System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
     }
 
     boolean kovetkezoMegallo() throws SQLException {
+        Random r = new Random();
+
         if (!hatralevoAllomasok.hasNext()) {
             buszLeszallOsszesUtas();
 
@@ -57,16 +59,19 @@ public class Busz {
         allomasIndex++;
         printState();
 
-        Random r = new Random();
-        buszFelszallUtas(r.nextInt(10));
-        System.out.println("buszSzabadhelyekszama " + getBuszSzabadHelyekSzama());
+        buszLeszallUtas(r.nextInt(6));
 
+        buszFelszallUtas(r.nextInt(10));
+        MainController.labelSzabadhelyekSzama.setVisible(true);
+        MainController.labelSzabadhelyekSzama.setText("Busz szabad helyek száma: " + buszSzabadHelyekSzama);
         buszEllenorzes();
 
         return true;
     }
 
     void buszFelszallUtas(int buszMennyiUtas) throws SQLException {
+        MainController.labelFelszallutasok.setText("Felszállt utasok száma: " + buszMennyiUtas);
+        MainController.labelFelszallutasok.setVisible(true);
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
@@ -81,9 +86,7 @@ public class Busz {
                 } else {
                     nemTudtakFelszallniLista.add(dataBase.getAnything("int", j, "id"));
                 }
-                if (i == buszMennyiUtas) { //>=
-                    //System.out.println("--Buszra felszállt utasok száma: " + buszMennyiUtas + "--");
-                    //System.out.print("Nem tudtak felszallni: ");
+                if (i == buszMennyiUtas) {
                     for (Integer intek : nemTudtakFelszallniLista) {
                         System.out.print(intek + ", ");
                     }
@@ -97,42 +100,40 @@ public class Busz {
     void felszallBerlettel(int j) throws SQLException {
         dataBase.setAnything("boolean", j, "utasUtazikE", "true");
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
-        //System.out.println("--felszállt,bérlet--" + j);
     }
 
     void felszallJeggyel(int j) throws SQLException {
         dataBase.setAnything("boolean", j, "utasVanEJegye", "false");
         dataBase.setAnything("boolean", j, "utasUtazikE", "true");
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
-        //System.out.println("--felszáll, jegy--" + j);
     }
 
-    public void buszLeszallOsszesUtas() throws SQLException {
+    private void buszLeszallOsszesUtas() throws SQLException {
 
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
             leszallUtas(j);
         }
-        System.out.println("Leszállt minden utas");
+        MainController.labelEsemenyek.setVisible(true);
+        MainController.labelEsemenyek.setText("Leszállt minden utas");
     }
 
     void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
+        MainController.labelLeszallutasok.setText("Felszállt utasok száma: " + buszMennyiUtas);
+        MainController.labelLeszallutasok.setVisible(true);
         int i = 0;
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
             if (i == buszMennyiUtas) {
-                //System.out.println("lezállt ennyi utas: " + i);
                 return;
             } else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {
                 leszallUtas(j);
                 i++;
             } else {
-                //System.out.println("Üres a busz, vagy az utas nem utazik: " + dataBase.getAnything("string", j, "id"));
             }
         }
     }
 
     void leszallUtas(int j) throws SQLException {
         dataBase.setAnything("boolean", j, "utasUtazikE", "false");
-        //System.out.println("Leszállt az utas: " + dataBase.getAnything("string", j, "id"));
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() + 1);
     }
 
@@ -152,19 +153,25 @@ public class Busz {
                 }
             }
         }
-        System.out.println(buntetesekSzama + " büntetés volt a buszon");
+        MainController.labelBuntetesek.setVisible(true);
+        MainController.labelBuntetesek.setText(buntetesekSzama + " büntetés volt a buszon");
+
     }
 
 
     void buszJegyetElhasznal(int i) throws SQLException {
         dataBase.setAnything("boolean", i, "utasVanEJegye", "false");
-        System.out.println(dataBase.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
+        MainController.labelEsemenyek.setVisible(true);
+        MainController.labelEsemenyek.setText(dataBase.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
+
     }
 
     void buszJegyetVesz(int i) throws SQLException {
         dataBase.setNewIntValue(i, "utasEgyenleg", "450", "-");
         dataBase.setAnything("boolean", i, "utasVanEJegye", "true");
-        System.out.println(dataBase.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá");
+        MainController.labelEsemenyek.setVisible(true);
+        MainController.labelEsemenyek.setText(dataBase.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá");
+
     }
 
     int getBuszSzabadHelyekSzama() {

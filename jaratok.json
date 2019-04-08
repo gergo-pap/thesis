@@ -1,114 +1,99 @@
 {
-  "34": [
+  "134": [
     {
       "name": "Békásmegyer, Újmegyeri tér",
-      "x":  453,
-      "y":  161
+      "x":    550,
+      "y":    90
     },
     {
-      "name": "Hadrianus utca",
-      "x":  438,
-      "y":  202
+      "name": "Bálint György utca",
+      "x":    545,
+      "y":    113
     },
     {
-      "name": "Madzsar József utca / Hadrianus utca",
-      "x":  424,
-      "y":  200
+      "name": "Hatvany Lajos utca / Juhász Gyula utca",
+      "x":    533,
+      "y":    138
     },
     {
-      "name": "Szolgáltatóház",
-      "x":  406,
-      "y":  199
+      "name": "Hímző utca",
+      "x":    504,
+      "y":    137
     },
     {
       "name": "Békásmegyer H",
-      "x":  400,
-      "y":  215
+      "x":    490,
+      "y":    135
     },
     {
       "name": "Madzsar József utca / Pünkösdfürdő utca",
-      "x":  400,
-      "y":  215
+      "x":    470,
+      "y":    157
     },
     {
-      "name": "Medgyessy Ferenc utca",
-      "x":  399,
-      "y":  214
+      "name": "Szent István utca",
+      "x":    450,
+      "y":    191
     },
     {
-      "name": "Boglár utca",
-      "x":  393,
-      "y":  230
+      "name": "Csillaghegy H",
+      "x":    434,
+      "y":    235
     },
     {
-      "name": "Pünkösdfürdő",
-      "x":  389,
-      "y":  275
+      "name": "Bercsényi utca",
+      "x":    463,
+      "y":    239
     },
     {
-      "name": "Sinkovits Imre utca",
-      "x":  410,
-      "y":  279
+      "name": "Hunyadi utca",
+      "x":    488,
+      "y":    242
     },
     {
-      "name": "Mátyás király út",
-      "x":  402,
-      "y":  301
+      "name": "Huba utca",
+      "x":    480,
+      "y":    270
     },
     {
-      "name": "Szamos utca",
-      "x":  396,
-      "y":  315
+      "name": "Attila utca",
+      "x":    470,
+      "y":    290
     },
     {
-      "name": "Szent János utca",
-      "x":  386,
-      "y":  318
-    },
-    {
-      "name": "Nimród utca",
-      "x":  380,
-      "y":  339
-    },
-    {
-      "name": "Dósa utca",
-      "x":  378,
-      "y":  375
-    },
-    {
-      "name": "Rómaifürdő H",
-      "x":  382,
-      "y":  392
-    },
-    {
-      "name": "Római tér",
-      "x":  376,
-      "y":  424
+      "name": "Czetz János köz",
+      "x":    452,
+      "y":    292
     },
     {
       "name": "Aquincum H",
-      "x":  367,
-      "y":  456
+      "x":    445,
+      "y":    393
     },
     {
       "name": "Záhony utca",
-      "x":  359,
-      "y":  500
+      "x":    434,
+      "y":    449
     },
     {
       "name": "Kaszásdűlő H",
-      "x":  353,
-      "y":  532
+      "x":    425,
+      "y":    489
     },
     {
       "name": "Bogdáni út",
-      "x":  351,
-      "y":  546
+      "x":    409,
+      "y":    560
     },
     {
       "name": "Raktár utca",
-      "x":  366,
-      "y":  566
+      "x":    404,
+      "y":    593
+    },
+    {
+      "name": "Szentlélek tér H",
+      "x":    426,
+      "y":    633
     }
   ]
 }
