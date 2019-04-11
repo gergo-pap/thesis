@@ -11,26 +11,26 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainController {
-    public ImageView imageViewBusz;
-    public ImageView imageViewMap;
     public static Label labelAllomas;
     public static Label labelSzabadhelyekSzama;
     public static Label labelEsemenyek;
     public static Label labelBuntetesek;
     public static Label labelLeszallutasok;
     public static Label labelFelszallutasok;
+    public ImageView imageViewBusz;
+    public ImageView imageViewMap;
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;
 
     public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
-        busz = new Busz("134", 100);
+
         autoPlay = false;
+        busz = new Busz("134", 100);
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -64,8 +64,8 @@ public class MainController {
         path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
         path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
 
-
-        pathTransition.setDuration(Duration.millis(calculateDistance(busz.getAktualisAllomas().getX(),elozoAllomas.getX(),busz.getAktualisAllomas().getY(),elozoAllomas.getY())));
+        double distance = Math.hypot(busz.getAktualisAllomas().getX() - elozoAllomas.getX(), busz.getAktualisAllomas().getY() - elozoAllomas.getY() * 10);
+        pathTransition.setDuration(Duration.millis(distance)); //calculateDistance(busz.getAktualisAllomas().getX(),elozoAllomas.getX(),busz.getAktualisAllomas().getY(),elozoAllomas.getY()))
         pathTransition.setPath(path);
         labelAllomas.setVisible(true);
         labelAllomas.setText("" + busz.getAktualisAllomas().getName());
@@ -94,4 +94,5 @@ public class MainController {
         autoPlay = false;
         nyomasAKovetkezoMegalloba();
     }
+
 }

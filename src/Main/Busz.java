@@ -33,7 +33,6 @@ public class Busz {
         hatralevoAllomasok = this.allomasok.listIterator();
         allomasIndex = 0;
         aktualisAllomas = hatralevoAllomasok.next();
-        printState();
     }
 
     Allomas getAktualisAllomas() {
@@ -41,10 +40,6 @@ public class Busz {
         return aktualisAllomas;
     }
 
-    private void printState() {
-        //MainController.labelAllomas.setText("" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName());
-        System.out.println("----------------------------" + this.buszJaratSzam + " busz aktuális megállója:(" + allomasIndex + ") " + aktualisAllomas.getName() + " [" + aktualisAllomas.getX() + ", " + aktualisAllomas.getY() + "]----------------------------");
-    }
 
     boolean kovetkezoMegallo() throws SQLException {
         Random r = new Random();
@@ -57,7 +52,6 @@ public class Busz {
 
         aktualisAllomas = hatralevoAllomasok.next();
         allomasIndex++;
-        printState();
 
         buszLeszallUtas(r.nextInt(6));
 
@@ -118,7 +112,7 @@ public class Busz {
     }
 
     void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
-        MainController.labelLeszallutasok.setText("Felszállt utasok száma: " + buszMennyiUtas);
+        MainController.labelLeszallutasok.setText("Leszállt utasok száma: " + buszMennyiUtas);
         MainController.labelLeszallutasok.setVisible(true);
         int i = 0;
         for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
