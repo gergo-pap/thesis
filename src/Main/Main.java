@@ -14,13 +14,19 @@ import java.sql.SQLException;
 
 public class Main extends Application {
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) {
+
         Application.launch(args);
 
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+        DataBase dataBase = new DataBase();
+        dataBase.createUtasokTable();
+        if (dataBase.countTableSize() < 100) {
+            dataBase.postUtasNumberOfTimes(100);
+        }
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

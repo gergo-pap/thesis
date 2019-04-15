@@ -12,13 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+
 public class DataBase {
+
+
+
+    public void setDb(Connection db) {
+        this.db = db;
+    }
+
+    private int utaskorMin = 15;
+    private int utaskorMax = 99;
+    private int utasEgyenlegMax = 50000;
+    private int utasJegy = 50;
+    private int utasBerlet = 85;
 
     private Connection db;
 
+
+    
     DataBase() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
-        String url = "jdbc:sqlite:test.db";
+        String url = "jdbc:sqlite:utasok.db";
 
         Class.forName(driver);
         db = DriverManager.getConnection(url);
@@ -37,6 +53,34 @@ public class DataBase {
     private static boolean randomPercent(int percentage) {
         Random rand = new Random();
         return (rand.nextInt(100) < percentage);
+    }
+
+    void deleteOneRow(int i) throws SQLException {
+        PreparedStatement st = db.prepareStatement("DELETE FROM utasok WHERE id = ?");
+        st.setInt(1, i);
+        checkSQL(st);
+    }
+
+    void deleteAllRows() throws SQLException {
+        for (int i = 1; i < countTableSize() + 1; i++) {
+            deleteOneRow(i);
+        }
+    }
+
+    public void refreshAllRow(int utasKorTol, int utasKorIg, int utasEgyenlegIg, int utasVanEBerletePercent, int utasVanEJegyePercent) throws SQLException {
+        db.close();
+        for (int i = 1; i < countTableSize(); i++) {
+            Random r = new Random();
+            PreparedStatement posted = db.prepareStatement("UPDATE utasok SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? WHERE id =" + i);
+
+            posted.setString(1, NameGenerator());
+            posted.setInt(2, r.nextInt((utasKorIg - utasKorTol) + 1) + utasKorTol);
+            posted.setInt(3, r.nextInt(utasEgyenlegIg));
+            posted.setBoolean(4, randomPercent(utasVanEBerletePercent));
+            posted.setBoolean(5, randomPercent(utasVanEJegyePercent));
+            posted.setBoolean(6, false);
+            checkSQL(posted);
+        }
     }
 
     public void createUtasokTable() throws SQLException {
@@ -67,10 +111,10 @@ public class DataBase {
                         + "VALUES (?,?,?,?,?,?)");
 
         posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((99 - 15) + 1) + 15);
-        posted.setInt(3, r.nextInt(50000));
-        posted.setBoolean(4, randomPercent(85));
-        posted.setBoolean(5, randomPercent(50));
+        posted.setInt(2, r.nextInt((utaskorMax - utaskorMin) + 1) + utaskorMin);
+        posted.setInt(3, r.nextInt(utasEgyenlegMax));
+        posted.setBoolean(4, randomPercent(utasBerlet));
+        posted.setBoolean(5, randomPercent(utasJegy));
         posted.setBoolean(6, false);
         checkSQL(posted);
     }
@@ -101,8 +145,8 @@ public class DataBase {
         return allomasok;
     }
 
-    int countTableSize(String tableName) throws SQLException {
-        PreparedStatement create = db.prepareStatement("SELECT COUNT(*) FROM " + tableName);
+    int countTableSize() throws SQLException {
+        PreparedStatement create = db.prepareStatement("SELECT COUNT(*) FROM utasok");
         ResultSet result = create.executeQuery();
         if (result.next()) {
         }
@@ -183,5 +227,47 @@ public class DataBase {
         return Beginning[rand.nextInt(Beginning.length)] + " " +
                 Middle[rand.nextInt(Middle.length)];
     }
+    public int getUtaskorMin() {
+        return utaskorMin;
+    }
 
+    public void setUtaskorMin(int utaskorMin) {
+        this.utaskorMin = utaskorMin;
+    }
+
+    public int getUtaskorMax() {
+        return utaskorMax;
+    }
+
+    public void setUtaskorMax(int utaskorMax) {
+        this.utaskorMax = utaskorMax;
+    }
+
+    public int getUtasEgyenlegMax() {
+        return utasEgyenlegMax;
+    }
+
+    public void setUtasEgyenlegMax(int utasEgyenlegMax) {
+        this.utasEgyenlegMax = utasEgyenlegMax;
+    }
+
+    public int getUtasJegy() {
+        return utasJegy;
+    }
+
+    public void setUtasJegy(int utasJegy) {
+        this.utasJegy = utasJegy;
+    }
+
+    public int getUtasBerlet() {
+        return utasBerlet;
+    }
+
+    public void setUtasBerlet(int utasBerlet) {
+        this.utasBerlet = utasBerlet;
+    }
+
+    public Connection getDb() {
+        return db;
+    }
 }

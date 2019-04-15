@@ -68,7 +68,7 @@ public class Busz {
         MainController.labelFelszallutasok.setVisible(true);
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
-        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+        for (int j = 1; j <= dataBase.countTableSize(); j++) {
             if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0) {
             } else {
                 if (getBuszSzabadHelyekSzama() > 0 && dataBase.getAnything("boolean", j, "utasVanEBerlete") == 1) {
@@ -104,7 +104,7 @@ public class Busz {
 
     private void buszLeszallOsszesUtas() throws SQLException {
 
-        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+        for (int j = 1; j <= dataBase.countTableSize(); j++) {
             leszallUtas(j);
         }
         MainController.labelEsemenyek.setVisible(true);
@@ -115,7 +115,7 @@ public class Busz {
         MainController.labelLeszallutasok.setText("Leszállt utasok száma: " + buszMennyiUtas);
         MainController.labelLeszallutasok.setVisible(true);
         int i = 0;
-        for (int j = 1; j <= dataBase.countTableSize("utasok"); j++) {
+        for (int j = 1; j <= dataBase.countTableSize(); j++) {
             if (i == buszMennyiUtas) {
                 return;
             } else if (dataBase.getAnything("boolean", j, "utasUtazikE") == 1) {

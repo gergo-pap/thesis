@@ -1,16 +1,22 @@
 package Main;
 
 import javafx.animation.PathTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -65,7 +71,7 @@ public class MainController {
         path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
 
         double distance = Math.hypot(busz.getAktualisAllomas().getX() - elozoAllomas.getX(), busz.getAktualisAllomas().getY() - elozoAllomas.getY() * 10);
-        pathTransition.setDuration(Duration.millis(distance)); //calculateDistance(busz.getAktualisAllomas().getX(),elozoAllomas.getX(),busz.getAktualisAllomas().getY(),elozoAllomas.getY()))
+        pathTransition.setDuration(Duration.millis(distance));
         pathTransition.setPath(path);
         labelAllomas.setVisible(true);
         labelAllomas.setText("" + busz.getAktualisAllomas().getName());
@@ -95,4 +101,22 @@ public class MainController {
         nyomasAKovetkezoMegalloba();
     }
 
+    public void optionsSceneButotn(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
+
+        DataBase dataBase = new DataBase();
+        dataBase.refreshAllRow(200, 200, 10, 100, 0);
+    }
+
+    public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("beallitasok.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    public void kilepesMenuClicked(ActionEvent actionEvent) {
+        Platform.exit();
+
+    }
 }
