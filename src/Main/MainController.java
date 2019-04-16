@@ -21,12 +21,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainController {
-    public static Label labelAllomas;
-    public static Label labelSzabadhelyekSzama;
-    public static Label labelEsemenyek;
-    public static Label labelBuntetesek;
-    public static Label labelLeszallutasok;
-    public static Label labelFelszallutasok;
+
+
+    public Label labelAllomas;
+    public Label labelSzabadhelyekSzama;
+    public Label labelEsemenyek;
+    public Label labelBuntetesek;
+    public Label labelLeszallutasok;
+    public Label labelFelszallutasok;
     public ImageView imageViewBusz;
     public ImageView imageViewMap;
     private Busz busz;
@@ -48,7 +50,7 @@ public class MainController {
                     if (autoPlay) {
                         nyomasAKovetkezoMegalloba();
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -59,7 +61,7 @@ public class MainController {
         pathTransition.setNode(imageViewBusz);
     }
 
-    private void nyomasAKovetkezoMegalloba() throws SQLException {
+    private void nyomasAKovetkezoMegalloba() throws Exception {
         Allomas elozoAllomas = busz.getAktualisAllomas();
         boolean utonVan = busz.kovetkezoMegallo();
         if (!utonVan) {
@@ -83,7 +85,7 @@ public class MainController {
         }
     }
 
-    public void OnRestart(MouseEvent mouseEvent) throws SQLException {
+    public void OnRestart(MouseEvent mouseEvent) throws Exception {
 
         busz.buszAStartPoziciora();
         Allomas kezdoAllomas = busz.getAktualisAllomas();
@@ -95,7 +97,7 @@ public class MainController {
         nyomasAKovetkezoMegalloba();
     }
 
-    public void OnStepByStep(MouseEvent mouseEvent) throws SQLException {
+    public void OnStepByStep(MouseEvent mouseEvent) throws Exception {
         imageViewBusz.setVisible(true);
         autoPlay = false;
         nyomasAKovetkezoMegalloba();
@@ -118,5 +120,57 @@ public class MainController {
     public void kilepesMenuClicked(ActionEvent actionEvent) {
         Platform.exit();
 
+    }
+
+    public Label getLabelAllomas() {
+        return labelAllomas;
+    }
+
+    public void setLabelAllomas(Label labelAllomas) {
+        this.labelAllomas = labelAllomas;
+    }
+
+    public Label getLabelSzabadhelyekSzama() {
+        return labelSzabadhelyekSzama;
+    }
+
+    public void setLabelSzabadhelyekSzama(Label labelSzabadhelyekSzama) {
+        this.labelSzabadhelyekSzama = labelSzabadhelyekSzama;
+    }
+
+    public Label getLabelEsemenyek() {
+        return labelEsemenyek;
+    }
+
+    public void setLabelEsemenyek(Label labelEsemenyek) {
+        this.labelEsemenyek = labelEsemenyek;
+    }
+
+    public Label getLabelBuntetesek() {
+        return labelBuntetesek;
+    }
+
+    public void setLabelBuntetesek(Label labelBuntetesek) {
+        this.labelBuntetesek = labelBuntetesek;
+    }
+
+    public Label getLabelLeszallutasok() {
+        return labelLeszallutasok;
+    }
+
+    public void setLabelLeszallutasok(Label labelLeszallutasok) {
+        this.labelLeszallutasok = labelLeszallutasok;
+    }
+
+    public Label getLabelFelszallutasok() {
+        return labelFelszallutasok;
+    }
+
+    public void setLabelFelszallutasok(Label labelFelszallutasok) {
+        this.labelFelszallutasok = labelFelszallutasok;
+    }
+
+
+    public void restartMenuButtonClicked(ActionEvent actionEvent) {
     }
 }

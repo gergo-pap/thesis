@@ -9,13 +9,13 @@
       <Label layoutX="34.0" layoutY="68.0" />
       <Label layoutX="34.0" layoutY="107.0" text="Utaskor (max)" />
       <Label layoutX="34.0" layoutY="147.0" text="Utasegyenleg (ig)" />
-      <TextField fx:id="utaskorMinTF" layoutX="163.0" layoutY="61.0" />
-      <TextField fx:id="utaskorMaxTF" layoutX="163.0" layoutY="100.0" />
-      <TextField fx:id="utasEgyenlegIgTF" layoutX="163.0" layoutY="140.0" />
+      <TextField fx:id="utaskorMinTF" layoutX="163.0" layoutY="61.0" text="0" />
+      <TextField fx:id="utaskorMaxTF" layoutX="163.0" layoutY="100.0" text="0" />
+      <TextField fx:id="utasEgyenlegIgTF" layoutX="163.0" layoutY="140.0" text="0" />
       <Label layoutX="34.0" layoutY="192.0" text="Utas van-e jegye (%)" />
       <Label layoutX="34.0" layoutY="232.0" text="Utas van-e bérlete (%)" />
-      <TextField fx:id="utasJegyTF" layoutX="163.0" layoutY="185.0" />
-      <TextField fx:id="utasBerletTF" layoutX="163.0" layoutY="228.0" />
+      <TextField fx:id="utasJegyTF" layoutX="163.0" layoutY="185.0" text="0" />
+      <TextField fx:id="utasBerletTF" layoutX="163.0" layoutY="228.0" text="0" />
       <Label layoutX="34.0" layoutY="68.0" text="Utaskor (min)" />
    </children>
 </AnchorPane>

@@ -31,7 +31,7 @@ public class DataBase {
     private Connection db;
 
 
-    
+
     DataBase() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
@@ -227,9 +227,8 @@ public class DataBase {
         return Beginning[rand.nextInt(Beginning.length)] + " " +
                 Middle[rand.nextInt(Middle.length)];
     }
-    public int getUtaskorMin() {
-        return utaskorMin;
-    }
+
+    public int getUtaskorMin() {return utaskorMin;}
 
     public void setUtaskorMin(int utaskorMin) {
         this.utaskorMin = utaskorMin;

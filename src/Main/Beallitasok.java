@@ -1,9 +1,6 @@
 package Main;
 
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-
-import java.sql.SQLException;
 
 public class Beallitasok {
 
@@ -16,13 +13,18 @@ public class Beallitasok {
     private DataBase dataBase;
 
     public Beallitasok(){
+        getVariables();
+    }
+
+
+
+    private void getVariables(){
         utaskorMinTF.setText(""+dataBase.getUtaskorMin());
         utaskorMaxTF.setText(""+dataBase.getUtaskorMax());
         utasEgyenlegIgTF.setText(""+dataBase.getUtasEgyenlegMax());
         utasJegyTF.setText(""+dataBase.getUtasJegy());
         utasBerletTF.setText(""+dataBase.getUtasBerlet());
     }
-
 
 
 
