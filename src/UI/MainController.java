@@ -42,9 +42,6 @@ public class MainController {
     @FXML
     private ImageView imageViewBusz;
 
-    @FXML
-    private ImageView imageViewMap;
-
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;

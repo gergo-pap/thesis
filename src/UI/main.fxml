@@ -17,7 +17,7 @@
         <RowConstraints/>
     </rowConstraints>
     <Pane prefHeight="800.0" prefWidth="800.0">
-        <ImageView fx:id="imageViewMap" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true"
+        <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true"
                    preserveRatio="true">
             <Image url="@../map.png"/>
         </ImageView>
