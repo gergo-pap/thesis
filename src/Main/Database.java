@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class DataBase {
+public class Database {
     private int utasKorMin;
     private int utasKorMax;
     private int utasEgyenlegMax;
@@ -22,7 +22,7 @@ public class DataBase {
 
     private Connection db;
 
-    public DataBase() throws ClassNotFoundException, SQLException {
+    public Database() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
 

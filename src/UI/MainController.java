@@ -3,7 +3,7 @@ package UI;
 import Main.Allomas;
 import Main.Beallitasok;
 import Main.Busz;
-import Main.DataBase;
+import Main.Database;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -48,7 +48,7 @@ public class MainController {
     private ImageView imageViewBusz;
 
     private Beallitasok beallitasok;
-    private DataBase database;
+    private Database database;
 
     private Busz busz;
     private PathTransition pathTransition;
@@ -76,7 +76,7 @@ public class MainController {
         });
     }
 
-    public void initializeData(Beallitasok beallitasok, DataBase database) {
+    public void initializeData(Beallitasok beallitasok, Database database) {
         this.beallitasok = beallitasok;
         this.database = database;
     }

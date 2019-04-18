@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Busz {
 
-    DataBase dataBase = new DataBase();
+    Database dataBase = new Database();
     private String buszJaratSzam;
     private int buszKapacitas;
     private int buszSzabadHelyekSzama;

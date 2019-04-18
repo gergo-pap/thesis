@@ -1,7 +1,7 @@
 package UI;
 
 import Main.Beallitasok;
-import Main.DataBase;
+import Main.Database;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 public class BeallitasokController {
 
     private Beallitasok beallitasok;
-    private DataBase database;
+    private Database database;
 
     @FXML
     private TextField utasKorMinTF;
@@ -26,7 +26,7 @@ public class BeallitasokController {
     @FXML
     private TextField utasBerletTF;
 
-    public void initializeData(Beallitasok beallitasok, DataBase database) {
+    public void initializeData(Beallitasok beallitasok, Database database) {
         this.beallitasok = beallitasok;
         this.database = database;
 

@@ -26,7 +26,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         Beallitasok beallitasok = new Beallitasok();
 
-        DataBase dataBase = new DataBase();
+        Database dataBase = new Database();
         dataBase.loadSettings(beallitasok);
 
         dataBase.createUtasokTable();
