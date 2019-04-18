@@ -13,24 +13,15 @@ import java.util.List;
 import java.util.Random;
 
 
-
 public class DataBase {
 
-
-
-    public void setDb(Connection db) {
-        this.db = db;
-    }
 
     private int utaskorMin = 15;
     private int utaskorMax = 99;
     private int utasEgyenlegMax = 50000;
     private int utasJegy = 50;
     private int utasBerlet = 85;
-
     private Connection db;
-
-
 
     public DataBase() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
@@ -228,7 +219,9 @@ public class DataBase {
                 Middle[rand.nextInt(Middle.length)];
     }
 
-    public int getUtaskorMin() {return this.utaskorMin;}
+    public int getUtaskorMin() {
+        return this.utaskorMin;
+    }
 
     public void setUtaskorMin(int utaskorMin) {
         this.utaskorMin = utaskorMin;
@@ -268,5 +261,9 @@ public class DataBase {
 
     public Connection getDb() {
         return this.db;
+    }
+
+    public void setDb(Connection db) {
+        this.db = db;
     }
 }

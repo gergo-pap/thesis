@@ -37,7 +37,7 @@ public class MainController {
     public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
 
         autoPlay = false;
-        busz = new Busz(this,"134", 100);
+        busz = new Busz(this, "134", 100);
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -83,7 +83,6 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
 
 
     public void OnStepByStep(MouseEvent mouseEvent) throws Exception {
@@ -167,7 +166,6 @@ public class MainController {
     public void setLabelFelszallutasok(Label labelFelszallutasok) {
         this.labelFelszallutasok = labelFelszallutasok;
     }
-
 
 
 }

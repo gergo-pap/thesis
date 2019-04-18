@@ -23,7 +23,6 @@ public class Busz {
     private MainController m;
 
 
-
     public Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.m = m;
         this.buszJaratSzam = buszJaratSzam;

@@ -29,7 +29,7 @@ public class BeallitasokController {
     public void showBeallitasok() throws IOException, SQLException, ClassNotFoundException, ParseException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.beallitasok.fxml"));
         fxmlLoader.setController(new MainController());
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));
         stage.show();
@@ -53,7 +53,6 @@ public class BeallitasokController {
         dataBase.setUtasJegy(Integer.parseInt(this.utasJegyTF.getText()));
         dataBase.setUtasBerlet(Integer.parseInt(this.utasBerletTF.getText()));
     }
-
 
 
 }
