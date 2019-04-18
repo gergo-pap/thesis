@@ -39,6 +39,7 @@ public class MainController {
 
         autoPlay = false;
         busz = new Busz("134", 100);
+        busz.m = this;
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -85,17 +86,7 @@ public class MainController {
         }
     }
 
-    public void OnRestart(MouseEvent mouseEvent) throws Exception {
 
-        busz.buszAStartPoziciora();
-        Allomas kezdoAllomas = busz.getAktualisAllomas();
-        imageViewBusz.setX(kezdoAllomas.getX());
-        imageViewBusz.setY(kezdoAllomas.getY());
-        imageViewBusz.setVisible(true);
-
-        autoPlay = true;
-        nyomasAKovetkezoMegalloba();
-    }
 
     public void OnStepByStep(MouseEvent mouseEvent) throws Exception {
         imageViewBusz.setVisible(true);
@@ -105,8 +96,7 @@ public class MainController {
 
     public void optionsSceneButotn(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
 
-        DataBase dataBase = new DataBase();
-        dataBase.refreshAllRow(200, 200, 10, 100, 0);
+
     }
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException{
@@ -120,6 +110,22 @@ public class MainController {
     public void kilepesMenuClicked(ActionEvent actionEvent) {
         Platform.exit();
 
+    }
+
+    public void restartMenuButtonClicked(ActionEvent actionEvent) throws Exception {
+        busz.buszAStartPoziciora();
+        Allomas kezdoAllomas = busz.getAktualisAllomas();
+        imageViewBusz.setX(kezdoAllomas.getX());
+        imageViewBusz.setY(kezdoAllomas.getY());
+        imageViewBusz.setVisible(true);
+
+        autoPlay = true;
+        nyomasAKovetkezoMegalloba();
+    }
+
+    public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        DataBase dataBase = new DataBase();
+        dataBase.refreshAllRow(200, 200, 10, 100, 0);
     }
 
     public Label getLabelAllomas() {
@@ -171,6 +177,5 @@ public class MainController {
     }
 
 
-    public void restartMenuButtonClicked(ActionEvent actionEvent) {
-    }
+
 }

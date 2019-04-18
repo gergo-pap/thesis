@@ -34,8 +34,7 @@
                         <Image url="@../bus2.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="111.0" layoutY="133.0" mnemonicParsing="false" onMouseClicked="#OnRestart" prefHeight="25.0" prefWidth="82.0" text="Restart" />
-                <Button layoutX="111.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep" text="Step by step" />
+                <Button layoutX="25.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep" text="Step by step" />
                 <Label fx:id="labelAllomas" alignment="CENTER" layoutX="379.0" layoutY="37.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label">
                     <font>
                         <Font size="18.0" />
@@ -58,12 +57,12 @@
                 </Label>
                 <Label fx:id="labelLeszallutasok" layoutX="27.0" layoutY="696.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
                 <Label fx:id="labelFelszallutasok" layoutX="27.0" layoutY="672.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
-                <Button layoutX="126.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#optionsSceneButotn" text="Másik Scene" />
                 <MenuBar prefHeight="25.0" prefWidth="800.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
+                        <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
+                        <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />
                         <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Restart" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés" />
