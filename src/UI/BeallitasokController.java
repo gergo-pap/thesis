@@ -13,12 +13,11 @@ import java.sql.SQLException;
 
 public class BeallitasokController {
 
-    private TextField utasKorMinTF;
-    private TextField utasKorMaxTF;
-    private TextField utasEgyenlegIgTF;
-    private TextField utasJegyTF;
-    private TextField utasBerletTF;
-
+    public TextField utasKorMinTF;
+    public TextField utasKorMaxTF;
+    public TextField utasEgyenlegIgTF;
+    public TextField utasJegyTF;
+    public TextField utasBerletTF;
 
     public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
         showBeallitasok();
