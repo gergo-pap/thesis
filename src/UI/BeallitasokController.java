@@ -1,6 +1,7 @@
 package UI;
 
 import Main.DataBase;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,11 +14,20 @@ import java.sql.SQLException;
 
 public class BeallitasokController {
 
-    public TextField utasKorMinTF;
-    public TextField utasKorMaxTF;
-    public TextField utasEgyenlegIgTF;
-    public TextField utasJegyTF;
-    public TextField utasBerletTF;
+    @FXML
+    private TextField utasKorMinTF;
+
+    @FXML
+    private TextField utasKorMaxTF;
+
+    @FXML
+    private TextField utasEgyenlegIgTF;
+
+    @FXML
+    private TextField utasJegyTF;
+
+    @FXML
+    private TextField utasBerletTF;
 
     public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
         showBeallitasok();
