@@ -59,7 +59,7 @@
                 <Label fx:id="labelFelszallutasok" layoutX="27.0" layoutY="672.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
                 <MenuBar prefHeight="25.0" prefWidth="800.0">
                     <menus>
-                        <Menu mnemonicParsing="false" text="File">
+                        <Menu mnemonicParsing="false" text="Menü">
                             <items>
                         <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
                         <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />

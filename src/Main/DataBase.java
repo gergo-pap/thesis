@@ -228,14 +228,14 @@ public class DataBase {
                 Middle[rand.nextInt(Middle.length)];
     }
 
-    public int getUtaskorMin() {return utaskorMin;}
+    public int getUtaskorMin() {return this.utaskorMin;}
 
     public void setUtaskorMin(int utaskorMin) {
         this.utaskorMin = utaskorMin;
     }
 
     public int getUtaskorMax() {
-        return utaskorMax;
+        return this.utaskorMax;
     }
 
     public void setUtaskorMax(int utaskorMax) {
@@ -243,7 +243,7 @@ public class DataBase {
     }
 
     public int getUtasEgyenlegMax() {
-        return utasEgyenlegMax;
+        return this.utasEgyenlegMax;
     }
 
     public void setUtasEgyenlegMax(int utasEgyenlegMax) {
@@ -251,7 +251,7 @@ public class DataBase {
     }
 
     public int getUtasJegy() {
-        return utasJegy;
+        return this.utasJegy;
     }
 
     public void setUtasJegy(int utasJegy) {
@@ -259,7 +259,7 @@ public class DataBase {
     }
 
     public int getUtasBerlet() {
-        return utasBerlet;
+        return this.utasBerlet;
     }
 
     public void setUtasBerlet(int utasBerlet) {
@@ -267,6 +267,6 @@ public class DataBase {
     }
 
     public Connection getDb() {
-        return db;
+        return this.db;
     }
 }

@@ -2,6 +2,8 @@ package Main;
 
 import javafx.scene.control.TextField;
 
+import java.sql.SQLException;
+
 public class Beallitasok {
 
     public TextField utaskorMinTF;
@@ -12,18 +14,19 @@ public class Beallitasok {
 
     private DataBase dataBase;
 
-    public Beallitasok(){
+    public Beallitasok() throws SQLException, ClassNotFoundException {
         getVariables();
     }
 
 
 
-    private void getVariables(){
-        utaskorMinTF.setText(""+dataBase.getUtaskorMin());
-        utaskorMaxTF.setText(""+dataBase.getUtaskorMax());
-        utasEgyenlegIgTF.setText(""+dataBase.getUtasEgyenlegMax());
-        utasJegyTF.setText(""+dataBase.getUtasJegy());
-        utasBerletTF.setText(""+dataBase.getUtasBerlet());
+    private void getVariables() throws SQLException, ClassNotFoundException {
+        dataBase = new DataBase();
+        this.utaskorMinTF.setText(""+this.dataBase.getUtaskorMin());
+        this.utaskorMaxTF.setText(""+this.dataBase.getUtaskorMax());
+        this.utasEgyenlegIgTF.setText(""+this.dataBase.getUtasEgyenlegMax());
+        this.utasJegyTF.setText(""+this.dataBase.getUtasJegy());
+        this.utasBerletTF.setText(""+this.dataBase.getUtasBerlet());
     }
 
 

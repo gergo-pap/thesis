@@ -23,7 +23,7 @@ public class Busz {
 
 
 
-    Busz(String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
+    Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
         this.buszSzabadHelyekSzama = buszKapacitas;
@@ -47,6 +47,7 @@ public class Busz {
         Random r = new Random();
 
         if (!hatralevoAllomasok.hasNext()) {
+
             buszLeszallOsszesUtas();
 
             return false;

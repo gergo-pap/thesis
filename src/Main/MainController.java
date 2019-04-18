@@ -38,7 +38,7 @@ public class MainController {
     public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
 
         autoPlay = false;
-        busz = new Busz("134", 100);
+        busz = new Busz(this,"134", 100);
         busz.m = this;
 
         pathTransition = new PathTransition();
@@ -94,10 +94,6 @@ public class MainController {
         nyomasAKovetkezoMegalloba();
     }
 
-    public void optionsSceneButotn(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
-
-
-    }
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("beallitasok.fxml"));
