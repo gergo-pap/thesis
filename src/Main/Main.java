@@ -1,5 +1,6 @@
 package Main;
 
+import UI.AlertBox;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class Main extends Application {
         if (dataBase.countTableSize() < 100) {
             dataBase.postUtasNumberOfTimes(100);
         }
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../UI/main.fxml"));
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {

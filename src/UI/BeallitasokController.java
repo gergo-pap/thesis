@@ -1,5 +1,6 @@
-package Main;
+package UI;
 
+import Main.DataBase;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,7 +11,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class Beallitasok {
+public class BeallitasokController {
 
     private TextField utaskorMinTF;
     private TextField utaskorMaxTF;
@@ -19,7 +20,7 @@ public class Beallitasok {
     private TextField utasBerletTF;
 
 
-    public Beallitasok() throws IOException, ParseException, SQLException, ClassNotFoundException {
+    public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
         showBeallitasok();
         //utaskorMinTF.setText("sd");
         //getVariables();

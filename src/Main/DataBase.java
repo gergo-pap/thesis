@@ -32,7 +32,7 @@ public class DataBase {
 
 
 
-    DataBase() throws ClassNotFoundException, SQLException {
+    public DataBase() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
 

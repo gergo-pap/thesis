@@ -1,5 +1,6 @@
 package Main;
 
+import UI.MainController;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -19,11 +20,11 @@ public class Busz {
     private Allomas aktualisAllomas;
     private ListIterator<Allomas> hatralevoAllomasok;
     private int allomasIndex;
-     private MainController m;
+    private MainController m;
 
 
 
-    Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
+    public Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
         this.m = m;
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
@@ -32,19 +33,19 @@ public class Busz {
         buszAStartPoziciora();
     }
 
-    void buszAStartPoziciora() {
+    public void buszAStartPoziciora() {
         hatralevoAllomasok = this.allomasok.listIterator();
         allomasIndex = 0;
         aktualisAllomas = hatralevoAllomasok.next();
     }
 
-    Allomas getAktualisAllomas() {
+    public Allomas getAktualisAllomas() {
 
         return aktualisAllomas;
     }
 
 
-    boolean kovetkezoMegallo() throws Exception {
+    public boolean kovetkezoMegallo() throws Exception {
         Random r = new Random();
 
         if (!hatralevoAllomasok.hasNext()) {
@@ -66,7 +67,7 @@ public class Busz {
         return true;
     }
 
-    void buszFelszallUtas(int buszMennyiUtas) throws Exception {
+    public void buszFelszallUtas(int buszMennyiUtas) throws Exception {
         m.getLabelFelszallutasok().setText("Felszállt utasok száma: " + buszMennyiUtas);
         m.getLabelFelszallutasok().setVisible(true);
         int i = 0;
@@ -105,7 +106,7 @@ public class Busz {
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
     }
 
-    private void buszLeszallOsszesUtas() throws SQLException {
+    public void buszLeszallOsszesUtas() throws SQLException {
 
         for (int j = 1; j <= dataBase.countTableSize(); j++) {
             leszallUtas(j);
@@ -114,7 +115,7 @@ public class Busz {
         m.getLabelEsemenyek().setText("Leszállt minden utas");
     }
 
-    void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
+    public void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
         m.getLabelLeszallutasok().setText("Leszállt utasok száma: " + buszMennyiUtas);
         m.getLabelLeszallutasok().setVisible(true);
         int i = 0;
@@ -129,12 +130,12 @@ public class Busz {
         }
     }
 
-    void leszallUtas(int j) throws SQLException {
+    public void leszallUtas(int j) throws SQLException {
         dataBase.setAnything("boolean", j, "utasUtazikE", "false");
         setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() + 1);
     }
 
-    void buszEllenorzes() throws SQLException {
+    public void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
         for (int i = 1; i <= buszKapacitas - getBuszSzabadHelyekSzama(); i++) {
             if (dataBase.getAnything("boolean", i, "utasUtazikE") == 1 || dataBase.getAnything("boolean", i, "utasVanEBerlete") == 1) {
@@ -156,14 +157,14 @@ public class Busz {
     }
 
 
-    void buszJegyetElhasznal(int i) throws SQLException {
+    public void buszJegyetElhasznal(int i) throws SQLException {
         dataBase.setAnything("boolean", i, "utasVanEJegye", "false");
         m.getLabelEsemenyek().setVisible(true);
         m.getLabelEsemenyek().setText(dataBase.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
 
     }
 
-    void buszJegyetVesz(int i) throws SQLException {
+    public void buszJegyetVesz(int i) throws SQLException {
         dataBase.setNewIntValue(i, "utasEgyenleg", "450", "-");
         dataBase.setAnything("boolean", i, "utasVanEJegye", "true");
         m.getLabelEsemenyek().setVisible(true);
@@ -171,11 +172,11 @@ public class Busz {
 
     }
 
-    int getBuszSzabadHelyekSzama() {
+    public int getBuszSzabadHelyekSzama() {
         return buszSzabadHelyekSzama;
     }
 
-    void setBuszSzabadHelyekSzama(int buszSzabadHelyekSzama) {
+    public void setBuszSzabadHelyekSzama(int buszSzabadHelyekSzama) {
         this.buszSzabadHelyekSzama = buszSzabadHelyekSzama;
     }
 
