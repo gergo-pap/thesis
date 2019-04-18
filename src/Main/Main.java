@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException, ParseException {
         Beallitasok beallitasok = new Beallitasok();
 
         Database dataBase = new Database();
@@ -35,7 +36,7 @@ public class Main extends Application {
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/main.fxml"));
-        Parent root = loader.load();
+        Parent root = (Parent)loader.load();
 
         MainController controller = loader.getController();
         controller.initializeData(beallitasok, dataBase);

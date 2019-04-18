@@ -54,10 +54,9 @@ public class MainController {
     private PathTransition pathTransition;
     private boolean autoPlay;
 
-    public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
+    public MainController() {
 
         autoPlay = false;
-        busz = new Busz(this, "134", 100);
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -76,9 +75,11 @@ public class MainController {
         });
     }
 
-    public void initializeData(Beallitasok beallitasok, Database database) {
+    public void initializeData(Beallitasok beallitasok, Database database) throws ClassNotFoundException, SQLException, ParseException, IOException {
         this.beallitasok = beallitasok;
         this.database = database;
+
+        busz = new Busz(this.database, this, "134", 100);
     }
 
     public void initialize() {
@@ -119,7 +120,7 @@ public class MainController {
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/beallitasok.fxml"));
-        Parent root = loader.load();
+        Parent root = (Parent) loader.load();
 
         BeallitasokController controller = loader.getController();
         controller.initializeData(this.beallitasok, this.database);
