@@ -122,7 +122,7 @@ public class MainController {
         Parent root = loader.load();
 
         BeallitasokController controller = loader.getController();
-        controller.initializeData(this.beallitasok);
+        controller.initializeData(this.beallitasok, this.database);
 
         Scene scene = new Scene(root);
 

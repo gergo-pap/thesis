@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 public class BeallitasokController {
 
     private Beallitasok beallitasok;
+    private DataBase database;
 
     @FXML
     private TextField utasKorMinTF;
@@ -25,8 +26,9 @@ public class BeallitasokController {
     @FXML
     private TextField utasBerletTF;
 
-    public void initializeData(Beallitasok beallitasok) {
+    public void initializeData(Beallitasok beallitasok, DataBase database) {
         this.beallitasok = beallitasok;
+        this.database = database;
 
         this.resetUI();
     }
@@ -38,5 +40,24 @@ public class BeallitasokController {
         this.utasEgyenlegIgTF.setText(this.beallitasok.getUtasEgyenlegIgTF().toString());
         this.utasJegyTF.setText(this.beallitasok.getUtasJegyTF().toString());
         this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
+    }
+
+    public void applySettings() {
+        this.beallitasok.setUtasBerletTF(Integer.parseInt(this.utasBerletTF.getText()));
+        this.beallitasok.setUtasKorMinTF(Integer.parseInt(this.utasKorMinTF.getText()));
+        this.beallitasok.setUtasKorMaxTF(Integer.parseInt(this.utasKorMaxTF.getText()));
+        this.beallitasok.setUtasEgyenlegIgTF(Integer.parseInt(this.utasEgyenlegIgTF.getText()));
+        this.beallitasok.setUtasJegyTF(Integer.parseInt(this.utasJegyTF.getText()));
+        this.beallitasok.setUtasBerletTF(Integer.parseInt(this.utasBerletTF.getText()));
+
+        database.loadSettings(this.beallitasok);
+    }
+
+    public void OnApply(MouseEvent mouseEvent) {
+        this.applySettings();
+    }
+
+    public void OnReset(MouseEvent mouseEvent) {
+        this.resetUI();
     }
 }
