@@ -1,18 +1,14 @@
 package UI;
 
+import Main.Beallitasok;
 import Main.DataBase;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import javafx.scene.input.MouseEvent;
 
 public class BeallitasokController {
+
+    private Beallitasok beallitasok;
 
     @FXML
     private TextField utasKorMinTF;
@@ -29,39 +25,18 @@ public class BeallitasokController {
     @FXML
     private TextField utasBerletTF;
 
-    public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
-        showBeallitasok();
-        //utasKorMinTF.setText("sd");
-        //getVariables();
+    public void initializeData(Beallitasok beallitasok) {
+        this.beallitasok = beallitasok;
+
+        this.resetUI();
     }
 
-    public void showBeallitasok() throws IOException, SQLException, ClassNotFoundException, ParseException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.beallitasok.fxml"));
-        fxmlLoader.setController(new MainController());
-        Parent root1 = fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));
-        stage.show();
-        getVariables();
+    public void resetUI() {
+        this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
+        this.utasKorMinTF.setText(this.beallitasok.getUtasKorMinTF().toString());
+        this.utasKorMaxTF.setText(this.beallitasok.getUtasKorMaxTF().toString());
+        this.utasEgyenlegIgTF.setText(this.beallitasok.getUtasEgyenlegIgTF().toString());
+        this.utasJegyTF.setText(this.beallitasok.getUtasJegyTF().toString());
+        this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
     }
-
-    public void getVariables() throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        this.utasKorMinTF.setText("ssad"/*+this.dataBase.getUtaskorMin()*/);/*
-        this.utasKorMaxTF.setText(""+this.dataBase.getUtaskorMax());
-        this.utasEgyenlegIgTF.setText(""+this.dataBase.getUtasEgyenlegMax());
-        this.utasJegyTF.setText(""+this.dataBase.getUtasJegy());
-        this.utasBerletTF.setText(""+this.dataBase.getUtasBerlet());*/
-    }
-
-    public void setVaribales() throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        dataBase.setUtaskorMin(Integer.parseInt(this.utasKorMinTF.getText()));
-        dataBase.setUtaskorMax(Integer.parseInt(this.utasKorMaxTF.getText()));
-        dataBase.setUtasEgyenlegMax(Integer.parseInt(this.utasEgyenlegIgTF.getText()));
-        dataBase.setUtasJegy(Integer.parseInt(this.utasJegyTF.getText()));
-        dataBase.setUtasBerlet(Integer.parseInt(this.utasBerletTF.getText()));
-    }
-
-
 }

@@ -9,12 +9,16 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.parser.ParseException;
 
@@ -114,9 +118,17 @@ public class MainController {
 
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
-        BeallitasokController b = new BeallitasokController();
-        /*b.showBeallitasok();
-        b.utasKorMaxTF.setText("sdaasd");*/
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/beallitasok.fxml"));
+        Parent root = loader.load();
+
+        BeallitasokController controller = loader.getController();
+        controller.initializeData(this.beallitasok);
+
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void kilepesMenuClicked(ActionEvent actionEvent) {
