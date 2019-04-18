@@ -13,8 +13,8 @@ import java.sql.SQLException;
 
 public class BeallitasokController {
 
-    private TextField utaskorMinTF;
-    private TextField utaskorMaxTF;
+    private TextField utasKorMinTF;
+    private TextField utasKorMaxTF;
     private TextField utasEgyenlegIgTF;
     private TextField utasJegyTF;
     private TextField utasBerletTF;
@@ -22,7 +22,7 @@ public class BeallitasokController {
 
     public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
         showBeallitasok();
-        //utaskorMinTF.setText("sd");
+        //utasKorMinTF.setText("sd");
         //getVariables();
     }
 
@@ -38,8 +38,8 @@ public class BeallitasokController {
 
     public void getVariables() throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
-        this.utaskorMinTF.setText("ssad"/*+this.dataBase.getUtaskorMin()*/);/*
-        this.utaskorMaxTF.setText(""+this.dataBase.getUtaskorMax());
+        this.utasKorMinTF.setText("ssad"/*+this.dataBase.getUtaskorMin()*/);/*
+        this.utasKorMaxTF.setText(""+this.dataBase.getUtaskorMax());
         this.utasEgyenlegIgTF.setText(""+this.dataBase.getUtasEgyenlegMax());
         this.utasJegyTF.setText(""+this.dataBase.getUtasJegy());
         this.utasBerletTF.setText(""+this.dataBase.getUtasBerlet());*/
@@ -47,8 +47,8 @@ public class BeallitasokController {
 
     public void setVaribales() throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
-        dataBase.setUtaskorMin(Integer.parseInt(this.utaskorMinTF.getText()));
-        dataBase.setUtaskorMax(Integer.parseInt(this.utaskorMaxTF.getText()));
+        dataBase.setUtaskorMin(Integer.parseInt(this.utasKorMinTF.getText()));
+        dataBase.setUtaskorMax(Integer.parseInt(this.utasKorMaxTF.getText()));
         dataBase.setUtasEgyenlegMax(Integer.parseInt(this.utasEgyenlegIgTF.getText()));
         dataBase.setUtasJegy(Integer.parseInt(this.utasJegyTF.getText()));
         dataBase.setUtasBerlet(Integer.parseInt(this.utasBerletTF.getText()));

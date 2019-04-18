@@ -95,7 +95,7 @@ public class MainController {
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
         BeallitasokController b = new BeallitasokController();
         /*b.showBeallitasok();
-        b.utaskorMaxTF.setText("sdaasd");*/
+        b.utasKorMaxTF.setText("sdaasd");*/
     }
 
     public void kilepesMenuClicked(ActionEvent actionEvent) {

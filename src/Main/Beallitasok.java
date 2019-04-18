@@ -2,35 +2,35 @@ package Main;
 
 public class Beallitasok {
 
-    private int utaskorMinTF;
-    private int utaskorMaxTF;
+    private int utasKorMinTF;
+    private int utasKorMaxTF;
     private int utasEgyenlegIgTF;
     private int utasJegyTF;
     private int utasBerletTF;
 
 
     public Beallitasok() {
-        this.utaskorMinTF = 15;
-        this.utaskorMaxTF = 99;
+        this.utasKorMinTF = 15;
+        this.utasKorMaxTF = 99;
         this.utasEgyenlegIgTF = 50000;
         this.utasJegyTF = 50;
         this.utasBerletTF = 85;
     }
 
     public int getUtaskorMinTF() {
-        return utaskorMinTF;
+        return utasKorMinTF;
     }
 
-    public void setUtaskorMinTF(int utaskorMinTF) {
-        this.utaskorMinTF = utaskorMinTF;
+    public void setUtaskorMinTF(int utasKorMinTF) {
+        this.utasKorMinTF = utasKorMinTF;
     }
 
     public int getUtaskorMaxTF() {
-        return utaskorMaxTF;
+        return utasKorMaxTF;
     }
 
-    public void setUtaskorMaxTF(int utaskorMaxTF) {
-        this.utaskorMaxTF = utaskorMaxTF;
+    public void setUtaskorMaxTF(int utasKorMaxTF) {
+        this.utasKorMaxTF = utasKorMaxTF;
     }
 
     public int getUtasEgyenlegIgTF() {
