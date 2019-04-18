@@ -1,6 +1,7 @@
 package UI;
 
 import Main.Allomas;
+import Main.Beallitasok;
 import Main.Busz;
 import Main.DataBase;
 import javafx.animation.PathTransition;
@@ -42,6 +43,9 @@ public class MainController {
     @FXML
     private ImageView imageViewBusz;
 
+    private Beallitasok beallitasok;
+    private DataBase database;
+
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;
@@ -66,6 +70,11 @@ public class MainController {
                 }
             }
         });
+    }
+
+    public void initializeData(Beallitasok beallitasok, DataBase database) {
+        this.beallitasok = beallitasok;
+        this.database = database;
     }
 
     public void initialize() {
@@ -126,9 +135,8 @@ public class MainController {
         nyomasAKovetkezoMegalloba();
     }
 
-    public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        dataBase.refreshAllRow(200, 200, 10, 100, 0);
+    public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException {
+        this.database.refreshAllRow(200, 200, 10, 100, 0);
     }
 
     public Label getLabelAllomas() {

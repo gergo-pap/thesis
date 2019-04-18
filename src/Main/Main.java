@@ -25,6 +25,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
+        Beallitasok beallitasok = new Beallitasok();
+
         dataBase.createUtasokTable();
         if (dataBase.countTableSize() < 100) {
             dataBase.postUtasNumberOfTimes(100);
@@ -34,6 +36,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         MainController controller = loader.getController();
+        controller.initializeData(beallitasok, dataBase);
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
