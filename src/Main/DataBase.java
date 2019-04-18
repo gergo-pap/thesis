@@ -14,13 +14,12 @@ import java.util.Random;
 
 
 public class DataBase {
+    private int utaskorMin;
+    private int utaskorMax;
+    private int utasEgyenlegMax;
+    private int utasJegy;
+    private int utasBerlet;
 
-
-    private int utaskorMin = 15;
-    private int utaskorMax = 99;
-    private int utasEgyenlegMax = 50000;
-    private int utasJegy = 50;
-    private int utasBerlet = 85;
     private Connection db;
 
     public DataBase() throws ClassNotFoundException, SQLException {
@@ -29,6 +28,14 @@ public class DataBase {
 
         Class.forName(driver);
         db = DriverManager.getConnection(url);
+    }
+
+    public void loadSettings(Beallitasok beallitasok) {
+        this.utaskorMin = beallitasok.getUtasKorMinTF();
+        this.utaskorMax = beallitasok.getUtasKorMaxTF();
+        this.utasEgyenlegMax = beallitasok.getUtasEgyenlegIgTF();
+        this.utasJegy = beallitasok.getUtasJegyTF();
+        this.utasBerlet = beallitasok.getUtasBerletTF();
     }
 
     private static void checkSQL(PreparedStatement posted) throws SQLException {

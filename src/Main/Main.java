@@ -24,8 +24,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
         Beallitasok beallitasok = new Beallitasok();
+
+        DataBase dataBase = new DataBase();
+        dataBase.loadSettings(beallitasok);
 
         dataBase.createUtasokTable();
         if (dataBase.countTableSize() < 100) {
