@@ -39,7 +39,6 @@ public class MainController {
 
         autoPlay = false;
         busz = new Busz(this,"134", 100);
-        busz.m = this;
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -95,12 +94,10 @@ public class MainController {
     }
 
 
-    public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("beallitasok.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));
-        stage.show();
+    public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
+        Beallitasok b = new Beallitasok();
+        /*b.showBeallitasok();
+        b.utaskorMaxTF.setText("sdaasd");*/
     }
 
     public void kilepesMenuClicked(ActionEvent actionEvent) {

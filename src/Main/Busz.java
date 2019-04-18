@@ -19,11 +19,12 @@ public class Busz {
     private Allomas aktualisAllomas;
     private ListIterator<Allomas> hatralevoAllomasok;
     private int allomasIndex;
-    MainController m;
+     private MainController m;
 
 
 
     Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
+        this.m = m;
         this.buszJaratSzam = buszJaratSzam;
         this.buszKapacitas = buszKapacitas;
         this.buszSzabadHelyekSzama = buszKapacitas;
