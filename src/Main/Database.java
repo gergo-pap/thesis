@@ -53,33 +53,23 @@ public class Database {
         return (rand.nextInt(100) < percentage);
     }
 
-    void deleteOneRow(int i) throws SQLException {
-        PreparedStatement st = db.prepareStatement("DELETE FROM utasok WHERE id = ?");
-        st.setInt(1, i);
-        checkSQL(st);
-    }
 
-    void deleteAllRows() throws SQLException {
-        for (int i = 1; i < countTableSize() + 1; i++) {
-            deleteOneRow(i);
-        }
-    }
-
-    public void refreshAllRow(int utasKorTol, int utasKorIg, int utasEgyenlegIg, int utasVanEBerletePercent, int utasVanEJegyePercent) throws SQLException {
-        db.close();
-        for (int i = 1; i < countTableSize(); i++) {
+    public void refreshAllRow() throws SQLException {
+        for (int i = 0; i <= countTableSize(); i++) {
             Random r = new Random();
             PreparedStatement posted = db.prepareStatement("UPDATE utasok SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? WHERE id =" + i);
 
             posted.setString(1, NameGenerator());
-            posted.setInt(2, r.nextInt((utasKorIg - utasKorTol) + 1) + utasKorTol);
-            posted.setInt(3, r.nextInt(utasEgyenlegIg));
-            posted.setBoolean(4, randomPercent(utasVanEBerletePercent));
-            posted.setBoolean(5, randomPercent(utasVanEJegyePercent));
+            posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
+            posted.setInt(3, r.nextInt(utasEgyenlegMax));
+            posted.setBoolean(4, randomPercent(utasBerlet));
+            posted.setBoolean(5, randomPercent(utasJegy));
             posted.setBoolean(6, false);
             checkSQL(posted);
         }
     }
+
+
 
     public void createUtasokTable() throws SQLException {
         PreparedStatement create = db.prepareStatement(
@@ -109,7 +99,7 @@ public class Database {
                         + "VALUES (?,?,?,?,?,?)");
 
         posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
+        posted.setInt(2, r.nextInt((utasKorMin - utasKorMax) + 1) + utasKorMin);
         posted.setInt(3, r.nextInt(utasEgyenlegMax));
         posted.setBoolean(4, randomPercent(utasBerlet));
         posted.setBoolean(5, randomPercent(utasJegy));
@@ -144,11 +134,14 @@ public class Database {
     }
 
     int countTableSize() throws SQLException {
-        PreparedStatement create = db.prepareStatement("SELECT COUNT(*) FROM utasok");
-        ResultSet result = create.executeQuery();
-        if (result.next()) {
-        }
-        return result.getInt(1);
+        /*int size = 0;
+        Statement stat = db.createStatement();
+        ResultSet rs = stat.executeQuery("SELECT COUNT(*) FROM utasok");
+        rs.next();
+
+        size = rs.getInt(1);*/
+        return 100;
+
     }
 
     int getAnything(String varibaleType, int id, String row) throws SQLException {

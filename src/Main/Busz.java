@@ -60,16 +60,16 @@ public class Busz {
 
         buszLeszallUtas(r.nextInt(6));
         buszFelszallUtas(r.nextInt(10));
-        m.getLabelSzabadhelyekSzama().setVisible(true);
-        m.getLabelSzabadhelyekSzama().setText("Busz szabad helyek száma: " + buszSzabadHelyekSzama);
+        m.getLabelSzabadhelyekSzama134().setVisible(true);
+        m.getLabelSzabadhelyekSzama134().setText("Busz szabad helyek száma: " + buszSzabadHelyekSzama);
         buszEllenorzes();
 
         return true;
     }
 
     public void buszFelszallUtas(int buszMennyiUtas) throws Exception {
-        m.getLabelFelszallutasok().setText("Felszállt utasok száma: " + buszMennyiUtas);
-        m.getLabelFelszallutasok().setVisible(true);
+        m.getLabelFelszallutasok134().setText("Felszállt utasok száma: " + buszMennyiUtas);
+        m.getLabelFelszallutasok134().setVisible(true);
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
         for (int j = 1; j <= database.countTableSize(); j++) {
@@ -111,13 +111,12 @@ public class Busz {
         for (int j = 1; j <= database.countTableSize(); j++) {
             leszallUtas(j);
         }
-        m.getLabelEsemenyek().setVisible(true);
-        m.getLabelEsemenyek().setText("Leszállt minden utas");
+        m.getLabelEsemenyek134().setVisible(true);
+        m.getLabelEsemenyek134().setText("Leszállt minden utas");
     }
-
     public void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
-        m.getLabelLeszallutasok().setText("Leszállt utasok száma: " + buszMennyiUtas);
-        m.getLabelLeszallutasok().setVisible(true);
+        m.getLabelLeszallutasok134().setText("Leszállt utasok száma: " + buszMennyiUtas);
+        m.getLabelLeszallutasok134().setVisible(true);
         int i = 0;
         for (int j = 1; j <= database.countTableSize(); j++) {
             if (i == buszMennyiUtas) {
@@ -151,24 +150,24 @@ public class Busz {
                 }
             }
         }
-        m.getLabelBuntetesek().setVisible(true);
-        m.getLabelBuntetesek().setText(buntetesekSzama + " büntetés volt a buszon");
+        m.getLabelBuntetesek134().setVisible(true);
+        m.getLabelBuntetesek134().setText(buntetesekSzama + " büntetés volt a buszon");
 
     }
 
 
     public void buszJegyetElhasznal(int i) throws SQLException {
         database.setAnything("boolean", i, "utasVanEJegye", "false");
-        m.getLabelEsemenyek().setVisible(true);
-        m.getLabelEsemenyek().setText(database.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
+        m.getLabelEsemenyek134().setVisible(true);
+        m.getLabelEsemenyek134().setText(database.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
 
     }
 
     public void buszJegyetVesz(int i) throws SQLException {
         database.setNewIntValue(i, "utasEgyenleg", "450", "-");
         database.setAnything("boolean", i, "utasVanEJegye", "true");
-        m.getLabelEsemenyek().setVisible(true);
-        m.getLabelEsemenyek().setText(database.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá");
+        m.getLabelEsemenyek134().setVisible(true);
+        m.getLabelEsemenyek134().setText(database.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá");
 
     }
 

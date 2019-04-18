@@ -1,4 +1,100 @@
 {
+  "160": [
+    {
+      "name": "Békásmegyer H",
+      "x": 472,
+      "y": 127
+    },
+    {
+      "name": "Pünkösdfürdő utca",
+      "x": 457,
+      "y": 156
+    },
+    {
+      "name": "Nád utca",
+      "x": 438,
+      "y": 167
+    },
+    {
+      "name": "Kert sor",
+      "x": 420,
+      "y": 187
+    },
+    {
+      "name": "Csillaghegy H",
+      "x": 400,
+      "y": 245
+    },
+    {
+      "name": "Forrásliget lakópark",
+      "x": 375,
+      "y": 275
+    },
+    {
+      "name": "Mészkő utca",
+      "x": 355,
+      "y": 293
+    },
+    {
+      "name": "Ürömhegyi lejtő",
+      "x": 342,
+      "y": 306
+    },
+    {
+      "name": "Aranyhegyi lejtő",
+      "x": 331,
+      "y": 351
+    },
+    {
+      "name": "Óbudai autóbuszgarázs",
+      "x": 307,
+      "y": 390
+    },
+    {
+      "name": "Óbudai temető",
+      "x": 288,
+      "y": 410
+    },
+    {
+      "name": "Óbudai temető",
+      "x": 290,
+      "y": 420
+    },
+    {
+      "name": "Kubik utca",
+      "x": 295,
+      "y": 445
+    },
+    {
+      "name": "Bojtár utca",
+      "x": 300,
+      "y": 467
+    },
+    {
+      "name": "Orbán Balázs út",
+      "x": 310,
+      "y": 490
+    },
+    {
+      "name": "Laborc utca",
+      "x": 317,
+      "y": 527
+    },
+    {
+      "name": "Bécsi út / Vörösvári út",
+      "x": 328,
+      "y": 558
+    },
+    {
+      "name": "Óbudai rendelőintézet",
+      "x": 352,
+      "y": 584
+    }
+  ],
+
+
+
+
   "134": [
     {
       "name": "Békásmegyer, Újmegyeri tér",

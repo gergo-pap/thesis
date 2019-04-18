@@ -28,37 +28,69 @@
         <ImageView fx:id="imageViewBusz" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <Image url="@../bus2.png" />
         </ImageView>
-        <Button layoutX="25.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep" text="Step by step" />
-        <Label fx:id="labelAllomas" alignment="CENTER" layoutX="379.0" layoutY="37.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+        <Button layoutX="516.0" layoutY="38.0" mnemonicParsing="false" onKeyPressed="#OnStepByStep134KeyPressed" onMouseClicked="#OnStepByStep" text="Egyesével (134)" />
+        <Label fx:id="labelAllomas134" alignment="CENTER" layoutX="470.0" layoutY="643.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelAllomas134">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="labelSzabadhelyekSzama" layoutX="193.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+        <Label fx:id="labelSzabadhelyekSzama134" layoutX="527.0" layoutY="750.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelBuntetesekSzam134">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="labelEsemenyek" layoutX="25.0" layoutY="751.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+        <Label fx:id="labelEsemenyek134" layoutX="527.0" layoutY="730.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelEsemenyek134">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="labelBuntetesek" layoutX="25.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+        <Label fx:id="labelBuntetesek134" layoutX="527.0" layoutY="710.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelBuntetesek134">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="labelLeszallutasok" layoutX="27.0" layoutY="696.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
-        <Label fx:id="labelFelszallutasok" layoutX="27.0" layoutY="672.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
+        <Label fx:id="labelLeszallutasok134" layoutX="527.0" layoutY="690.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelLeszallUtas134">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label fx:id="labelFelszallutasok134" layoutX="525.0" layoutY="670.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelFelszallUtas134">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
         <MenuBar prefHeight="25.0" prefWidth="800.0">
             <Menu mnemonicParsing="false" text="Menü">
                 <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
                 <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />
-                <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Restart" />
+                <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Újrakezdés" />
                 <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés" />
             </Menu>
         </MenuBar>
+      <Label fx:id="labelFelSzallUtas160" layoutX="138.0" layoutY="324.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelFelSzallUtas160">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="labelLeSzallUtas160" layoutX="139.0" layoutY="344.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelLeSzallUtas160">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="labelBuntetesek160" layoutX="140.0" layoutY="364.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelBuntetesek160">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="labelEsemenyek160" layoutX="139.0" layoutY="384.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelEsemenyek160">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="labelBuntetesekSzam160" layoutX="140.0" layoutY="404.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="LabelBuntetesekSzam160">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="labelAllomas160" layoutX="73.0" layoutY="297.0" style="-fx-background-color: rgba(66, 66, 66, 0.3);" text="labelAllomas160">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="329.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep160KeyPressed" text="Egyesével(160)" />
     </Pane>
 </GridPane>

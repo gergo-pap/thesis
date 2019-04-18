@@ -13,12 +13,13 @@ import javafx.stage.WindowEvent;
 
 public class AlertBox {
     public static void display(String title, String message) {
-        final Stage window = new Stage();
+        final Stage stage = new Stage();
 
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
-        window.setMinWidth(250);
-        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(title);
+        stage.setResizable(false);
+        stage.setMinWidth(250);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
                 windowEvent.consume();
@@ -39,7 +40,7 @@ public class AlertBox {
         goOnButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                window.close();
+                stage.close();
             }
         });
         GridPane gridPane = new GridPane();
@@ -52,7 +53,7 @@ public class AlertBox {
         gridPane.getChildren().addAll(closeButton, goOnButton, label);
         Scene scene = new Scene(gridPane, 260, 40);
 
-        window.setScene(scene);
-        window.show();
+        stage.setScene(scene);
+        stage.show();
     }
 }
