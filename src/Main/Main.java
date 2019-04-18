@@ -1,6 +1,7 @@
 package Main;
 
 import UI.AlertBox;
+import UI.MainController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -23,12 +24,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
+        Beallitasok beallitasok = new Beallitasok();
+
+        Database dataBase = new Database();
+        dataBase.loadSettings(beallitasok);
+
         dataBase.createUtasokTable();
         if (dataBase.countTableSize() < 100) {
             dataBase.postUtasNumberOfTimes(100);
         }
-        Parent root = FXMLLoader.load(getClass().getResource("../UI/main.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/main.fxml"));
+        Parent root = loader.load();
+
+        MainController controller = loader.getController();
+        controller.initializeData(beallitasok, dataBase);
+
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {

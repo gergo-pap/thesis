@@ -1,59 +1,63 @@
 package UI;
 
-import Main.DataBase;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import Main.Beallitasok;
+import Main.Database;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import javafx.scene.input.MouseEvent;
 
 public class BeallitasokController {
 
-    private TextField utaskorMinTF;
-    private TextField utaskorMaxTF;
+    private Beallitasok beallitasok;
+    private Database database;
+
+    @FXML
+    private TextField utasKorMinTF;
+
+    @FXML
+    private TextField utasKorMaxTF;
+
+    @FXML
     private TextField utasEgyenlegIgTF;
+
+    @FXML
     private TextField utasJegyTF;
+
+    @FXML
     private TextField utasBerletTF;
 
+    public void initializeData(Beallitasok beallitasok, Database database) {
+        this.beallitasok = beallitasok;
+        this.database = database;
 
-    public BeallitasokController() throws IOException, ParseException, SQLException, ClassNotFoundException {
-        showBeallitasok();
-        //utaskorMinTF.setText("sd");
-        //getVariables();
+        this.resetUI();
     }
 
-    public void showBeallitasok() throws IOException, SQLException, ClassNotFoundException, ParseException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.beallitasok.fxml"));
-        fxmlLoader.setController(new MainController());
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));
-        stage.show();
-        getVariables();
+    public void resetUI() {
+        this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
+        this.utasKorMinTF.setText(this.beallitasok.getUtasKorMinTF().toString());
+        this.utasKorMaxTF.setText(this.beallitasok.getUtasKorMaxTF().toString());
+        this.utasEgyenlegIgTF.setText(this.beallitasok.getUtasEgyenlegIgTF().toString());
+        this.utasJegyTF.setText(this.beallitasok.getUtasJegyTF().toString());
+        this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
     }
 
-    public void getVariables() throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        this.utaskorMinTF.setText("ssad"/*+this.dataBase.getUtaskorMin()*/);/*
-        this.utaskorMaxTF.setText(""+this.dataBase.getUtaskorMax());
-        this.utasEgyenlegIgTF.setText(""+this.dataBase.getUtasEgyenlegMax());
-        this.utasJegyTF.setText(""+this.dataBase.getUtasJegy());
-        this.utasBerletTF.setText(""+this.dataBase.getUtasBerlet());*/
+    public void applySettings() {
+        this.beallitasok.setUtasBerletTF(Integer.parseInt(this.utasBerletTF.getText()));
+        this.beallitasok.setUtasKorMinTF(Integer.parseInt(this.utasKorMinTF.getText()));
+        this.beallitasok.setUtasKorMaxTF(Integer.parseInt(this.utasKorMaxTF.getText()));
+        this.beallitasok.setUtasEgyenlegIgTF(Integer.parseInt(this.utasEgyenlegIgTF.getText()));
+        this.beallitasok.setUtasJegyTF(Integer.parseInt(this.utasJegyTF.getText()));
+        this.beallitasok.setUtasBerletTF(Integer.parseInt(this.utasBerletTF.getText()));
+
+        database.loadSettings(this.beallitasok);
     }
 
-    public void setVaribales() throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        dataBase.setUtaskorMin(Integer.parseInt(this.utaskorMinTF.getText()));
-        dataBase.setUtaskorMax(Integer.parseInt(this.utaskorMaxTF.getText()));
-        dataBase.setUtasEgyenlegMax(Integer.parseInt(this.utasEgyenlegIgTF.getText()));
-        dataBase.setUtasJegy(Integer.parseInt(this.utasJegyTF.getText()));
-        dataBase.setUtasBerlet(Integer.parseInt(this.utasBerletTF.getText()));
+    public void OnApply(MouseEvent mouseEvent) {
+        this.applySettings();
     }
 
-
-
+    public void OnReset(MouseEvent mouseEvent) {
+        this.resetUI();
+    }
 }

@@ -1,18 +1,24 @@
 package UI;
 
 import Main.Allomas;
+import Main.Beallitasok;
 import Main.Busz;
-import Main.DataBase;
+import Main.Database;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.parser.ParseException;
 
@@ -20,16 +26,30 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainController {
+    @FXML
+    private Label labelAllomas;
 
+    @FXML
+    private Label labelSzabadhelyekSzama;
 
-    public Label labelAllomas;
-    public Label labelSzabadhelyekSzama;
-    public Label labelEsemenyek;
-    public Label labelBuntetesek;
-    public Label labelLeszallutasok;
-    public Label labelFelszallutasok;
-    public ImageView imageViewBusz;
-    public ImageView imageViewMap;
+    @FXML
+    private Label labelEsemenyek;
+
+    @FXML
+    private Label labelBuntetesek;
+
+    @FXML
+    private Label labelLeszallutasok;
+
+    @FXML
+    private Label labelFelszallutasok;
+
+    @FXML
+    private ImageView imageViewBusz;
+
+    private Beallitasok beallitasok;
+    private Database database;
+
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;
@@ -37,7 +57,7 @@ public class MainController {
     public MainController() throws ClassNotFoundException, SQLException, ParseException, IOException {
 
         autoPlay = false;
-        busz = new Busz(this,"134", 100);
+        busz = new Busz(this, "134", 100);
 
         pathTransition = new PathTransition();
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -54,6 +74,11 @@ public class MainController {
                 }
             }
         });
+    }
+
+    public void initializeData(Beallitasok beallitasok, Database database) {
+        this.beallitasok = beallitasok;
+        this.database = database;
     }
 
     public void initialize() {
@@ -85,7 +110,6 @@ public class MainController {
     }
 
 
-
     public void OnStepByStep(MouseEvent mouseEvent) throws Exception {
         imageViewBusz.setVisible(true);
         autoPlay = false;
@@ -94,9 +118,17 @@ public class MainController {
 
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
-        BeallitasokController b = new BeallitasokController();
-        /*b.showBeallitasok();
-        b.utaskorMaxTF.setText("sdaasd");*/
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/beallitasok.fxml"));
+        Parent root = loader.load();
+
+        BeallitasokController controller = loader.getController();
+        controller.initializeData(this.beallitasok, this.database);
+
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void kilepesMenuClicked(ActionEvent actionEvent) {
@@ -115,9 +147,8 @@ public class MainController {
         nyomasAKovetkezoMegalloba();
     }
 
-    public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        DataBase dataBase = new DataBase();
-        dataBase.refreshAllRow(200, 200, 10, 100, 0);
+    public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException {
+        this.database.refreshAllRow(200, 200, 10, 100, 0);
     }
 
     public Label getLabelAllomas() {
@@ -167,7 +198,6 @@ public class MainController {
     public void setLabelFelszallutasok(Label labelFelszallutasok) {
         this.labelFelszallutasok = labelFelszallutasok;
     }
-
 
 
 }

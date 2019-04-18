@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="34.0" layoutY="68.0" />
-      <Label layoutX="34.0" layoutY="107.0" text="Utaskor (max)" />
-      <Label layoutX="34.0" layoutY="147.0" text="Utasegyenleg (ig)" />
-      <TextField fx:id="utaskorMinTF" layoutX="163.0" layoutY="61.0" text="0" />
-      <TextField fx:id="utaskorMaxTF" layoutX="163.0" layoutY="100.0" text="0" />
-      <TextField fx:id="utasEgyenlegIgTF" layoutX="163.0" layoutY="140.0" text="0" />
-      <Label layoutX="34.0" layoutY="192.0" text="Utas van-e jegye (%)" />
-      <Label layoutX="34.0" layoutY="232.0" text="Utas van-e bérlete (%)" />
-      <TextField fx:id="utasJegyTF" layoutX="163.0" layoutY="185.0" text="0" />
-      <TextField fx:id="utasBerletTF" layoutX="163.0" layoutY="228.0" text="0" />
-      <Label layoutX="34.0" layoutY="68.0" text="Utaskor (min)" />
-   </children>
+<AnchorPane prefHeight="363.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.BeallitasokController">
+
+    <Label layoutX="34.0" layoutY="68.0" />
+    <Label layoutX="34.0" layoutY="107.0" text="Utaskor (max)" />
+    <TextField fx:id="utasKorMinTF" layoutX="163.0" layoutY="61.0" text="0" />
+    <TextField fx:id="utasKorMaxTF" layoutX="163.0" layoutY="100.0" text="0" />
+
+    <Label layoutX="34.0" layoutY="147.0" text="Utasegyenleg (ig)" />
+    <TextField fx:id="utasEgyenlegIgTF" layoutX="163.0" layoutY="140.0" text="0" />
+
+    <Label layoutX="34.0" layoutY="192.0" text="Utas van-e jegye (%)" />
+    <TextField fx:id="utasJegyTF" layoutX="163.0" layoutY="185.0" text="0" />
+
+    <Label layoutX="34.0" layoutY="232.0" text="Utas van-e bérlete (%)" />
+    <TextField fx:id="utasBerletTF" layoutX="163.0" layoutY="228.0" text="0" />
+    <Label layoutX="34.0" layoutY="68.0" text="Utaskor (min)" />
+
+
+    <Button layoutX="123.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#OnApply" text="Alkalmaz" />
+    <Button layoutX="249.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#OnReset" text="Visszaállít" />
+
 </AnchorPane>

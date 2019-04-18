@@ -13,31 +13,29 @@ import java.util.List;
 import java.util.Random;
 
 
-
-public class DataBase {
-
-
-
-    public void setDb(Connection db) {
-        this.db = db;
-    }
-
-    private int utaskorMin = 15;
-    private int utaskorMax = 99;
-    private int utasEgyenlegMax = 50000;
-    private int utasJegy = 50;
-    private int utasBerlet = 85;
+public class Database {
+    private int utasKorMin;
+    private int utasKorMax;
+    private int utasEgyenlegMax;
+    private int utasJegy;
+    private int utasBerlet;
 
     private Connection db;
 
-
-
-    public DataBase() throws ClassNotFoundException, SQLException {
+    public Database() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
 
         Class.forName(driver);
         db = DriverManager.getConnection(url);
+    }
+
+    public void loadSettings(Beallitasok beallitasok) {
+        this.utasKorMin = beallitasok.getUtasKorMinTF();
+        this.utasKorMax = beallitasok.getUtasKorMaxTF();
+        this.utasEgyenlegMax = beallitasok.getUtasEgyenlegIgTF();
+        this.utasJegy = beallitasok.getUtasJegyTF();
+        this.utasBerlet = beallitasok.getUtasBerletTF();
     }
 
     private static void checkSQL(PreparedStatement posted) throws SQLException {
@@ -111,7 +109,7 @@ public class DataBase {
                         + "VALUES (?,?,?,?,?,?)");
 
         posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utaskorMax - utaskorMin) + 1) + utaskorMin);
+        posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
         posted.setInt(3, r.nextInt(utasEgyenlegMax));
         posted.setBoolean(4, randomPercent(utasBerlet));
         posted.setBoolean(5, randomPercent(utasJegy));
@@ -228,18 +226,20 @@ public class DataBase {
                 Middle[rand.nextInt(Middle.length)];
     }
 
-    public int getUtaskorMin() {return this.utaskorMin;}
-
-    public void setUtaskorMin(int utaskorMin) {
-        this.utaskorMin = utaskorMin;
+    public int getUtasKorMin() {
+        return this.utasKorMin;
     }
 
-    public int getUtaskorMax() {
-        return this.utaskorMax;
+    public void setUtasKorMin(int utasKorMin) {
+        this.utasKorMin = utasKorMin;
     }
 
-    public void setUtaskorMax(int utaskorMax) {
-        this.utaskorMax = utaskorMax;
+    public int getUtasKorMax() {
+        return this.utasKorMax;
+    }
+
+    public void setUtasKorMax(int utasKorMax) {
+        this.utasKorMax = utasKorMax;
     }
 
     public int getUtasEgyenlegMax() {
@@ -268,5 +268,9 @@ public class DataBase {
 
     public Connection getDb() {
         return this.db;
+    }
+
+    public void setDb(Connection db) {
+        this.db = db;
     }
 }

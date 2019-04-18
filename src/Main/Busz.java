@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Busz {
 
-    DataBase dataBase = new DataBase();
+    Database dataBase = new Database();
     private String buszJaratSzam;
     private int buszKapacitas;
     private int buszSzabadHelyekSzama;
@@ -21,7 +21,6 @@ public class Busz {
     private ListIterator<Allomas> hatralevoAllomasok;
     private int allomasIndex;
     private MainController m;
-
 
 
     public Busz(MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {

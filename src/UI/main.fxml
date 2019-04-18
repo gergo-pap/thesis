@@ -21,56 +21,44 @@
     <rowConstraints>
         <RowConstraints />
     </rowConstraints>
-    <children>
-        <Pane prefHeight="800.0" prefWidth="800.0">
-            <children>
-                <ImageView fx:id="imageViewMap" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../map.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="imageViewBusz" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                    <image>
-                        <Image url="@../bus2.png" />
-                    </image>
-                </ImageView>
-                <Button layoutX="25.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep" text="Step by step" />
-                <Label fx:id="labelAllomas" alignment="CENTER" layoutX="379.0" layoutY="37.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
-                <Label fx:id="labelSzabadhelyekSzama" layoutX="193.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="labelEsemenyek" layoutX="25.0" layoutY="751.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="labelBuntetesek" layoutX="25.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="labelLeszallutasok" layoutX="27.0" layoutY="696.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
-                <Label fx:id="labelFelszallutasok" layoutX="27.0" layoutY="672.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
-                <MenuBar prefHeight="25.0" prefWidth="800.0">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Menü">
-                            <items>
-                        <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
-                        <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />
-                        <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Restart" />
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
-        </Pane>
-    </children>
+    <Pane prefHeight="800.0" prefWidth="800.0">
+        <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../map.png" />
+        </ImageView>
+        <ImageView fx:id="imageViewBusz" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../bus2.png" />
+        </ImageView>
+        <Button layoutX="25.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#OnStepByStep" text="Step by step" />
+        <Label fx:id="labelAllomas" alignment="CENTER" layoutX="379.0" layoutY="37.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelSzabadhelyekSzama" layoutX="193.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelEsemenyek" layoutX="25.0" layoutY="751.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelBuntetesek" layoutX="25.0" layoutY="719.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelLeszallutasok" layoutX="27.0" layoutY="696.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
+        <Label fx:id="labelFelszallutasok" layoutX="27.0" layoutY="672.0" style="-fx-background-color: rgba(66, 66, 66, 0.1);" text="Label" visible="false" />
+        <MenuBar prefHeight="25.0" prefWidth="800.0">
+            <Menu mnemonicParsing="false" text="Menü">
+                <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
+                <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />
+                <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Restart" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés" />
+            </Menu>
+        </MenuBar>
+    </Pane>
 </GridPane>
