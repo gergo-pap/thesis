@@ -27,18 +27,18 @@ public class BeallitasokController {
     }
 
     public void showBeallitasok() throws IOException, SQLException, ClassNotFoundException, ParseException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("beallitasok.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.beallitasok.fxml"));
         fxmlLoader.setController(new MainController());
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));
         stage.show();
-        //getVariables();
+        getVariables();
     }
 
     public void getVariables() throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
-        this.utaskorMinTF.setText(""/*+this.dataBase.getUtaskorMin()*/);/*
+        this.utaskorMinTF.setText("ssad"/*+this.dataBase.getUtaskorMin()*/);/*
         this.utaskorMaxTF.setText(""+this.dataBase.getUtaskorMax());
         this.utasEgyenlegIgTF.setText(""+this.dataBase.getUtasEgyenlegMax());
         this.utasJegyTF.setText(""+this.dataBase.getUtasJegy());
