@@ -2,11 +2,11 @@ package Main;
 
 public class Beallitasok {
 
-    private int utasKorMinTF;
-    private int utasKorMaxTF;
-    private int utasEgyenlegIgTF;
-    private int utasJegyTF;
-    private int utasBerletTF;
+    private Integer utasKorMinTF;
+    private Integer utasKorMaxTF;
+    private Integer utasEgyenlegIgTF;
+    private Integer utasJegyTF;
+    private Integer utasBerletTF;
 
 
     public Beallitasok() {
@@ -17,43 +17,43 @@ public class Beallitasok {
         this.utasBerletTF = 85;
     }
 
-    public int getUtaskorMinTF() {
+    public Integer getUtaskorMinTF() {
         return utasKorMinTF;
     }
 
-    public void setUtaskorMinTF(int utasKorMinTF) {
+    public void setUtaskorMinTF(Integer utasKorMinTF) {
         this.utasKorMinTF = utasKorMinTF;
     }
 
-    public int getUtaskorMaxTF() {
+    public Integer getUtaskorMaxTF() {
         return utasKorMaxTF;
     }
 
-    public void setUtaskorMaxTF(int utasKorMaxTF) {
+    public void setUtaskorMaxTF(Integer utasKorMaxTF) {
         this.utasKorMaxTF = utasKorMaxTF;
     }
 
-    public int getUtasEgyenlegIgTF() {
+    public Integer getUtasEgyenlegIgTF() {
         return utasEgyenlegIgTF;
     }
 
-    public void setUtasEgyenlegIgTF(int utasEgyenlegIgTF) {
+    public void setUtasEgyenlegIgTF(Integer utasEgyenlegIgTF) {
         this.utasEgyenlegIgTF = utasEgyenlegIgTF;
     }
 
-    public int getUtasJegyTF() {
+    public Integer getUtasJegyTF() {
         return utasJegyTF;
     }
 
-    public void setUtasJegyTF(int utasJegyTF) {
+    public void setUtasJegyTF(Integer utasJegyTF) {
         this.utasJegyTF = utasJegyTF;
     }
 
-    public int getUtasBerletTF() {
+    public Integer getUtasBerletTF() {
         return utasBerletTF;
     }
 
-    public void setUtasBerletTF(int utasBerletTF) {
+    public void setUtasBerletTF(Integer utasBerletTF) {
         this.utasBerletTF = utasBerletTF;
     }
 }

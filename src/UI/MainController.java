@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,16 +21,30 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainController {
+    @FXML
+    private Label labelAllomas;
 
+    @FXML
+    private Label labelSzabadhelyekSzama;
 
-    public Label labelAllomas;
-    public Label labelSzabadhelyekSzama;
-    public Label labelEsemenyek;
-    public Label labelBuntetesek;
-    public Label labelLeszallutasok;
-    public Label labelFelszallutasok;
-    public ImageView imageViewBusz;
-    public ImageView imageViewMap;
+    @FXML
+    private Label labelEsemenyek;
+
+    @FXML
+    private Label labelBuntetesek;
+
+    @FXML
+    private Label labelLeszallutasok;
+
+    @FXML
+    private Label labelFelszallutasok;
+
+    @FXML
+    private ImageView imageViewBusz;
+
+    @FXML
+    private ImageView imageViewMap;
+
     private Busz busz;
     private PathTransition pathTransition;
     private boolean autoPlay;
