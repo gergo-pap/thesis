@@ -128,6 +128,7 @@ public class MainController {
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();
+        stage.setTitle("Beállítások");
         stage.setScene(scene);
         stage.show();
     }
@@ -149,7 +150,7 @@ public class MainController {
     }
 
     public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException {
-        this.database.refreshAllRow(200, 200, 10, 100, 0);
+        this.database.refreshAllRow();
     }
 
     public Label getLabelAllomas() {
