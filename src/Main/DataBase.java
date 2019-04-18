@@ -14,8 +14,8 @@ import java.util.Random;
 
 
 public class DataBase {
-    private int utaskorMin;
-    private int utaskorMax;
+    private int utasKorMin;
+    private int utasKorMax;
     private int utasEgyenlegMax;
     private int utasJegy;
     private int utasBerlet;
@@ -31,8 +31,8 @@ public class DataBase {
     }
 
     public void loadSettings(Beallitasok beallitasok) {
-        this.utaskorMin = beallitasok.getUtasKorMinTF();
-        this.utaskorMax = beallitasok.getUtasKorMaxTF();
+        this.utasKorMin = beallitasok.getUtasKorMinTF();
+        this.utasKorMax = beallitasok.getUtasKorMaxTF();
         this.utasEgyenlegMax = beallitasok.getUtasEgyenlegIgTF();
         this.utasJegy = beallitasok.getUtasJegyTF();
         this.utasBerlet = beallitasok.getUtasBerletTF();
@@ -109,7 +109,7 @@ public class DataBase {
                         + "VALUES (?,?,?,?,?,?)");
 
         posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utaskorMax - utaskorMin) + 1) + utaskorMin);
+        posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
         posted.setInt(3, r.nextInt(utasEgyenlegMax));
         posted.setBoolean(4, randomPercent(utasBerlet));
         posted.setBoolean(5, randomPercent(utasJegy));
@@ -226,20 +226,20 @@ public class DataBase {
                 Middle[rand.nextInt(Middle.length)];
     }
 
-    public int getUtaskorMin() {
-        return this.utaskorMin;
+    public int getUtasKorMin() {
+        return this.utasKorMin;
     }
 
-    public void setUtaskorMin(int utaskorMin) {
-        this.utaskorMin = utaskorMin;
+    public void setUtasKorMin(int utasKorMin) {
+        this.utasKorMin = utasKorMin;
     }
 
-    public int getUtaskorMax() {
-        return this.utaskorMax;
+    public int getUtasKorMax() {
+        return this.utasKorMax;
     }
 
-    public void setUtaskorMax(int utaskorMax) {
-        this.utaskorMax = utaskorMax;
+    public void setUtasKorMax(int utasKorMax) {
+        this.utasKorMax = utasKorMax;
     }
 
     public int getUtasEgyenlegMax() {

@@ -17,19 +17,19 @@ public class Beallitasok {
         this.utasBerletTF = 85;
     }
 
-    public Integer getUtaskorMinTF() {
+    public Integer getUtasKorMinTF() {
         return utasKorMinTF;
     }
 
-    public void setUtaskorMinTF(Integer utasKorMinTF) {
+    public void setUtasKorMinTF(Integer utasKorMinTF) {
         this.utasKorMinTF = utasKorMinTF;
     }
 
-    public Integer getUtaskorMaxTF() {
+    public Integer getUtasKorMaxTF() {
         return utasKorMaxTF;
     }
 
-    public void setUtaskorMaxTF(Integer utasKorMaxTF) {
+    public void setUtasKorMaxTF(Integer utasKorMaxTF) {
         this.utasKorMaxTF = utasKorMaxTF;
     }
 
