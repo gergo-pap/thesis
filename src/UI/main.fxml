@@ -1,66 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-
-<Pane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="800.0" prefWidth="800.0"
+      xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="UI.MainController">
 
     <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../map.png" />
+        <Image url="@../map.png"/>
     </ImageView>
-    
+
     <MenuBar prefHeight="25.0" prefWidth="800.0">
         <Menu mnemonicParsing="false" text="Menü">
-            <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások" />
-            <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked" text="Utasok újragenerálása az adatbázisban" />
-            <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Újrakezdés" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés" />
+            <MenuItem mnemonicParsing="false" onAction="#beallitasMenuClicked" text="Beállítások"/>
+            <MenuItem mnemonicParsing="false" onAction="#utasUjrageneralasMenuClicked"
+                      text="Utasok újragenerálása az adatbázisban"/>
+            <MenuItem mnemonicParsing="false" onAction="#restartMenuButtonClicked" text="Újrakezdés"/>
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <MenuItem mnemonicParsing="false" onAction="#kilepesMenuClicked" text="Kilépés"/>
         </Menu>
     </MenuBar>
-    <ImageView fx:id="busz1Img" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
-        <Image url="@../bus2.png" />
+    <ImageView fx:id="busz1Img" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
+               visible="false">
+        <Image url="@../bus2.png"/>
     </ImageView>
-    <ImageView fx:id="busz2Img" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
-        <Image url="@../bus2.png" />
+    <ImageView fx:id="busz2Img" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
+               visible="false">
+        <Image url="@../bus2.png"/>
     </ImageView>
-    <VBox layoutX="15.0" layoutY="600.0" prefHeight="188.0" prefWidth="350.0" styleClass="jarat-info-keret" stylesheets="@jarat-info.css">
-      <HBox alignment="CENTER" prefHeight="145.0" prefWidth="350.0" styleClass="fejlec">
-         <children>
-               <Label fx:id="busz1Jaratszam" prefHeight="21.0" prefWidth="254.0" styleClass="jaratszam" />
-               <Button mnemonicParsing="false" onAction="#busz1StepByStep" prefHeight="0.0" prefWidth="85.0" text="Egyesével" />
-         </children>
-      </HBox>
-        <Label fx:id="busz1Allomas" styleClass="allomas">
-            <VBox.margin>
-                <Insets left="5.0" top="10.0" />
-            </VBox.margin>
-        </Label>
-        <TextArea fx:id="busz1Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info" />
-    </VBox>
-    <VBox layoutX="435.0" layoutY="600.0" prefHeight="188.0" prefWidth="350.0" styleClass="jarat-info-keret" stylesheets="@jarat-info.css">
+    <VBox layoutX="15.0" layoutY="600.0" prefHeight="188.0" prefWidth="350.0" styleClass="jarat-info-keret"
+          stylesheets="@jarat-info.css">
         <HBox alignment="CENTER" prefHeight="145.0" prefWidth="350.0" styleClass="fejlec">
             <children>
-                <Label fx:id="busz2Jaratszam" prefHeight="21.0" prefWidth="254.0" styleClass="jaratszam" />
-                <Button mnemonicParsing="false" onAction="#busz2StepByStep" prefHeight="0.0" prefWidth="85.0" text="Egyesével" />
+                <Label fx:id="busz1Jaratszam" prefHeight="21.0" prefWidth="254.0" styleClass="jaratszam"/>
+                <Button mnemonicParsing="false" onAction="#busz1StepByStep" prefHeight="0.0" prefWidth="85.0"
+                        text="Egyesével"/>
+            </children>
+        </HBox>
+        <Label fx:id="busz1Allomas" styleClass="allomas">
+            <VBox.margin>
+                <Insets left="5.0" top="10.0"/>
+            </VBox.margin>
+        </Label>
+        <TextArea fx:id="busz1Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info"/>
+    </VBox>
+    <VBox layoutX="435.0" layoutY="600.0" prefHeight="188.0" prefWidth="350.0" styleClass="jarat-info-keret"
+          stylesheets="@jarat-info.css">
+        <HBox alignment="CENTER" prefHeight="145.0" prefWidth="350.0" styleClass="fejlec">
+            <children>
+                <Label fx:id="busz2Jaratszam" prefHeight="21.0" prefWidth="254.0" styleClass="jaratszam"/>
+                <Button mnemonicParsing="false" onAction="#busz2StepByStep" prefHeight="0.0" prefWidth="85.0"
+                        text="Egyesével"/>
             </children>
         </HBox>
         <Label fx:id="busz2Allomas" styleClass="allomas">
             <VBox.margin>
-                <Insets left="5.0" top="10.0" />
+                <Insets left="5.0" top="10.0"/>
             </VBox.margin>
         </Label>
-        <TextArea fx:id="busz2Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info" />
+        <TextArea fx:id="busz2Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info"/>
     </VBox>
 </Pane>

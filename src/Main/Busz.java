@@ -1,10 +1,5 @@
 package Main;
 
-import javafx.scene.control.TextArea;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +159,7 @@ public class Busz {
 
     public String getBuszInfo() {
         return String.format(
-            "Busz szabad helyek száma: %d\n%s\n%s\n%s\n%s",
+                "Busz szabad helyek száma: %d\n%s\n%s\n%s\n%s",
                 this.buszSzabadHelyekSzama,
                 this.infoFelszallUtasok,
                 this.infoLeszallUtasok,

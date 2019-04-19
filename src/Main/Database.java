@@ -28,6 +28,21 @@ public class Database {
         initializeJSON();
     }
 
+    private static void checkSQL(PreparedStatement posted) throws SQLException {
+        int rs = posted.executeUpdate();
+
+        if (rs >= 0) {
+            System.out.println("Done");
+        } else {
+            System.out.println("Error");
+        }
+    }
+
+    private static boolean randomPercent(int percentage) {
+        Random rand = new Random();
+        return (rand.nextInt(100) < percentage);
+    }
+
     private void initializeSQL() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
@@ -48,22 +63,6 @@ public class Database {
         this.utasJegy = beallitasok.getUtasJegyTF();
         this.utasBerlet = beallitasok.getUtasBerletTF();
     }
-
-    private static void checkSQL(PreparedStatement posted) throws SQLException {
-        int rs = posted.executeUpdate();
-
-        if (rs >= 0) {
-            System.out.println("Done");
-        } else {
-            System.out.println("Error");
-        }
-    }
-
-    private static boolean randomPercent(int percentage) {
-        Random rand = new Random();
-        return (rand.nextInt(100) < percentage);
-    }
-
 
     public void refreshAllRow() throws SQLException {
         for (int i = 0; i <= countTableSize(); i++) {

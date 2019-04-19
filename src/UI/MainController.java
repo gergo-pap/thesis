@@ -30,15 +30,23 @@ public class MainController {
 
     private final List<String> jaratok = Arrays.asList("160", "134");
 
-    @FXML private ImageView busz1Img;
-    @FXML private Label busz1Jaratszam;
-    @FXML private Label busz1Allomas;
-    @FXML private TextArea busz1Info;
+    @FXML
+    private ImageView busz1Img;
+    @FXML
+    private Label busz1Jaratszam;
+    @FXML
+    private Label busz1Allomas;
+    @FXML
+    private TextArea busz1Info;
 
-    @FXML private ImageView busz2Img;
-    @FXML private Label busz2Jaratszam;
-    @FXML private Label busz2Allomas;
-    @FXML private TextArea busz2Info;
+    @FXML
+    private ImageView busz2Img;
+    @FXML
+    private Label busz2Jaratszam;
+    @FXML
+    private Label busz2Allomas;
+    @FXML
+    private TextArea busz2Info;
 
 
     private Beallitasok beallitasok;
@@ -69,7 +77,7 @@ public class MainController {
                 e.printStackTrace();
             }
         });
-        
+
         busz2PathTransition = new PathTransition();
         busz2PathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         busz2PathTransition.setCycleCount(1);
@@ -112,7 +120,7 @@ public class MainController {
 
         busz1PathTransition.play();
     }
-    
+
     private void busz2NyomasAKovetkezoMegalloba() throws Exception {
         if (nyomasAKovetkezoMegalloba(busz2, busz2PathTransition)) return;
 
@@ -170,8 +178,8 @@ public class MainController {
         busz1Img.setVisible(true);
         busz1AutoPlay = true;
         busz1NyomasAKovetkezoMegalloba();
-        
-        
+
+
         busz2.buszAStartPoziciora();
         kezdoAllomas = busz2.getAktualisAllomas();
         busz2Img.setX(kezdoAllomas.getX());
