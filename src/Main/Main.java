@@ -55,23 +55,6 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setTitle("Transport Simulation");
         Scene scene = new Scene(root, 800, 800);
-
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.SPACE) {
-                    MainController m = new MainController();
-                    try {
-                        m.OnStepByStep();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //Stop letting it do anything else
-                    keyEvent.consume();
-                }
-            }
-        });
-
         stage.setScene(scene);
         stage.show();
     }

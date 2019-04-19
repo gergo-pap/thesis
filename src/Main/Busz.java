@@ -1,6 +1,6 @@
 package Main;
 
-import UI.MainController;
+import javafx.scene.control.TextArea;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -10,24 +10,27 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
+
 public class Busz {
-    private Database database;
-    private MainController m;
     private String buszJaratSzam;
+    private Database database;
+    private TextArea buszInfoField;
     private int buszKapacitas;
     private int buszSzabadHelyekSzama;
     private List<Allomas> allomasok;
     private Allomas aktualisAllomas;
     private ListIterator<Allomas> hatralevoAllomasok;
-    private int allomasIndex;
+    private String infoFelszallUtasok;
+    private String infoLeszallUtasok;
+    private String infoBuntetesek;
+    private String infoEsemenyek;
 
 
-    public Busz(Database database, MainController m, String buszJaratSzam, int buszKapacitas) throws SQLException, ClassNotFoundException, IOException, ParseException {
-        this.database = database;
-        this.m = m;
-
+    public Busz(String buszJaratSzam, Database database) throws IOException, ParseException {
         this.buszJaratSzam = buszJaratSzam;
-        this.buszKapacitas = buszKapacitas;
+        this.database = database;
+
+        this.buszKapacitas = 100;
         this.buszSzabadHelyekSzama = buszKapacitas;
         this.allomasok = database.getAllomasokLista(buszJaratSzam);
         buszAStartPoziciora();
@@ -35,7 +38,6 @@ public class Busz {
 
     public void buszAStartPoziciora() {
         hatralevoAllomasok = this.allomasok.listIterator();
-        allomasIndex = 0;
         aktualisAllomas = hatralevoAllomasok.next();
     }
 
@@ -43,7 +45,6 @@ public class Busz {
 
         return aktualisAllomas;
     }
-
 
     public boolean kovetkezoMegallo() throws Exception {
         Random r = new Random();
@@ -56,26 +57,22 @@ public class Busz {
         }
 
         aktualisAllomas = hatralevoAllomasok.next();
-        allomasIndex++;
 
         buszLeszallUtas(r.nextInt(6));
         buszFelszallUtas(r.nextInt(10));
-        m.getLabelSzabadhelyekSzama134().setVisible(true);
-        m.getLabelSzabadhelyekSzama134().setText("Busz szabad helyek száma: " + buszSzabadHelyekSzama);
         buszEllenorzes();
 
         return true;
     }
 
     public void buszFelszallUtas(int buszMennyiUtas) throws Exception {
-        m.getLabelFelszallutasok134().setText("Felszállt utasok száma: " + buszMennyiUtas);
-        m.getLabelFelszallutasok134().setVisible(true);
+        this.infoFelszallUtasok = "Felszállt utasok száma: " + buszMennyiUtas;
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
         for (int j = 1; j <= database.countTableSize(); j++) {
             if (database.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0) {
             } else {
-                if (getBuszSzabadHelyekSzama() > 0 && database.getAnything("boolean", j, "utasVanEBerlete") == 1) {
+                if (buszSzabadHelyekSzama > 0 && database.getAnything("boolean", j, "utasVanEBerlete") == 1) {
                     felszallBerlettel(j);
                     i++;
                 } else if (database.getAnything("boolean", j, "utasVanEJegye") == 1) {
@@ -97,13 +94,13 @@ public class Busz {
 
     void felszallBerlettel(int j) throws SQLException {
         database.setAnything("boolean", j, "utasUtazikE", "true");
-        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
+        buszSzabadHelyekSzama--;
     }
 
     void felszallJeggyel(int j) throws SQLException {
         database.setAnything("boolean", j, "utasVanEJegye", "false");
         database.setAnything("boolean", j, "utasUtazikE", "true");
-        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() - 1);
+        buszSzabadHelyekSzama--;
     }
 
     public void buszLeszallOsszesUtas() throws SQLException {
@@ -111,12 +108,11 @@ public class Busz {
         for (int j = 1; j <= database.countTableSize(); j++) {
             leszallUtas(j);
         }
-        m.getLabelEsemenyek134().setVisible(true);
-        m.getLabelEsemenyek134().setText("Leszállt minden utas");
+        this.infoEsemenyek = "Leszállt minden utas";
     }
+
     public void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
-        m.getLabelLeszallutasok134().setText("Leszállt utasok száma: " + buszMennyiUtas);
-        m.getLabelLeszallutasok134().setVisible(true);
+        this.infoLeszallUtasok = "Leszállt utasok száma: " + buszMennyiUtas;
         int i = 0;
         for (int j = 1; j <= database.countTableSize(); j++) {
             if (i == buszMennyiUtas) {
@@ -124,19 +120,18 @@ public class Busz {
             } else if (database.getAnything("boolean", j, "utasUtazikE") == 1) {
                 leszallUtas(j);
                 i++;
-            } else {
             }
         }
     }
 
     public void leszallUtas(int j) throws SQLException {
         database.setAnything("boolean", j, "utasUtazikE", "false");
-        setBuszSzabadHelyekSzama(getBuszSzabadHelyekSzama() + 1);
+        buszSzabadHelyekSzama++;
     }
 
     public void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
-        for (int i = 1; i <= buszKapacitas - getBuszSzabadHelyekSzama(); i++) {
+        for (int i = 1; i <= buszKapacitas - buszSzabadHelyekSzama; i++) {
             if (database.getAnything("boolean", i, "utasUtazikE") == 1 || database.getAnything("boolean", i, "utasVanEBerlete") == 1) {
             } else {
                 if (database.getAnything("boolean", i, "utasVanEJegye") == 1) {
@@ -150,33 +145,28 @@ public class Busz {
                 }
             }
         }
-        m.getLabelBuntetesek134().setVisible(true);
-        m.getLabelBuntetesek134().setText(buntetesekSzama + " büntetés volt a buszon");
-
+        this.infoBuntetesek = buntetesekSzama + " büntetés volt a buszon";
     }
-
 
     public void buszJegyetElhasznal(int i) throws SQLException {
         database.setAnything("boolean", i, "utasVanEJegye", "false");
-        m.getLabelEsemenyek134().setVisible(true);
-        m.getLabelEsemenyek134().setText(database.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)");
-
+        this.infoEsemenyek = database.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)";
     }
 
     public void buszJegyetVesz(int i) throws SQLException {
         database.setNewIntValue(i, "utasEgyenleg", "450", "-");
         database.setAnything("boolean", i, "utasVanEJegye", "true");
-        m.getLabelEsemenyek134().setVisible(true);
-        m.getLabelEsemenyek134().setText(database.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá");
-
+        this.infoEsemenyek = database.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá";
     }
 
-    public int getBuszSzabadHelyekSzama() {
-        return buszSzabadHelyekSzama;
+    public String getBuszInfo() {
+        return String.format(
+            "Busz szabad helyek száma: %d\n%s\n%s\n%s\n%s",
+                this.buszSzabadHelyekSzama,
+                this.infoFelszallUtasok,
+                this.infoLeszallUtasok,
+                this.infoBuntetesek,
+                this.infoEsemenyek
+        );
     }
-
-    public void setBuszSzabadHelyekSzama(int buszSzabadHelyekSzama) {
-        this.buszSzabadHelyekSzama = buszSzabadHelyekSzama;
-    }
-
 }

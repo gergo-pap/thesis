@@ -57,7 +57,10 @@ public class Database {
     public void refreshAllRow() throws SQLException {
         for (int i = 0; i <= countTableSize(); i++) {
             Random r = new Random();
-            PreparedStatement posted = db.prepareStatement("UPDATE utasok SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? WHERE id =" + i);
+            PreparedStatement posted = db.prepareStatement(
+                    "UPDATE utasok "
+                            + "SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? "
+                            + "WHERE id = ?");
 
             posted.setString(1, NameGenerator());
             posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
@@ -65,10 +68,10 @@ public class Database {
             posted.setBoolean(4, randomPercent(utasBerlet));
             posted.setBoolean(5, randomPercent(utasJegy));
             posted.setBoolean(6, false);
+            posted.setInt(7, i);
             checkSQL(posted);
         }
     }
-
 
 
     public void createUtasokTable() throws SQLException {
@@ -116,12 +119,12 @@ public class Database {
     public List<Allomas> getAllomasokLista(String jaratSzam) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONObject jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
-        JSONArray jarat34 = (JSONArray) jaratok.get(jaratSzam);
+        JSONArray jarat = (JSONArray) jaratok.get(jaratSzam);
 
         List<Allomas> allomasok = new ArrayList<>();
         JSONObject megallo;
 
-        for (Object megalloObj : jarat34) {
+        for (Object megalloObj : jarat) {
             megallo = (JSONObject) megalloObj;
             allomasok.add(new Allomas(
                     (String) megallo.get("name"),
@@ -145,15 +148,14 @@ public class Database {
     }
 
     int getAnything(String varibaleType, int id, String row) throws SQLException {
-        PreparedStatement statement = db.prepareStatement("SELECT * FROM utasok where id =?");
+        PreparedStatement statement = db.prepareStatement("SELECT * FROM utasok where id = ?");
         statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
         int eredmeny;
+
         while (result.next()) {
             switch (varibaleType.toLowerCase()) {
                 case "boolean":
-                    eredmeny = result.getInt(row);
-                    return eredmeny;
                 case "int":
                     eredmeny = result.getInt(row);
                     return eredmeny;
@@ -217,53 +219,5 @@ public class Database {
         Random rand = new Random();
         return Beginning[rand.nextInt(Beginning.length)] + " " +
                 Middle[rand.nextInt(Middle.length)];
-    }
-
-    public int getUtasKorMin() {
-        return this.utasKorMin;
-    }
-
-    public void setUtasKorMin(int utasKorMin) {
-        this.utasKorMin = utasKorMin;
-    }
-
-    public int getUtasKorMax() {
-        return this.utasKorMax;
-    }
-
-    public void setUtasKorMax(int utasKorMax) {
-        this.utasKorMax = utasKorMax;
-    }
-
-    public int getUtasEgyenlegMax() {
-        return this.utasEgyenlegMax;
-    }
-
-    public void setUtasEgyenlegMax(int utasEgyenlegMax) {
-        this.utasEgyenlegMax = utasEgyenlegMax;
-    }
-
-    public int getUtasJegy() {
-        return this.utasJegy;
-    }
-
-    public void setUtasJegy(int utasJegy) {
-        this.utasJegy = utasJegy;
-    }
-
-    public int getUtasBerlet() {
-        return this.utasBerlet;
-    }
-
-    public void setUtasBerlet(int utasBerlet) {
-        this.utasBerlet = utasBerlet;
-    }
-
-    public Connection getDb() {
-        return this.db;
-    }
-
-    public void setDb(Connection db) {
-        this.db = db;
     }
 }
