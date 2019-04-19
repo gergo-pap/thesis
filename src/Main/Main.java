@@ -7,17 +7,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class Main extends Application {
+public class Main extends Application  {
 
     public static void main(String[] args) {
 
@@ -26,7 +23,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException, ParseException {
+    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException, ParseException{
         Beallitasok beallitasok = new Beallitasok();
 
         Database dataBase = new Database();
@@ -38,7 +35,7 @@ public class Main extends Application {
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/main.fxml"));
-        Parent root = (Parent)loader.load();
+        Parent root = (Parent) loader.load();
 
         MainController controller = loader.getController();
         controller.initializeData(beallitasok, dataBase);
@@ -55,23 +52,6 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setTitle("Transport Simulation");
         Scene scene = new Scene(root, 800, 800);
-
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.SPACE) {
-                    MainController m = new MainController();
-                    try {
-                        m.OnStepByStep();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //Stop letting it do anything else
-                    keyEvent.consume();
-                }
-            }
-        });
-
         stage.setScene(scene);
         stage.show();
     }

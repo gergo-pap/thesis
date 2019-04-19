@@ -13,9 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -25,47 +24,73 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainController {
 
+    private final List<String> jaratok = Arrays.asList("160", "134");
 
+    @FXML
+    private ImageView busz1Img;
+    @FXML
+    private Label busz1Jaratszam;
+    @FXML
+    private Label busz1Allomas;
+    @FXML
+    private TextArea busz1Info;
 
-    @FXML public Label labelAllomas134;
-    @FXML public Label labelSzabadhelyekSzama134;
-    @FXML public Label labelEsemenyek134;
-    @FXML public Label labelBuntetesek134;
-    @FXML public Label labelLeszallutasok134;
-    @FXML public Label labelFelszallutasok134;
+    @FXML
+    private ImageView busz2Img;
+    @FXML
+    private Label busz2Jaratszam;
+    @FXML
+    private Label busz2Allomas;
+    @FXML
+    private TextArea busz2Info;
 
-    @FXML public Label labelFelSzallUtas160;
-    @FXML public Label labelLeSzallUtas160;
-    @FXML public Label labelBuntetesek160;
-    @FXML public Label labelEsemenyek160;
-    @FXML public Label labelBuntetesekSzam134;
-    @FXML public Label labelAllomas160;
-
-    @FXML private ImageView imageViewBusz;
 
     private Beallitasok beallitasok;
     private Database database;
 
-    private Busz busz;
-    private PathTransition pathTransition;
-    private boolean autoPlay;
+    private Busz busz1;
+    private PathTransition busz1PathTransition;
+    private boolean busz1AutoPlay;
+
+    private Busz busz2;
+    private PathTransition busz2PathTransition;
+    private boolean busz2AutoPlay;
+
 
     public MainController() {
+        busz1AutoPlay = false;
+        busz2AutoPlay = false;
 
-        autoPlay = false;
-
-        pathTransition = new PathTransition();
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(1);
-        pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+        busz1PathTransition = new PathTransition();
+        busz1PathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        busz1PathTransition.setCycleCount(1);
+        busz1PathTransition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    if (autoPlay) {
-                        nyomasAKovetkezoMegalloba();
+                    if (busz1AutoPlay) {
+                        busz1NyomasAKovetkezoMegalloba();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        busz2PathTransition = new PathTransition();
+        busz2PathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        busz2PathTransition.setCycleCount(1);
+        busz2PathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    if (busz2AutoPlay) {
+                        busz2NyomasAKovetkezoMegalloba();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,50 +99,63 @@ public class MainController {
         });
     }
 
-    public void initializeData(Beallitasok beallitasok, Database database) throws ClassNotFoundException, SQLException, ParseException, IOException {
+    public void initializeData(Beallitasok beallitasok, Database database) throws ParseException, IOException {
+        String jaratszam;
+
         this.beallitasok = beallitasok;
         this.database = database;
 
-        busz = new Busz(this.database, this, "160", 100);
+        jaratszam = this.jaratok.get(0);
+        this.busz1Jaratszam.setText(jaratszam);
+        this.busz1 = new Busz(jaratszam, this.database);
+
+        jaratszam = this.jaratok.get(1);
+        this.busz2Jaratszam.setText(jaratszam);
+        this.busz2 = new Busz(jaratszam, this.database);
     }
 
     public void initialize() {
-        pathTransition.setNode(imageViewBusz);
+        busz1PathTransition.setNode(busz1Img);
+        busz2PathTransition.setNode(busz2Img);
     }
 
-    private void nyomasAKovetkezoMegalloba() throws Exception {
+    private void busz1NyomasAKovetkezoMegalloba() throws Exception {
+        if (nyomasAKovetkezoMegalloba(busz1, busz1PathTransition)) return;
+
+        this.busz1Allomas.setText(busz1.getAktualisAllomas().getName());
+        this.busz1Info.setText(busz1.getBuszInfo());
+
+        busz1PathTransition.play();
+    }
+
+    private void busz2NyomasAKovetkezoMegalloba() throws Exception {
+        if (nyomasAKovetkezoMegalloba(busz2, busz2PathTransition)) return;
+
+        this.busz2Allomas.setText(busz2.getAktualisAllomas().getName());
+        this.busz2Info.setText(busz2.getBuszInfo());
+
+        busz2PathTransition.play();
+    }
+
+    private boolean nyomasAKovetkezoMegalloba(Busz busz, PathTransition pathTransition) throws Exception {
         Allomas elozoAllomas = busz.getAktualisAllomas();
         boolean utonVan = busz.kovetkezoMegallo();
         if (!utonVan) {
-            return;
+            return true;
         }
 
         Path path = new Path();
         path.getElements().add(new MoveTo(elozoAllomas.getX(), elozoAllomas.getY()));
         path.getElements().add(new LineTo(busz.getAktualisAllomas().getX(), busz.getAktualisAllomas().getY()));
 
-        double distance = Math.hypot(busz.getAktualisAllomas().getX() - elozoAllomas.getX(), busz.getAktualisAllomas().getY() - elozoAllomas.getY() * 10);
-        pathTransition.setDuration(Duration.millis(distance));
+        double distance = Math.hypot(busz.getAktualisAllomas().getX() - elozoAllomas.getX(), busz.getAktualisAllomas().getY() - elozoAllomas.getY());
+        pathTransition.setDuration(Duration.millis(distance * 30));
         pathTransition.setPath(path);
-        labelAllomas134.setVisible(true);
-        labelAllomas134.setText("" + busz.getAktualisAllomas().getName());
-        pathTransition.play();
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        return false;
     }
 
-
-    public void OnStepByStep() throws Exception {
-        imageViewBusz.setVisible(true);
-        autoPlay = false;
-        nyomasAKovetkezoMegalloba();
-    }
-
-
-    public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException, ParseException {
+    public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/beallitasok.fxml"));
         Parent root = (Parent) loader.load();
 
@@ -138,125 +176,41 @@ public class MainController {
     }
 
     public void restartMenuButtonClicked(ActionEvent actionEvent) throws Exception {
-        busz.buszAStartPoziciora();
-        Allomas kezdoAllomas = busz.getAktualisAllomas();
-        imageViewBusz.setX(kezdoAllomas.getX());
-        imageViewBusz.setY(kezdoAllomas.getY());
-        imageViewBusz.setVisible(true);
+        Allomas kezdoAllomas;
 
-        autoPlay = true;
-        nyomasAKovetkezoMegalloba();
+        busz1.buszAStartPoziciora();
+        kezdoAllomas = busz1.getAktualisAllomas();
+        busz1Img.setX(kezdoAllomas.getX());
+        busz1Img.setY(kezdoAllomas.getY());
+        busz1Img.setVisible(true);
+        busz1AutoPlay = true;
+        busz1NyomasAKovetkezoMegalloba();
+
+
+        busz2.buszAStartPoziciora();
+        kezdoAllomas = busz2.getAktualisAllomas();
+        busz2Img.setX(kezdoAllomas.getX());
+        busz2Img.setY(kezdoAllomas.getY());
+        busz2Img.setVisible(true);
+        busz2AutoPlay = true;
+        busz2NyomasAKovetkezoMegalloba();
     }
 
     public void utasUjrageneralasMenuClicked(ActionEvent actionEvent) throws SQLException {
         this.database.refreshAllRow();
     }
 
-    public void OnStepByStep134KeyPressed(KeyEvent keyEvent) throws Exception {
-        imageViewBusz.setVisible(true);
-        autoPlay = false;
-        nyomasAKovetkezoMegalloba();
+    @FXML
+    private void busz1StepByStep() throws Exception {
+        busz1Img.setVisible(true);
+        busz1AutoPlay = false;
+        busz1NyomasAKovetkezoMegalloba();
     }
 
-    public void OnStepByStep160KeyPressed(MouseEvent mouseEvent) {
-
+    @FXML
+    private void busz2StepByStep() throws Exception {
+        busz2Img.setVisible(true);
+        busz2AutoPlay = false;
+        busz2NyomasAKovetkezoMegalloba();
     }
-
-    public Label getLabelAllomas134() {
-        return labelAllomas134;
-    }
-
-    public void setLabelAllomas134(Label labelAllomas134) {
-        this.labelAllomas134 = labelAllomas134;
-    }
-
-    public Label getLabelSzabadhelyekSzama134() {
-        return labelSzabadhelyekSzama134;
-    }
-
-    public void setLabelSzabadhelyekSzama134(Label labelSzabadhelyekSzama134) {
-        this.labelSzabadhelyekSzama134 = labelSzabadhelyekSzama134;
-    }
-
-    public Label getLabelEsemenyek134() {
-        return labelEsemenyek134;
-    }
-
-    public void setLabelEsemenyek134(Label labelEsemenyek134) {
-        this.labelEsemenyek134 = labelEsemenyek134;
-    }
-
-    public Label getLabelBuntetesek134() {
-        return labelBuntetesek134;
-    }
-
-    public void setLabelBuntetesek134(Label labelBuntetesek134) {
-        this.labelBuntetesek134 = labelBuntetesek134;
-    }
-
-    public Label getLabelLeszallutasok134() {
-        return labelLeszallutasok134;
-    }
-
-    public void setLabelLeszallutasok134(Label labelLeszallutasok134) {
-        this.labelLeszallutasok134 = labelLeszallutasok134;
-    }
-
-    public Label getLabelFelszallutasok134() {
-        return labelFelszallutasok134;
-    }
-
-    public void setLabelFelszallutasok134(Label labelFelszallutasok134) {
-        this.labelFelszallutasok134 = labelFelszallutasok134;
-    }
-
-    public Label getLabelFelSzallUtas160() {
-        return labelFelSzallUtas160;
-    }
-
-    public void setLabelFelSzallUtas160(Label labelFelSzallUtas160) {
-        this.labelFelSzallUtas160 = labelFelSzallUtas160;
-    }
-
-    public Label getLabelLeSzallUtas160() {
-        return labelLeSzallUtas160;
-    }
-
-    public void setLabelLeSzallUtas160(Label labelLeSzallUtas160) {
-        this.labelLeSzallUtas160 = labelLeSzallUtas160;
-    }
-
-    public Label getLabelBuntetesek160() {
-        return labelBuntetesek160;
-    }
-
-    public void setLabelBuntetesek160(Label labelBuntetesek160) {
-        this.labelBuntetesek160 = labelBuntetesek160;
-    }
-
-    public Label getLabelEsemenyek160() {
-        return labelEsemenyek160;
-    }
-
-    public void setLabelEsemenyek160(Label labelEsemenyek160) {
-        this.labelEsemenyek160 = labelEsemenyek160;
-    }
-
-    public Label getLabelBuntetesekSzam134() {
-        return labelBuntetesekSzam134;
-    }
-
-    public void setLabelBuntetesekSzam134(Label labelBuntetesekSzam134) {
-        this.labelBuntetesekSzam134 = labelBuntetesekSzam134;
-    }
-
-    public Label getLabelAllomas160() {
-        return labelAllomas160;
-    }
-
-    public void setLabelAllomas160(Label labelAllomas160) {
-        this.labelAllomas160 = labelAllomas160;
-    }
-
-
 }
