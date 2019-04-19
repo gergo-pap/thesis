@@ -7,6 +7,7 @@ import Main.Database;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -68,26 +69,32 @@ public class MainController {
         busz1PathTransition = new PathTransition();
         busz1PathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         busz1PathTransition.setCycleCount(1);
-        busz1PathTransition.setOnFinished(actionEvent -> {
-            try {
-                if (busz1AutoPlay) {
-                    busz1NyomasAKovetkezoMegalloba();
+        busz1PathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    if (busz1AutoPlay) {
+                        busz1NyomasAKovetkezoMegalloba();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
 
         busz2PathTransition = new PathTransition();
         busz2PathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         busz2PathTransition.setCycleCount(1);
-        busz2PathTransition.setOnFinished(actionEvent -> {
-            try {
-                if (busz2AutoPlay) {
-                    busz2NyomasAKovetkezoMegalloba();
+        busz2PathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    if (busz2AutoPlay) {
+                        busz2NyomasAKovetkezoMegalloba();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }
