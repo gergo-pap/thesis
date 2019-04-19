@@ -21,13 +21,24 @@ public class Database {
     private int utasBerlet;
 
     private Connection db;
+    private JSONObject jaratok;
 
-    public Database() throws ClassNotFoundException, SQLException {
+    public Database() throws ClassNotFoundException, SQLException, IOException, ParseException {
+        initializeSQL();
+        initializeJSON();
+    }
+
+    private void initializeSQL() throws ClassNotFoundException, SQLException {
         String driver = "org.sqlite.JDBC";
         String url = "jdbc:sqlite:utasok.db";
 
         Class.forName(driver);
         db = DriverManager.getConnection(url);
+    }
+
+    private void initializeJSON() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        this.jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
     }
 
     public void loadSettings(Beallitasok beallitasok) {
@@ -116,15 +127,13 @@ public class Database {
         }
     }
 
-    public List<Allomas> getAllomasokLista(String jaratSzam) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
-        JSONArray jarat = (JSONArray) jaratok.get(jaratSzam);
+    public List<Allomas> getAllomasokLista(String jaratSzam) {
+        JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
 
         List<Allomas> allomasok = new ArrayList<>();
         JSONObject megallo;
 
-        for (Object megalloObj : jarat) {
+        for (Object megalloObj : (JSONArray) jarat.get("megallok")) {
             megallo = (JSONObject) megalloObj;
             allomasok.add(new Allomas(
                     (String) megallo.get("name"),
@@ -134,6 +143,16 @@ public class Database {
         }
 
         return allomasok;
+    }
+
+    public BuszInfo getBuszInfo(String jaratSzam) {
+        JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
+        JSONObject busz = (JSONObject) jarat.get("busz");
+
+        return new BuszInfo(
+                ((Long) busz.get("kapacitas")).intValue(),
+                (boolean) busz.get("elso_ajtos")
+        );
     }
 
     int countTableSize() throws SQLException {

@@ -1,6 +1,7 @@
 package Main;
 
 import javafx.scene.control.TextArea;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -14,24 +15,26 @@ import java.util.Random;
 public class Busz {
     private String buszJaratSzam;
     private Database database;
-    private TextArea buszInfoField;
-    private int buszKapacitas;
+
+    private BuszInfo buszInfo;
     private int buszSzabadHelyekSzama;
     private List<Allomas> allomasok;
     private Allomas aktualisAllomas;
     private ListIterator<Allomas> hatralevoAllomasok;
+
     private String infoFelszallUtasok;
     private String infoLeszallUtasok;
     private String infoBuntetesek;
     private String infoEsemenyek;
 
 
-    public Busz(String buszJaratSzam, Database database) throws IOException, ParseException {
+    public Busz(String buszJaratSzam, Database database) {
         this.buszJaratSzam = buszJaratSzam;
         this.database = database;
 
-        this.buszKapacitas = 100;
-        this.buszSzabadHelyekSzama = buszKapacitas;
+        this.buszInfo = database.getBuszInfo(buszJaratSzam);
+        this.buszSzabadHelyekSzama = this.buszInfo.getKapacitas();
+
         this.allomasok = database.getAllomasokLista(buszJaratSzam);
         buszAStartPoziciora();
     }
@@ -131,7 +134,7 @@ public class Busz {
 
     public void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
-        for (int i = 1; i <= buszKapacitas - buszSzabadHelyekSzama; i++) {
+        for (int i = 1; i <= this.buszInfo.getKapacitas() - buszSzabadHelyekSzama; i++) {
             if (database.getAnything("boolean", i, "utasUtazikE") == 1 || database.getAnything("boolean", i, "utasVanEBerlete") == 1) {
             } else {
                 if (database.getAnything("boolean", i, "utasVanEJegye") == 1) {
