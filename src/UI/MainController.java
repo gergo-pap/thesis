@@ -156,7 +156,7 @@ public class MainController {
     }
 
     public void beallitasMenuClicked(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/beallitasok.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/beallitasok.fxml"));
         Parent root = (Parent) loader.load();
 
         BeallitasokController controller = loader.getController();

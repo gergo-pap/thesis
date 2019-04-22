@@ -34,7 +34,7 @@ public class Main extends Application  {
             dataBase.postUtasNumberOfTimes(100);
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/main.fxml"));
         Parent root = (Parent) loader.load();
 
         MainController controller = loader.getController();
