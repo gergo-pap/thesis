@@ -5,8 +5,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,10 @@ public class Database {
     }
 
     private void initializeJSON() throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        this.jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
+        InputStream json_stream = this.getClass().getResourceAsStream("/jaratok.json");
+        InputStreamReader json_reader = new InputStreamReader(json_stream);
+
+        this.jaratok = (JSONObject) new JSONParser().parse(json_reader);
     }
 
     public void loadSettings(Beallitasok beallitasok) {
