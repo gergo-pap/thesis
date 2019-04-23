@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class Database {
 
     private void initializeJSON() throws IOException, ParseException {
         InputStream json_stream = this.getClass().getResourceAsStream("/jaratok.json");
-        InputStreamReader json_reader = new InputStreamReader(json_stream);
+        InputStreamReader json_reader = new InputStreamReader(json_stream, StandardCharsets.UTF_8);
 
         this.jaratok = (JSONObject) new JSONParser().parse(json_reader);
     }
