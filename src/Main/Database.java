@@ -68,24 +68,24 @@ public class Database {
     }
 
     public void refreshAllRow() throws SQLException {
+        Random r = new Random();
+
         for (int i = 0; i <= countTableSize(); i++) {
-            Random r = new Random();
             PreparedStatement posted = db.prepareStatement(
-                    "UPDATE utasok "
-                            + "SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? "
+                    "UPDATE utasok SET "
+                            + "utasNev = ?, "
+                            + "utasKor = ?, "
+                            + "utasEgyenleg = ?, "
+                            + "utasVanEBerlete = ?, "
+                            + "utasVanEJegye = ?, "
+                            + "utasUtazikE = ?"
                             + "WHERE id = ?");
 
-            posted.setString(1, NameGenerator());
-            posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
-            posted.setInt(3, r.nextInt(utasEgyenlegMax));
-            posted.setBoolean(4, randomPercent(utasBerlet));
-            posted.setBoolean(5, randomPercent(utasJegy));
-            posted.setBoolean(6, false);
+            randomizeUtas(r, posted);
             posted.setInt(7, i);
             checkSQL(posted);
         }
     }
-
 
     public void createUtasokTable() throws SQLException {
         PreparedStatement create = db.prepareStatement(
@@ -102,6 +102,7 @@ public class Database {
 
     public void postUtas() throws SQLException {
         Random r = new Random();
+
         PreparedStatement posted = db.prepareStatement(
                 "INSERT INTO utasok "
                         + "("
@@ -114,13 +115,17 @@ public class Database {
                         + ") "
                         + "VALUES (?,?,?,?,?,?)");
 
-        posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
-        posted.setInt(3, r.nextInt(utasEgyenlegMax));
-        posted.setBoolean(4, randomPercent(utasBerlet));
-        posted.setBoolean(5, randomPercent(utasJegy));
-        posted.setBoolean(6, false);
+        randomizeUtas(r, posted);
         checkSQL(posted);
+    }
+
+    private void randomizeUtas(Random r, PreparedStatement posted) throws SQLException {
+        posted.setString(1, NameGenerator());
+        posted.setInt(2, r.nextInt((this.utasKorMax - this.utasKorMin) + 1) + this.utasKorMin);
+        posted.setInt(3, r.nextInt(this.utasEgyenlegMax));
+        posted.setBoolean(4, randomPercent(this.utasBerlet));
+        posted.setBoolean(5, randomPercent(this.utasJegy));
+        posted.setBoolean(6, false);
     }
 
     public void postUtasNumberOfTimes(int num) throws SQLException {
