@@ -63,7 +63,7 @@ public class Busz {
         return true;
     }
 
-    public void buszFelszallUtas(int buszMennyiUtas) throws Exception {
+    private void buszFelszallUtas(int buszMennyiUtas) throws Exception {
         this.infoFelszallUtasok = "Felszállt utasok száma: " + buszMennyiUtas;
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
@@ -90,18 +90,18 @@ public class Busz {
 
     }
 
-    void felszallBerlettel(int j) throws SQLException {
+    private void felszallBerlettel(int j) throws SQLException {
         database.setAnything("boolean", j, "utasUtazikE", "true");
         buszSzabadHelyekSzama--;
     }
 
-    void felszallJeggyel(int j) throws SQLException {
+    private void felszallJeggyel(int j) throws SQLException {
         database.setAnything("boolean", j, "utasVanEJegye", "false");
         database.setAnything("boolean", j, "utasUtazikE", "true");
         buszSzabadHelyekSzama--;
     }
 
-    public void buszLeszallOsszesUtas() throws SQLException {
+    private void buszLeszallOsszesUtas() throws SQLException {
 
         for (int j = 1; j <= database.countTableSize(); j++) {
             leszallUtas(j);
@@ -109,7 +109,7 @@ public class Busz {
         this.infoEsemenyek = "Leszállt minden utas";
     }
 
-    public void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
+    private void buszLeszallUtas(int buszMennyiUtas) throws SQLException {
         this.infoLeszallUtasok = "Leszállt utasok száma: " + buszMennyiUtas;
         int i = 0;
         for (int j = 1; j <= database.countTableSize(); j++) {
@@ -122,12 +122,12 @@ public class Busz {
         }
     }
 
-    public void leszallUtas(int j) throws SQLException {
+    private void leszallUtas(int j) throws SQLException {
         database.setAnything("boolean", j, "utasUtazikE", "false");
         buszSzabadHelyekSzama++;
     }
 
-    public void buszEllenorzes() throws SQLException {
+    private void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
         for (int i = 1; i <= this.buszInfo.getKapacitas() - buszSzabadHelyekSzama; i++) {
             if (database.getAnything("boolean", i, "utasUtazikE") == 1 || database.getAnything("boolean", i, "utasVanEBerlete") == 1) {
@@ -146,12 +146,12 @@ public class Busz {
         this.infoBuntetesek = buntetesekSzama + " büntetés volt a buszon";
     }
 
-    public void buszJegyetElhasznal(int i) throws SQLException {
+    private void buszJegyetElhasznal(int i) throws SQLException {
         database.setAnything("boolean", i, "utasVanEJegye", "false");
         this.infoEsemenyek = database.getAnything("int", i, "id") + " jegyet elhasznált (bérlet nincs)";
     }
 
-    public void buszJegyetVesz(int i) throws SQLException {
+    private void buszJegyetVesz(int i) throws SQLException {
         database.setNewIntValue(i, "utasEgyenleg", "450", "-");
         database.setAnything("boolean", i, "utasVanEJegye", "true");
         this.infoEsemenyek = database.getAnything("int", i, "id") + " vett jegyet miután nem volt se jegye se bérlete, de elég pénze rá";

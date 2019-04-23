@@ -9,7 +9,7 @@ public class Beallitasok {
     private Integer utasBerletTF;
 
 
-    public Beallitasok() {
+    Beallitasok() {
         this.utasKorMinTF = 15;
         this.utasKorMaxTF = 99;
         this.utasEgyenlegIgTF = 50000;

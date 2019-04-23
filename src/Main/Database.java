@@ -24,7 +24,7 @@ public class Database {
     private Connection db;
     private JSONObject jaratok;
 
-    public Database() throws ClassNotFoundException, SQLException, IOException, ParseException {
+    Database() throws ClassNotFoundException, SQLException, IOException, ParseException {
         initializeSQL();
         initializeJSON();
     }
@@ -87,7 +87,7 @@ public class Database {
         }
     }
 
-    public void createUtasokTable() throws SQLException {
+    void createUtasokTable() throws SQLException {
         PreparedStatement create = db.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS utasok("
                         + "id INTEGER PRIMARY KEY AUTOINCREMENT   , "
@@ -100,7 +100,7 @@ public class Database {
         checkSQL(create);
     }
 
-    public void postUtas() throws SQLException {
+    private void postUtas() throws SQLException {
         Random r = new Random();
 
         PreparedStatement posted = db.prepareStatement(
@@ -128,13 +128,13 @@ public class Database {
         posted.setBoolean(6, false);
     }
 
-    public void postUtasNumberOfTimes(int num) throws SQLException {
+    void postUtasNumberOfTimes(int num) throws SQLException {
         for (int i = 0; i < num; i++) {
             postUtas();
         }
     }
 
-    public List<Allomas> getAllomasokLista(String jaratSzam) {
+    List<Allomas> getAllomasokLista(String jaratSzam) {
         JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
 
         List<Allomas> allomasok = new ArrayList<>();
@@ -152,7 +152,7 @@ public class Database {
         return allomasok;
     }
 
-    public BuszInfo getBuszInfo(String jaratSzam) {
+    BuszInfo getBuszInfo(String jaratSzam) {
         JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
         JSONObject busz = (JSONObject) jarat.get("busz");
 
