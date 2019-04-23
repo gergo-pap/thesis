@@ -51,7 +51,7 @@ public class AlertBox {
         GridPane.setConstraints(goOnButton, 1, 0);
         GridPane.setConstraints(closeButton, 2, 0);
         gridPane.getChildren().addAll(closeButton, goOnButton, label);
-        Scene scene = new Scene(gridPane, 260, 40);
+        Scene scene = new Scene(gridPane, 300, 40);
 
         stage.setScene(scene);
         stage.show();
