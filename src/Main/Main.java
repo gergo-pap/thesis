@@ -43,7 +43,11 @@ public class Main extends Application  {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
-                AlertBox.display("Kilépés", "Biztosan ki akarsz lépni?");
+
+                if (AlertBox.getAnswer("Kilépés", "Biztosan ki akarsz lépni?")) {
+                    System.exit(1);
+                }
+
                 windowEvent.consume();
             }
         });
