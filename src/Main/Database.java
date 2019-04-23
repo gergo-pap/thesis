@@ -115,7 +115,7 @@ public class Database {
                         + "VALUES (?,?,?,?,?,?)");
 
         posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utasKorMin - utasKorMax) + 1) + utasKorMin);
+        posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
         posted.setInt(3, r.nextInt(utasEgyenlegMax));
         posted.setBoolean(4, randomPercent(utasBerlet));
         posted.setBoolean(5, randomPercent(utasJegy));
