@@ -163,14 +163,10 @@ public class Database {
     }
 
     int countTableSize() throws SQLException {
-        /*int size = 0;
         Statement stat = db.createStatement();
         ResultSet rs = stat.executeQuery("SELECT COUNT(*) FROM utasok");
-        rs.next();
 
-        size = rs.getInt(1);*/
-        return 100;
-
+        return rs.getInt(1);
     }
 
     int getAnything(String varibaleType, int id, String row) throws SQLException {
