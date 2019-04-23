@@ -4,12 +4,12 @@ public class BuszInfo {
     private int kapacitas;
     private boolean elsoAjtos;
 
-    public BuszInfo(int kapacitas, boolean elsoAjtos) {
+    BuszInfo(int kapacitas, boolean elsoAjtos) {
         this.kapacitas = kapacitas;
         this.elsoAjtos = elsoAjtos;
     }
 
-    public int getKapacitas() {
+    int getKapacitas() {
         return kapacitas;
     }
 

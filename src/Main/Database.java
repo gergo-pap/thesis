@@ -5,8 +5,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Database {
     private Connection db;
     private JSONObject jaratok;
 
-    public Database() throws ClassNotFoundException, SQLException, IOException, ParseException {
+    Database() throws ClassNotFoundException, SQLException, IOException, ParseException {
         initializeSQL();
         initializeJSON();
     }
@@ -52,8 +53,10 @@ public class Database {
     }
 
     private void initializeJSON() throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        this.jaratok = (JSONObject) parser.parse(new FileReader("jaratok.json"));
+        InputStream json_stream = this.getClass().getResourceAsStream("/jaratok.json");
+        InputStreamReader json_reader = new InputStreamReader(json_stream);
+
+        this.jaratok = (JSONObject) new JSONParser().parse(json_reader);
     }
 
     public void loadSettings(Beallitasok beallitasok) {
@@ -65,26 +68,26 @@ public class Database {
     }
 
     public void refreshAllRow() throws SQLException {
+        Random r = new Random();
+
         for (int i = 0; i <= countTableSize(); i++) {
-            Random r = new Random();
             PreparedStatement posted = db.prepareStatement(
-                    "UPDATE utasok "
-                            + "SET utasNev = ?, utasKor = ?, utasEgyenleg = ?, utasVanEBerlete = ?, utasVanEJegye = ?, utasUtazikE = ? "
+                    "UPDATE utasok SET "
+                            + "utasNev = ?, "
+                            + "utasKor = ?, "
+                            + "utasEgyenleg = ?, "
+                            + "utasVanEBerlete = ?, "
+                            + "utasVanEJegye = ?, "
+                            + "utasUtazikE = ?"
                             + "WHERE id = ?");
 
-            posted.setString(1, NameGenerator());
-            posted.setInt(2, r.nextInt((utasKorMax - utasKorMin) + 1) + utasKorMin);
-            posted.setInt(3, r.nextInt(utasEgyenlegMax));
-            posted.setBoolean(4, randomPercent(utasBerlet));
-            posted.setBoolean(5, randomPercent(utasJegy));
-            posted.setBoolean(6, false);
+            randomizeUtas(r, posted);
             posted.setInt(7, i);
             checkSQL(posted);
         }
     }
 
-
-    public void createUtasokTable() throws SQLException {
+    void createUtasokTable() throws SQLException {
         PreparedStatement create = db.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS utasok("
                         + "id INTEGER PRIMARY KEY AUTOINCREMENT   , "
@@ -97,8 +100,9 @@ public class Database {
         checkSQL(create);
     }
 
-    public void postUtas() throws SQLException {
+    private void postUtas() throws SQLException {
         Random r = new Random();
+
         PreparedStatement posted = db.prepareStatement(
                 "INSERT INTO utasok "
                         + "("
@@ -111,22 +115,26 @@ public class Database {
                         + ") "
                         + "VALUES (?,?,?,?,?,?)");
 
-        posted.setString(1, NameGenerator());
-        posted.setInt(2, r.nextInt((utasKorMin - utasKorMax) + 1) + utasKorMin);
-        posted.setInt(3, r.nextInt(utasEgyenlegMax));
-        posted.setBoolean(4, randomPercent(utasBerlet));
-        posted.setBoolean(5, randomPercent(utasJegy));
-        posted.setBoolean(6, false);
+        randomizeUtas(r, posted);
         checkSQL(posted);
     }
 
-    public void postUtasNumberOfTimes(int num) throws SQLException {
+    private void randomizeUtas(Random r, PreparedStatement posted) throws SQLException {
+        posted.setString(1, NameGenerator());
+        posted.setInt(2, r.nextInt((this.utasKorMax - this.utasKorMin) + 1) + this.utasKorMin);
+        posted.setInt(3, r.nextInt(this.utasEgyenlegMax));
+        posted.setBoolean(4, randomPercent(this.utasBerlet));
+        posted.setBoolean(5, randomPercent(this.utasJegy));
+        posted.setBoolean(6, false);
+    }
+
+    void postUtasNumberOfTimes(int num) throws SQLException {
         for (int i = 0; i < num; i++) {
             postUtas();
         }
     }
 
-    public List<Allomas> getAllomasokLista(String jaratSzam) {
+    List<Allomas> getAllomasokLista(String jaratSzam) {
         JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
 
         List<Allomas> allomasok = new ArrayList<>();
@@ -144,7 +152,7 @@ public class Database {
         return allomasok;
     }
 
-    public BuszInfo getBuszInfo(String jaratSzam) {
+    BuszInfo getBuszInfo(String jaratSzam) {
         JSONObject jarat = (JSONObject) this.jaratok.get(jaratSzam);
         JSONObject busz = (JSONObject) jarat.get("busz");
 
@@ -155,14 +163,10 @@ public class Database {
     }
 
     int countTableSize() throws SQLException {
-        /*int size = 0;
         Statement stat = db.createStatement();
         ResultSet rs = stat.executeQuery("SELECT COUNT(*) FROM utasok");
-        rs.next();
 
-        size = rs.getInt(1);*/
-        return 100;
-
+        return rs.getInt(1);
     }
 
     int getAnything(String varibaleType, int id, String row) throws SQLException {

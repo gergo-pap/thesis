@@ -43,7 +43,7 @@
                 <Insets left="5.0" top="10.0"/>
             </VBox.margin>
         </Label>
-        <TextArea fx:id="busz1Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info"/>
+        <TextArea fx:id="busz1Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info" wrapText="true" />
     </VBox>
     <VBox layoutX="435.0" layoutY="600.0" prefHeight="188.0" prefWidth="350.0" styleClass="jarat-info-keret"
           stylesheets="@jarat-info.css">
@@ -59,6 +59,6 @@
                 <Insets left="5.0" top="10.0"/>
             </VBox.margin>
         </Label>
-        <TextArea fx:id="busz2Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info"/>
+        <TextArea fx:id="busz2Info" editable="false" prefHeight="230.0" prefWidth="222.0" styleClass="busz-info" wrapText="true" />
     </VBox>
 </Pane>

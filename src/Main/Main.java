@@ -34,7 +34,7 @@ public class Main extends Application  {
             dataBase.postUtasNumberOfTimes(100);
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/main.fxml"));
         Parent root = (Parent) loader.load();
 
         MainController controller = loader.getController();
@@ -43,7 +43,11 @@ public class Main extends Application  {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
-                AlertBox.display("Kilépés", "Biztosan ki akarsz lépni?");
+
+                if (AlertBox.getAnswer("Kilépés", "Biztosan ki akarsz lépni?")) {
+                    System.exit(1);
+                }
+
                 windowEvent.consume();
             }
         });

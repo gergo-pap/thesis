@@ -5,7 +5,7 @@ public class Allomas {
     private double x;
     private double y;
 
-    public Allomas(String name, double x, double y) {
+    Allomas(String name, double x, double y) {
         this.name = name;
         this.x = x;
         this.y = y;

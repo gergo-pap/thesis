@@ -23,13 +23,13 @@ public class BeallitasokController {
     @FXML
     private TextField utasBerletTF;
 
-    public void initializeData(Beallitasok beallitasok, Database database) {
+    void initializeData(Beallitasok beallitasok, Database database) {
         this.beallitasok = beallitasok;
         this.database = database;
         this.resetUI();
     }
 
-    public void resetUI() {
+    private void resetUI() {
         this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
         this.utasKorMinTF.setText(this.beallitasok.getUtasKorMinTF().toString());
         this.utasKorMaxTF.setText(this.beallitasok.getUtasKorMaxTF().toString());
@@ -38,7 +38,7 @@ public class BeallitasokController {
         this.utasBerletTF.setText(this.beallitasok.getUtasBerletTF().toString());
     }
 
-    public void applySettings() throws SQLException {
+    private void applySettings() throws SQLException {
         this.beallitasok.setUtasBerletTF(Integer.parseInt(this.utasBerletTF.getText()));
         this.beallitasok.setUtasKorMinTF(Integer.parseInt(this.utasKorMinTF.getText()));
         this.beallitasok.setUtasKorMaxTF(Integer.parseInt(this.utasKorMaxTF.getText()));
