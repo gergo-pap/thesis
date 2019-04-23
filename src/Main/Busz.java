@@ -16,10 +16,10 @@ public class Busz {
     private Allomas aktualisAllomas;
     private ListIterator<Allomas> hatralevoAllomasok;
 
-    private String infoFelszallUtasok;
-    private String infoLeszallUtasok;
-    private String infoBuntetesek;
-    private String infoEsemenyek;
+    private String infoFelszallUtasok = "";
+    private String infoLeszallUtasok = "";
+    private String infoBuntetesek = "";
+    private String infoEsemenyek = "";
 
 
     public Busz(String buszJaratSzam, Database database) {
