@@ -8,7 +8,6 @@ import java.util.Random;
 
 
 public class Busz {
-    private String buszJaratSzam;
     private Database database;
 
     private BuszInfo buszInfo;
@@ -24,7 +23,6 @@ public class Busz {
 
 
     public Busz(String buszJaratSzam, Database database) {
-        this.buszJaratSzam = buszJaratSzam;
         this.database = database;
 
         this.buszInfo = database.getBuszInfo(buszJaratSzam);
@@ -68,8 +66,7 @@ public class Busz {
         int i = 0;
         List<Integer> nemTudtakFelszallniLista = new ArrayList<>();
         for (int j = 1; j <= database.countTableSize(); j++) {
-            if (database.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0) {
-            } else {
+            if (!(database.getAnything("boolean", j, "utasUtazikE") == 1 || buszMennyiUtas == 0)) {
                 if (buszSzabadHelyekSzama > 0 && database.getAnything("boolean", j, "utasVanEBerlete") == 1) {
                     felszallBerlettel(j);
                     i++;
@@ -130,8 +127,7 @@ public class Busz {
     private void buszEllenorzes() throws SQLException {
         int buntetesekSzama = 0;
         for (int i = 1; i <= this.buszInfo.getKapacitas() - buszSzabadHelyekSzama; i++) {
-            if (database.getAnything("boolean", i, "utasUtazikE") == 1 || database.getAnything("boolean", i, "utasVanEBerlete") == 1) {
-            } else {
+            if (!(database.getAnything("boolean", i, "utasUtazikE") == 1 || database.getAnything("boolean", i, "utasVanEBerlete") == 1)) {
                 if (database.getAnything("boolean", i, "utasVanEJegye") == 1) {
                     buszJegyetElhasznal(i);
                 }
